@@ -3,51 +3,99 @@
   src: url("https://twc-italia.org/assets/fonts/rubik/Rubik-Regular.ttf") format("truetype");
 }
 
-body {margin: 0 auto;color: white;text-align: center;width: 100%; font-family: Rubik,Arial,sans-serif;word-wrap: break-word; font-style: normal;}
+body {
+  margin: 0 auto;
+  color: black;
+  text-align: center;
+  width: 100%;
+  font-family: Rubik,Arial,sans-serif;
+  word-wrap: break-word; 
+  font-style: normal;
+}
 a {color: white; text-decoration: none}
 a:hover {color: rgb(217, 217, 217);}
 
 h1 {
-  font-size: 2vw;
+  font-size: 6vw;
   margin: 0;
 }
 
 h2 {
   font-size: 1.5vw;
-  text-align: left;
   margin: 0;
 }
 
 h3 {
-  font-size: 1vw;
-  text-align: left;
+  font-size: 2vw;
   margin: 0;
 }
 
 h4 {
   font-size: 0.9vw;
-  text-align: left;
   margin: 0;
 }
 
 /*Container*/
 
-.container {display: flex;
+.container {
+  width: 80%;
+  margin: 6vw auto;
+  background: linear-gradient(90deg, #c32b1e 50%, rgb(15, 120, 186) 50%);
+}
+
+.title {
+  height: 16vw; /*any size*/
+}
+
+.main {display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   flex: 0 1 auto;
   /* background: linear-gradient(90deg, #c32b1e 50%, rgb(15, 120, 186) 50%); */
-  width: 80%;
-margin: 0 auto}
+  margin: 0 auto}
 
-.box {
-  width: 23%; /*any size*/
+.fightingshibas {
+  width: 40%; /*any size*/
+  height: 30vw; /*any size*/
+  flex: 0 1 auto;
+  justify-content: center;
+  align-items: center;
+}
+
+.progressbars {
+  width: 40%; /*any size*/
+  height: 8vw; /*any size*/
+  flex: 0 1 auto;
+  justify-content: center;
+  align-items: center;
+}
+
+.description {
+  padding: 2vw;
+}
+
+.qrcodes {
+  width: 40%; /*any size*/
   height: 25vw; /*any size*/
   flex: 0 1 auto;
   justify-content: center;
   align-items: center;
-  background: none;
-  padding: 2% 0 0 2%;
+}
+
+.votebuttons {
+  width: 40%; /*any size*/
+  height: 8vw; /*any size*/
+  flex: 0 1 auto;
+  justify-content: center;
+  align-items: center;
+}
+
+.vs {
+  width: 20%; /*any size*/
+  height: 30vw; /*any size*/
+  flex: 0 1 auto;
+  justify-content: center;
+  align-items: center;
 }
 
 .object-fit-cover {
