@@ -9,8 +9,9 @@ body {
   text-align: center;
   width: 100%;
   font-family: Rubik,Arial,sans-serif;
-  word-wrap: break-word; 
+  word-wrap: break-word;
   font-style: normal;
+  background-color: rgb(251,166,1)
 }
 a {color: white; text-decoration: none}
 a:hover {color: rgb(217, 217, 217);}
@@ -55,12 +56,18 @@ h4 {
   margin: 0 auto}
 
 .fightingshibas {
-  width: 40%; /*any size*/
-  height: 30vw; /*any size*/
+  width: 100%; /*any size*/
   flex: 0 1 auto;
   justify-content: center;
   align-items: center;
 }
+
+/* .fightingshibas img{
+  width:100%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: 100% 100%;
+} */
 
 .progressbars {
   width: 40%; /*any size*/
@@ -102,6 +109,11 @@ h4 {
   width: 100%;
   height: 100%;
   object-fit: cover; /*magic*/
+}
+
+.object-fit-contain {
+  width: 100%;
+  object-fit: contain; /*magic*/
 }
 
 /* .image1 { */
