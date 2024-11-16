@@ -97,6 +97,8 @@ button {
   gap: 0.5rem;
   transition: background-color 0.3s, transform 0.3s;
   background-color: #ddd;
+  -webkit-appearance:none;
+  appearance:none;
 }
 
 button:hover {
