@@ -78,10 +78,11 @@ h4 {
   margin: 0 auto;
   padding: 0.5rem;
   box-sizing: border-box; /* Include padding in the container's width */
-  color: black;
 }
 
 button {
+  all: unset;
+  color: black;
   flex: 0 1 auto;
   background-color: #f4f4f4;
   border: none;
