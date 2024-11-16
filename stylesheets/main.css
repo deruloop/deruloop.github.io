@@ -58,7 +58,7 @@ h4 {
 
 /*Container*/
 .container {
-  width: 500px;
+  max-width: 500px;
   margin: 2.6vw auto;
 }
 
@@ -70,26 +70,28 @@ h4 {
 .iconButtons {
   display: flex;
   flex-wrap: wrap; /* Allows icons to wrap onto multiple rows */
-  justify-content: space-around; /* Distributes icons evenly */
+  justify-content: center;
+  align-content: center;
   gap: 1rem; /* Space between icons */
-  width: 100%; /* Full width container */
-  max-width: 100%; /* Restrict max width of the container */
-  margin: 0 auto; /* Center the container */
+  /* width: 100%; */
+  /* max-width: 100%; */
+  margin: 0 auto;
   padding: 0.5rem;
   box-sizing: border-box; /* Include padding in the container's width */
 }
 
 button {
-  flex: 1 1 auto; /* Icons resize based on their content */
+  flex: 0 1 auto;
   background-color: #f4f4f4;
   border: none;
   border-radius: 5px;
-  padding: 1rem;
-  max-width: 50%;
+  padding: 0.5rem;
+  justify-content: center; /* Center content vertically */
+  align-items: center; /* Center content horizontally */
   cursor: pointer;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   display: flex;
-  flex-direction: inline; /* Stack the icon and text vertically */
+  flex-direction: row; /* Stack the icon and text vertically */
   align-items: center; /* Center the content */
   gap: 0.5rem;
   transition: background-color 0.3s, transform 0.3s;
