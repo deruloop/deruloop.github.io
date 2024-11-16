@@ -78,6 +78,7 @@ h4 {
   margin: 0 auto;
   padding: 0.5rem;
   box-sizing: border-box; /* Include padding in the container's width */
+  color: black;
 }
 
 button {
