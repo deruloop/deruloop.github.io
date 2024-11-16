@@ -17,12 +17,6 @@ body {
   font-size: 1.1rem;
 }
 
-img {
-  max-width: 100%; /* Prevent the image from exceeding container width */
-  height: auto; /* Maintain the aspect ratio */
-  display: block; /* Remove bottom spacing caused by inline images */
-}
-
 a {
   color: white;
   text-decoration: none
@@ -64,6 +58,9 @@ h4 {
 
 .logo {
   margin: 0 auto;
+  max-width: 60%;
+  height: auto;
+  display: block;
 }
 
 /*Navigation Buttons*/
@@ -118,6 +115,14 @@ button:active {
 
 .visible {
   display: inline; /* Text is shown for the selected tab */
+}
+
+.test1 {
+	-moz-border-radius: 12px;
+	-webkit-border-radius: 12px;
+	border-radius: 12px;
+	overflow:hidden;
+	position:relative;
 }
 
 @media screen and (max-width: 700px) {
