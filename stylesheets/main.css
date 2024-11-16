@@ -90,16 +90,18 @@ button {
   align-items: center; /* Center content horizontally */
   cursor: pointer;
   font-size: 1.2rem;
+  font-weight: bold;
   display: flex;
   flex-direction: row; /* Stack the icon and text vertically */
   align-items: center; /* Center the content */
   gap: 0.5rem;
   transition: background-color 0.3s, transform 0.3s;
+  background-color: #ddd;
 }
 
 button:hover {
   background-color: #ddd;
-  transform: scale(1.1);
+  transform: scale(1.15);
 }
 
 button:active {
