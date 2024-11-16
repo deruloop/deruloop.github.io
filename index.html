@@ -1,44 +1,86 @@
 <html>
-  <head>
-    <link type="text/css" rel="stylesheet" href="stylesheets/main.css">
-    <meta name="viewport" content="initial-scale=1, viewport-fit=cover">
-    <meta charset="UTF-8">
-    <link rel="icon" href="images/favicon.ico" sizes="any">
-    <title>Test!</title>
 
-    <meta property="twitter:image:src" content="http://alziamolatesta.twc-italia.org/images/opengraph_small.png" />
-    <meta itemprop="image" content="http://alziamolatesta.twc-italia.org/images/opengraph_small.png" />
-    <meta property="og:title" content="Prova sito" />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="http://alziamolatesta.twc-italia.org/images/opengraph.png" />
-    <meta property="og:height" content="627" />
-    <meta property="og:width" content="1200" />
-    <meta property="og:image" content="http://alziamolatesta.twc-italia.org/images/opengraph_small.png" />
-    <meta property="og:height" content="256" />
-    <meta property="og:width" content="256" />
-    <meta property="og:description" content="Prova prova wow" />
-  </head>
+<head>
+  <link type="text/css" rel="stylesheet" href="stylesheets/main.css">
+  <meta name="viewport" content="initial-scale=1, viewport-fit=cover">
+  <meta charset="UTF-8">
+  <link rel="icon" href="images/favicon.ico" sizes="any">
+  <title>Test!</title>
 
-  <body>
-    <div class="container">
-      <div class ="title"><img class="object-fit-contain" src="../images/banner.png"></div>
-      <div class="main">
-        <div class ="description">
-          <h3>
-          Test<br>
-          Website Test<br>
-          <h3>
-        </div>
-        <div class ="qrcodes"><img class="object-fit-contain" src="../images/qr1.png"></div>
-        <div style="width: 20%; flex: 0 1 auto; justify-content: center;align-items: center;"></div>
-        <div class ="qrcodes"><img class="object-fit-contain" src="../images/qr2.png"></div>
+  <meta property="twitter:image:src" content="http://alziamolatesta.twc-italia.org/images/opengraph_small.png" />
+  <meta itemprop="image" content="http://alziamolatesta.twc-italia.org/images/opengraph_small.png" />
+  <meta property="og:title" content="Prova sito" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="http://alziamolatesta.twc-italia.org/images/opengraph.png" />
+  <meta property="og:height" content="627" />
+  <meta property="og:width" content="1200" />
+  <meta property="og:image" content="http://alziamolatesta.twc-italia.org/images/opengraph_small.png" />
+  <meta property="og:height" content="256" />
+  <meta property="og:width" content="256" />
+  <meta property="og:description" content="Prova prova wow" />
+</head>
+
+<body>
+  <div class="container">
+    <img class="logo" src="../images/logo.png">
+    <div class="title">
+      <h1>
+        deruloop
+        <h1>
+    </div>
+    <p>
+      I'm an iOS Developer based in Italy, currently working on clients as a freelance while developing my own projects<br>
+    </p>
+    <div class="iconButtons">
+      <button onclick="showContent(1)">
+        <i class="icon">🏠</i> </br> <span id="text1" class="hidden">Home</span>
+      </button>
+      <button onclick="showContent(2)">
+        <i class="icon">📄</i> <br> <span id="text2" class="hidden">Home2</span>
+      </button>
+      <button onclick="showContent(3)">
+        <i class="icon">📧</i> <br> <span id="text3" class="hidden">Home3</span>
+      </button>
+      <button onclick="showContent(4)">
+        <i class="icon">⚙️</i> <br> <span id="text4" class="hidden">Home4</span>
+      </button>
+    </div>
+    
+    <div class="content">
+      <div id="content1" class="hidden">
+        <h2>Welcome Home</h2>
+        <p>This is the home section with more detailed content.</p>
+      </div>
+      <div id="content2" class="hidden">
+        <h2>Documents</h2>
+        <ul>
+          <li>Document 1</li>
+          <li>Document 2</li>
+          <li>Document 3</li>
+        </ul>
+      </div>
+      <div id="content3" class="hidden">
+        <h2>Inbox</h2>
+        <form>
+          <label for="email">Your Email:</label>
+          <input type="email" id="email" name="email">
+          <button type="submit">Send</button>
+        </form>
+      </div>
+      <div id="content4" class="hidden">
+        <h2>Settings</h2>
+        <p>Adjust your preferences below:</p>
+        <label><input type="checkbox"> Enable Notifications</label><br>
+        <label><input type="checkbox"> Dark Mode</label>
       </div>
     </div>
+  </div>
 
 
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
-    <script src="js/scripts.js"></script>
-  </body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+  <script src="js/scripts.js"></script>
+</body>
+
 </html>
