@@ -4,7 +4,7 @@
 }
 
 body {
-  margin: 120px auto;
+  margin: 100px auto;
   color: black;
   text-align: center;
   width: 100%;
@@ -58,7 +58,7 @@ h4 {
 
 /*Container*/
 .container {
-  max-width: 500px;
+  max-width: 480px;
   margin: 2.6vw auto;
 }
 
@@ -67,6 +67,12 @@ h4 {
   max-width: 60%;
   height: auto;
   display: block;
+}
+
+button {
+  all: unset;
+  -webkit-appearance:none;
+  appearance:none;
 }
 
 /*Navigation Buttons*/
@@ -83,8 +89,7 @@ h4 {
   box-sizing: border-box; /* Include padding in the container's width */
 }
 
-button {
-  all: unset;
+.iconButtons button {
   color: black;
   flex: 0 1 auto;
   background-color: #f4f4f4;
@@ -102,16 +107,14 @@ button {
   gap: 0.5rem;
   transition: background-color 0.3s, transform 0.3s;
   background-color: #e5d8c2;
-  -webkit-appearance:none;
-  appearance:none;
 }
 
-button:hover {
+.iconButtons button:hover {
   background-color: #e5d8c2;
   transform: scale(1.15);
 }
 
-button:active {
+.iconButtons button:active {
   transform: scale(1);
 }
 
@@ -123,18 +126,43 @@ button:active {
   display: inline; /* Text is shown for the selected tab */
 }
 
-.test1 {
-	-moz-border-radius: 12px;
-	-webkit-border-radius: 12px;
-	border-radius: 12px;
-	overflow:hidden;
-	position:relative;
+.clients {
+  display: flex;
+  flex-wrap: wrap; /* Allows icons to wrap onto multiple rows */
+  justify-content: center;
+  align-content: center;
+  gap: 1rem; /* Space between icons */
+  max-width: 70%;
+  margin: 0 auto;
+  padding: 0.5rem;
+  box-sizing: border-box; /* Include padding in the container's width */
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+}
+
+.clients button {
+  color: black;
+  flex: 0 1 auto;
+  background-color: #f4f4f4;
+  cursor: pointer;
+  width: 250px;
+  justify-content: center;
+  align-content: center;
+}
+.clients button:hover {
+  transform: scale(1.15);
+}
+
+.clients img {
+  width: 100%;
+  max-width: max-content;
 }
 
 @media screen and (max-width: 700px) {
 
   .container {
-    width: 95%;
+    width: 90%;
     margin: 2.6vw auto;
   }
 
