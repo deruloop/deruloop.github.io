@@ -11,7 +11,7 @@ body {
   font-family: sans-serif;
   word-wrap: break-word;
   font-style: normal;
-  background-color: #F4EDDF;
+  background-color: #F7EFE2; /*old #f6eddd*/
   font-size: 1.1rem;
 }
 
@@ -126,6 +126,40 @@ button {
   display: inline; /* Text is shown for the selected tab */
 }
 
+/*About tab*/
+.socials {
+  display: flex;
+  flex-wrap: wrap; /* Allows icons to wrap onto multiple rows */
+  justify-content: center;
+  align-content: center;
+  gap: 0rem; /* Space between icons */
+  margin: 0 auto;
+  padding: 0.5rem;
+  box-sizing: border-box; /* Include padding in the container's width */
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+}
+
+.socials button {
+  color: black;
+  flex: 0 1 auto;
+  cursor: pointer;
+  width: 60px;
+  justify-content: center;
+  align-content: center;
+}
+
+.socials button:hover {
+  transform: scale(1.15);
+}
+
+.socials img {
+  width: 100%;
+  max-width: max-content;
+}
+
+/*Clients tab*/
 .clients {
   display: flex;
   flex-wrap: wrap; /* Allows icons to wrap onto multiple rows */
@@ -144,12 +178,12 @@ button {
 .clients button {
   color: black;
   flex: 0 1 auto;
-  background-color: #f4f4f4;
   cursor: pointer;
   width: 250px;
   justify-content: center;
   align-content: center;
 }
+
 .clients button:hover {
   transform: scale(1.15);
 }

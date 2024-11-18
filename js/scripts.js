@@ -33,3 +33,7 @@ function showContent(selectedIndex) {
         }
     });
 }
+
+function sendEmail() {
+    window.location.href = "mailto:cristiano@calicchia.dev?subject=[Company]&body=[Content]";
+}
