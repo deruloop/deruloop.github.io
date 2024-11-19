@@ -16,7 +16,7 @@ body {
 }
 
 a {
-  color: white;
+  color: black;
   text-decoration: none
 }
 
@@ -45,7 +45,7 @@ h2 {
 }
 
 h3 {
-  font-size: clamp(1rem, 3vw, 2rem);
+  font-size: clamp(1.3rem, 3vw, 2rem);
   /* Minimum 1rem, preferred 3vw, maximum 2rem */
   margin: 0;
 }
@@ -193,11 +193,65 @@ button {
   max-width: max-content;
 }
 
+/*Project tab buttons*/
+.projectButton {
+  display: flex;
+  align-items: top;
+  background-color: #e5d8c2; /* Customize the button background color */
+  color: black;
+  padding: 15px 15px;
+  border-radius: 10px; /* Makes the button round */
+  text-align: left;
+  /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
+  transition: background-color 0.3s, transform 0.3s;
+  cursor: pointer;
+  border: none; /* Remove border */
+  text-decoration: none; /* Remove underline in case of <a> tag */
+  margin-top: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.projectButton:hover {
+  transform: scale(1.05); /* Slight grow effect */
+}
+
+.button-image {
+  width: 33%; /* Adjust image size */
+  height: auto;
+  object-fit: contain; 
+  border-radius: 10%; /* Makes the image round */
+  margin-right: 10px; /* Space between image and text */
+}
+
+.button-text {
+  flex: 1; /* Ensures the text grows naturally */
+  /* white-space: nowrap; */
+  overflow: hidden; /* Hides overflow text */
+  text-overflow: ellipsis; /* Adds "..." for truncated text */
+}
+
+.chevron {
+  display: flex;
+  align-items: center; /* Center chevron vertically */
+  margin-left: auto; /* Push chevron to the far right */
+}
+
+.chevron img {
+  width: 20px;
+}
+
+
 @media screen and (max-width: 700px) {
 
   .container {
     width: 90%;
     margin: 2.6vw auto;
+  }
+
+  .projectButton {
+    margin-left: 0px;
+    margin-right: 0px;
   }
 
 }
