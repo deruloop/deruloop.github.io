@@ -158,19 +158,17 @@ button:active {
 
 /* Icon styling */
 .feature-icon {
-  width: 80px; /* Icon size */
-  height: 80px; /* Keep square aspect ratio */
+  width: 60px; /* Icon size */
+  height: 60px; /* Keep square aspect ratio */
   border-radius: 10%; /* Circular icon */
   background: linear-gradient(to bottom, #F09E18, #EC8427, #D5711B);
-  background-color: #F09E18; /* Icon background color */
   padding: 10px; /* Padding around the icon */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for the icon */
   margin: 0 auto;
 }
 
-.feature-icon img {
-  width: 30px; /* Icon size */
-  height: auto; /* Keep square aspect ratio */
+.emoji {
+  font-size: 3rem;
 }
 
 /* Title styling */
