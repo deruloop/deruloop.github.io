@@ -75,6 +75,12 @@ h4 {
   margin: 2.6vw auto;
 }
 
+.privacyContainer {
+  max-width: 80%;
+  margin: 2.6vw auto;
+  text-align: left;
+}
+
 .logo {
   margin: 0 auto;
   max-width: 160px;
@@ -114,6 +120,24 @@ button:hover {
 
 button:active {
   transform: scale(1);
+}
+
+.privacyEmail button {
+  color:#EC8427;
+  display: inline;
+  background-color: #FFF;
+  transition: none;
+  font-size: 1.1rem;
+}
+
+.privacyEmail button:hover {
+  color: #D5711B;
+  transform: none;
+}
+
+.privacyEmail button:active {
+  color: #D5711B;
+  transform: none;
 }
 
 /*App store badge*/
