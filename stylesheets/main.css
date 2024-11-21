@@ -217,10 +217,10 @@ button {
 }
 
 .button-image {
-  width: 33%; /* Adjust image size */
+  width: 20%; /* Adjust image size */
   height: auto;
   object-fit: contain; 
-  border-radius: 10%; /* Makes the image round */
+  border-radius: 20px; /* Makes the image round */
   margin-right: 10px; /* Space between image and text */
 }
 
