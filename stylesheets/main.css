@@ -75,6 +75,10 @@ button {
   appearance:none;
 }
 
+.icon {
+  font-style: normal;
+}
+
 /*Navigation Buttons*/
 .iconButtons {
   display: flex;
