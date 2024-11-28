@@ -90,6 +90,13 @@ h4 {
   border-radius: 10%;
 }
 
+.mockup {
+  margin: 30px auto;
+  max-width: 60%;
+  height: auto;
+  display: block;
+}
+
 /*Buttons*/
 button {
   all: unset;
@@ -221,6 +228,10 @@ button:active {
     flex: 1 1 calc(50% - 20px); /* 2 columns on tablets */
     max-width: calc(50% - 20px);
   }
+
+  .mockup {
+    max-width: 90%;
+  }
 }
 
 @media (max-width: 480px) {
@@ -232,5 +243,9 @@ button:active {
   .feature-item {
     flex: 1 1 100%; /* 1 column on smaller screens */
     max-width: calc(100%);
+  }
+
+  .mockup {
+    max-width: 100%;
   }
 }
