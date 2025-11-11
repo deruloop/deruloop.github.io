@@ -1,0 +1,241 @@
+/* Scope all rules to the Packd page to avoid overriding global styles */
+.packd-page {
+  /* Basic container-level styles (used to replace previous body rules) */
+  display: block;
+  margin: 100px auto;
+  color: black;
+  text-align: center;
+  font-family: "Nunito-Regular", sans-serif;
+  width: 100%;
+  word-wrap: break-word;
+  font-style: normal;
+  background-color: #FFF;
+  font-size: 1.1rem;
+}
+
+.packd-page a {
+  color: #EC8427;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.packd-page a:hover {
+  color: #D5711B;
+}
+
+.packd-page .title {
+  font-size: clamp(2rem, 6vw, 2.8rem);
+  font-weight: 600;
+  padding-top: 15px;
+}
+
+.packd-page h1 {
+  font-size: clamp(1.5rem, 6vw, 2.8rem);
+  margin: 0;
+}
+
+.packd-page .info {
+  font-size: 0.8rem;
+  color: gray;
+}
+
+.packd-page .subtitle {
+  color: gray;
+}
+
+.packd-page h2 {
+  font-size: clamp(1.4rem, 4vw, 2.0rem);
+  margin: 0;
+}
+
+.packd-page h3 {
+  font-size: clamp(1.2rem, 3vw, 1.8rem);
+  margin: 0;
+}
+
+.packd-page h4 {
+  font-size: clamp(0.875rem, 2vw, 1.5rem);
+  margin: 0;
+}
+
+.packd-page .container {
+  max-width: 680px;
+  margin: 2.6vw auto;
+}
+
+.packd-page .privacyContainer {
+  max-width: 80%;
+  margin: 2.6vw auto;
+  text-align: left;
+}
+
+.packd-page .logo {
+  margin: 0 auto;
+  max-width: 160px;
+  height: auto;
+  display: block;
+  border-radius: 10%;
+}
+
+.packd-page .mockup {
+  margin: 30px auto;
+  max-width: 60%;
+  height: auto;
+  display: block;
+}
+
+/*Buttons*/
+.packd-page button {
+  all: unset;
+  -webkit-appearance: none;
+  appearance: none;
+  color: black;
+  flex: 0 1 auto;
+  background-color: #f4f4f4;
+  border: none;
+  border-radius: 5px;
+  padding: 0.5rem;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-weight: bold;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background-color 0.3s, transform 0.3s;
+  background-color: #e5d8c2;
+}
+
+.packd-page button:hover {
+  background-color: #e5d8c2;
+  transform: scale(1.15);
+}
+
+.packd-page button:active {
+  transform: scale(1);
+}
+
+.packd-page .privacyEmail button {
+  color: #EC8427;
+  display: inline;
+  background-color: #FFF;
+  transition: none;
+  font-size: 1.1rem;
+}
+
+.packd-page .privacyEmail button:hover {
+  color: #D5711B;
+  transform: none;
+}
+
+.packd-page .privacyEmail button:active {
+  color: #D5711B;
+  transform: none;
+}
+
+/*App store badge*/
+.packd-page .app-store-badge {
+  max-width: 100%;
+  height: auto;
+  margin: 10px;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.packd-page .app-store-badge:hover {
+  transform: scale(1.1);
+}
+
+/*Feature area*/
+.packd-page .features-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.packd-page .feature-item {
+  flex: 1 1 calc(33.333% - 20px);
+  max-width: calc(33.333% - 20px);
+  box-sizing: border-box;
+  text-align: center;
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.packd-page .feature-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+.packd-page .feature-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 10%;
+  background: linear-gradient(to bottom, #F09E18, #EC8427, #D5711B);
+  padding: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+}
+
+.packd-page .emoji {
+  font-size: 3rem;
+}
+
+.packd-page .feature-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 10px 0 5px;
+  color: #333;
+}
+
+.packd-page .feature-subtitle {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.4;
+}
+
+.packd-page footer {
+  margin-top: 40px;
+  padding: 20px;
+  border-top: 1px solid #eee;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+@media (max-width: 768px) {
+  .packd-page .container {
+    width: 90%;
+    margin: 2.6vw auto;
+  }
+
+  .packd-page .feature-item {
+    flex: 1 1 calc(50% - 20px);
+    max-width: calc(50% - 20px);
+  }
+
+  .packd-page .mockup {
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 480px) {
+  .packd-page .container {
+    width: 90%;
+    margin: 2.6vw auto;
+  }
+
+  .packd-page .feature-item {
+    flex: 1 1 100%;
+    max-width: calc(100%);
+  }
+
+  .packd-page .mockup {
+    max-width: 100%;
+  }
+}

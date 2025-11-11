@@ -1,103 +1,24 @@
-<html>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>iOS Developer Portfolio | Swift & SwiftUI Expert</title>
+    <meta name="description" content="Professional iOS developer portfolio showcasing beautiful mobile applications built with Swift and SwiftUI. View featured projects, skills, and experience." />
+    <meta name="author" content="iOS Developer" />
 
-<head>
-  <link type="text/css" rel="stylesheet" href="stylesheets/main.css">
-  <meta name="viewport" content="initial-scale=1, viewport-fit=cover">
-  <meta charset="UTF-8">
-  <link rel="icon" href="https://deruloop.github.io/images/logo.svg" type="image/svg+xml" sizes="any">
-  <title>deruloop</title>
+    <meta property="og:title" content="iOS Developer Portfolio | Swift & SwiftUI Expert" />
+    <meta property="og:description" content="Professional iOS developer portfolio showcasing beautiful mobile applications built with Swift and SwiftUI." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
 
-  <meta property="twitter:image:src" content="https://deruloop.github.io/images/logo.svg" />
-  <meta itemprop="image" content="https://deruloop.github.io/images/logo.svg" />
-  <meta property="og:image" content="https://deruloop.github.io/images/logo.svg" />
-  <meta property="og:title" content="deruloop" />
-  <meta property="og:type" content="website" />
-  <meta property="og:height" content="256" />
-  <meta property="og:width" content="256" />
-  <meta property="og:description" content="iOS Developer" />
-</head>
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@Lovable" />
+    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+  </head>
 
-<body>
-  <div class="container">
-    <img class="logo" src="../images/logo.svg">
-    <div class="title">deruloop</div>
-    <div class="iconButtons">
-      <button onclick="showContent(1)">
-        <i class="icon">🧑‍💻</i> <span id="text2" class="visible">About</span>
-      </button>
-      <!-- <button onclick="showContent(2)">
-        <i class="icon">📝</i> <span id="text1" class="hidden">Articles</span>
-      </button> -->
-      <button onclick="showContent(2)">
-        <i class="icon">🚀</i> <span id="text4" class="hidden">Projects</span>
-      </button>
-      <button onclick="showContent(3)">
-        <i class="icon">🗂️</i> <span id="text4" class="hidden">Clients</span>
-      </button>
-    </div>
-
-    <div class="content">
-      <div id="content1" class="visible">
-        <p>
-          I'm an iOS Developer based in Italy, currently working on clients as a freelance while developing my own
-          projects.
-          Feel free to follow me on the socials below or contact me for possible future collaborations<br>
-        </p>
-        <div class="socials">
-          <button onclick="window.open('https://bsky.app/profile/deruloop.bsky.social', '_blank');"><img class="bluesky"
-              src="../images/blueskylogo.png"></button>
-          <button onclick="sendEmail()"><img class="mail"
-              src="../images/maillogo.png"></button>
-          <button onclick="window.open('https://www.linkedin.com/in/cristiano-calicchia-240253167', '_blank');"><img class="linkedin"
-              src="../images/linkedinlogo.png"></button>
-          <button onclick="window.open('https://mastodon.social/@deruloop', '_blank');"><img class="mastodon"
-              src="../images/mastodonlogo.png"></button>
-          <button onclick="window.open('https://github.com/deruloop', '_blank');"><img class="github"
-              src="../images/githublogo.png"></button>
-          <button onclick="window.open('https://x.com/deruloop', '_blank');"><img class="x"
-              src="../images/xlogo.png"></button>
-        </div>
-      </div>
-      <!-- <div id="content2" class="hidden">
-        <h2>Documents</h2>
-        <ul>
-          <li>Document 1</li>
-          <li>Document 2</li>
-          <li>Document 3</li>
-        </ul>
-      </div> -->
-      <div id="content2" class="hidden">
-        <button onclick="window.open('packd', '_blank');">
-        <div class="projectButton">
-          <img src="../images/packd.png" class="button-image" />
-          <span class="button-text">
-            <b>Packd</b><br>
-            An app that helps you manage trip infos and pack your bag before departing.</span>
-        <div class="chevron"><img src="../images/chevron.png" /></div>
-        </div>
-      </button>
-      </div>
-      <div id="content3" class="hidden">
-        <p>
-          Here is a list of clients i've had the pleasure to work with during these years<br>
-        </p>
-        <div class="clients">
-          <button onclick="window.open('https://opentech.com', '_blank');"><img class="opentech"
-              src="../images/opentechclient.png"></button>
-          <button onclick="window.open('https://www.codegenerations.it', '_blank');"><img class="codegen"
-              src="../images/codegenclient.png"></button>
-          <button onclick="window.open('https://www.bip-group.com/it/', '_blank');"><img class="bip"
-              src="../images/bipclient.png"></button>
-          <button onclick="window.open('https://www.reply.com/it', '_blank');"><img class="reply"
-              src="../images/replyclient.png"></button>
-          <button onclick="window.open('https://piksel.com', '_blank');"><img class="piksel"
-              src="../images/pikselclient.png"></button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script src="js/scripts.js"></script>
-</body>
-
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>
