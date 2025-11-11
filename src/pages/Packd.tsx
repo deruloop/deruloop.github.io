@@ -1,4 +1,5 @@
 import "../styles/packd.css";
+import packd from "@/assets/packd.png";
 
 export default function Packd() {
   return (
@@ -6,7 +7,7 @@ export default function Packd() {
       <div className="container">
         <img
           className="logo"
-          src="https://deruloop.github.io/images/packd.png"
+          src={packd}
           alt="Packd Logo"
         />
         <div className="title">Packd</div>
