@@ -13,7 +13,7 @@ const projects = [
     tags: ["SwiftUI", "CloudKit", "VisionOS"],
     github: "https://github.com",
     appStore: "https://apps.apple.com/it/app/packd/id6593688485",
-    detailPage: "/pages/packd/",
+    detailPage: "/packd/",
   },
   {
     title: "Sky Weather",
