@@ -7,12 +7,13 @@ import appTasks from "@/assets/app-tasks.png";
 
 const projects = [
   {
-    title: "FitTrack Pro",
-    description: "A comprehensive fitness tracking app with activity monitoring, workout plans, and health insights.",
+    title: "Packd",
+    description: "Trip organizer, packing list manager and more! With AI integration and VisionOS support.",
     image: appFitness,
-    tags: ["SwiftUI", "HealthKit", "CoreData"],
+    tags: ["SwiftUI", "CloudKit", "VisionOS"],
     github: "https://github.com",
-    appStore: "https://apps.apple.com",
+    appStore: "https://apps.apple.com/it/app/packd/id6593688485",
+    detailPage: "/pages/packd/",
   },
   {
     title: "Sky Weather",
@@ -47,7 +48,8 @@ const Projects = () => {
           {projects.map((project, index) => (
             <Card 
               key={index}
-              className="group overflow-hidden hover:shadow-large transition-all duration-300 border-2"
+              className="group overflow-hidden hover:shadow-large transition-all duration-300 border-2 cursor-pointer"
+              onClick={() => project.detailPage && window.open(project.detailPage, '_blank')}
             >
               <div className="relative overflow-hidden bg-gradient-to-br from-primary/5 to-primary/10 p-8">
                 <img
