@@ -40,15 +40,11 @@ const About = () => {
                   </li>
                   <li className="flex items-start">
                     <span className="text-primary mr-3 mt-1">▹</span>
-                    <span>Published 10+ applications on the App Store</span>
+                    <span>Worked with 10+ companies with app in production on the App Store</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-primary mr-3 mt-1">▹</span>
                     <span>Strong focus on performance optimization and user experience</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-primary mr-3 mt-1">▹</span>
-                    <span>Active contributor to iOS development community</span>
                   </li>
                 </ul>
               </div>

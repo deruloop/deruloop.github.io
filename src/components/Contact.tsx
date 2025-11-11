@@ -18,20 +18,20 @@ const Contact = () => {
             <CardContent className="p-8 md:p-12 space-y-8">
               <div className="grid md:grid-cols-2 gap-6">
                 <a
-                  href="mailto:hello@example.com"
+                  href="mailto:cristiano@calicchia.dev"
                   className="group"
                 >
                   <div className="p-6 rounded-lg border-2 hover:border-primary transition-all duration-300 hover:shadow-medium">
                     <Mail className="h-8 w-8 text-primary mx-auto mb-3" />
                     <p className="font-semibold mb-1">Email</p>
                     <p className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">
-                      hello@example.com
+                      cristiano@calicchia.dev
                     </p>
                   </div>
                 </a>
 
                 <a
-                  href="https://linkedin.com"
+                  href="https://www.linkedin.com/in/cristiano-calicchia-240253167"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group"
@@ -46,7 +46,7 @@ const Contact = () => {
                 </a>
 
                 <a
-                  href="https://github.com"
+                  href="https://github.com/deruloop"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group"
@@ -61,21 +61,24 @@ const Contact = () => {
                 </a>
 
                 <a
-                  href="https://twitter.com"
+                  href="https://x.com/deruloop"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group"
                 >
                   <div className="p-6 rounded-lg border-2 hover:border-primary transition-all duration-300 hover:shadow-medium">
                     <MessageSquare className="h-8 w-8 text-primary mx-auto mb-3" />
-                    <p className="font-semibold mb-1">Twitter</p>
+                    <p className="font-semibold mb-1">X</p>
                     <p className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">
                       Follow updates
                     </p>
                   </div>
                 </a>
               </div>
-
+              <a
+                    href="mailto:cristiano@calicchia.dev"
+                    className="group"
+                  >
               <div className="pt-6">
                 <Button 
                   size="lg"
@@ -85,12 +88,13 @@ const Contact = () => {
                   Send Me a Message
                 </Button>
               </div>
+              </a>
             </CardContent>
           </Card>
 
-          <p className="text-muted-foreground mt-12">
+          {/* <p className="text-muted-foreground mt-12">
             Currently available for freelance opportunities and collaborations
-          </p>
+          </p> */}
         </div>
       </div>
     </section>
