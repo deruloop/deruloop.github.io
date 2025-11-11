@@ -34,6 +34,10 @@ jobs:
         # se usi un altro script, cambialo (es. `npm run build`)
         run: npm run build
 
+        # Fallback SPA: importantissimo
+      - name: Create SPA 404 fallback
+        run: cp dist/index.html dist/404.html
+        
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
