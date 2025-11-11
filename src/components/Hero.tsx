@@ -36,6 +36,12 @@ const Hero = () => {
             <Button 
               size="lg" 
               className="group text-lg px-8 py-6 shadow-medium hover:shadow-large transition-all duration-300"
+              onClick={() => {
+                document.getElementById('projects')?.scrollIntoView({ 
+                  behavior: 'smooth',
+                  block: 'start'
+                });
+              }}
             >
               View My Work
               <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
@@ -44,6 +50,12 @@ const Hero = () => {
               size="lg" 
               variant="outline" 
               className="text-lg px-8 py-6 border-2 hover:bg-muted/50 transition-all duration-300"
+              onClick={() => {
+                document.getElementById('contact')?.scrollIntoView({ 
+                  behavior: 'smooth',
+                  block: 'start'
+                });
+              }}
             >
               Get In Touch
             </Button>
