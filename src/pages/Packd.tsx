@@ -1,5 +1,7 @@
 import "../styles/packd.css";
-import packd from "@/assets/packd.png";
+import packd from "@/assets/packd.png?url";
+import mockup from "@/assets/mockup.png?url";
+import appstore from "@/assets/appstorebadge.svg?url";
 
 export default function Packd() {
   return (
@@ -17,7 +19,7 @@ export default function Packd() {
         </div>
         <img
           className="mockup"
-          src="https://deruloop.github.io/images/mockup.png"
+          src={mockup}
           alt="Packd Mockup"
         />
         <a
@@ -40,7 +42,7 @@ export default function Packd() {
             rel="noopener noreferrer"
           >
             <img
-              src="https://deruloop.github.io/images/appstorebadge.svg"
+              src={appstore}
               alt="Download on the App Store"
               className="app-store-badge"
             />
