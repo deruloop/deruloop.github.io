@@ -63,7 +63,7 @@ const Hero = () => {
           {/* Social Links */}
           <div className="flex gap-4 justify-center items-center pt-8">
             <a 
-              href="https://github.com" 
+              href="https://github.com/deruloop" 
               target="_blank" 
               rel="noopener noreferrer"
               className="p-3 rounded-full hover:bg-muted transition-all duration-300 hover:scale-110"
@@ -71,7 +71,7 @@ const Hero = () => {
               <Github className="h-6 w-6" />
             </a>
             <a 
-              href="https://linkedin.com" 
+              href="https://www.linkedin.com/in/cristiano-calicchia-240253167" 
               target="_blank" 
               rel="noopener noreferrer"
               className="p-3 rounded-full hover:bg-muted transition-all duration-300 hover:scale-110"
@@ -79,7 +79,7 @@ const Hero = () => {
               <Linkedin className="h-6 w-6" />
             </a>
             <a 
-              href="mailto:hello@example.com"
+              href="mailto:cristiano@calicchia.dev"
               className="p-3 rounded-full hover:bg-muted transition-all duration-300 hover:scale-110"
             >
               <Mail className="h-6 w-6" />
