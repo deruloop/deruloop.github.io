@@ -15,22 +15,21 @@ const projects = [
     appStore: "https://apps.apple.com/it/app/packd/id6593688485",
     detailPage: "/packd/",
   },
-  {
-    title: "Sky Weather",
-    description: "Beautiful weather app with detailed forecasts, interactive maps, and customizable widgets.",
-    image: packd,
-    tags: ["Swift", "WeatherKit", "Widgets"],
-    github: "https://github.com",
-    appStore: "https://apps.apple.com",
-  },
-  {
-    title: "TaskFlow",
-    description: "Intuitive task management app with smart organization, reminders, and collaboration features.",
-    image: packd,
-    tags: ["SwiftUI", "CloudKit", "Combine"],
-    github: "https://github.com",
-    appStore: "https://apps.apple.com",
-  },
+  // {
+  //   title: "Nuance Audio",
+  //   description: "Beautiful weather app with detailed forecasts, interactive maps, and customizable widgets.",
+  //   image: packd,
+  //   tags: ["Swift", "WeatherKit", "Widgets"],
+  //   appStore: "https://apps.apple.com/app/id6477399465",
+  // },
+  // {
+  //   title: "TaskFlow",
+  //   description: "Intuitive task management app with smart organization, reminders, and collaboration features.",
+  //   image: packd,
+  //   tags: ["SwiftUI", "CloudKit", "Combine"],
+  //   github: "https://github.com",
+  //   appStore: "https://apps.apple.com",
+  // },
 ];
 
 const Projects = () => {
