@@ -45,19 +45,19 @@ const Skills = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-4 max-w-4xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-3 max-w-4xl mx-auto">
           {skills.map((skill, index) => (
             <Card 
               key={index}
               className="group hover:shadow-medium transition-all duration-300 border-2 hover:border-primary/20"
             >
-              <CardContent className="p-4 flex items-start gap-4">
-                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors flex-shrink-0">
-                  <skill.icon className="h-6 w-6 text-primary" />
+              <CardContent className="p-3 flex items-start gap-3">
+                <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors flex-shrink-0">
+                  <skill.icon className="h-4 w-4 text-primary" />
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-lg font-semibold mb-1">{skill.title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
+                  <h3 className="text-base font-semibold mb-0.5">{skill.title}</h3>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
                     {skill.description}
                   </p>
                 </div>
