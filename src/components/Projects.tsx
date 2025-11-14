@@ -43,58 +43,64 @@ const Projects = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+        <div className="flex flex-col gap-6 max-w-4xl mx-auto">
           {projects.map((project, index) => (
             <Card 
               key={index}
               className="group overflow-hidden hover:shadow-large transition-all duration-300 border-2 cursor-pointer"
               onClick={() => project.detailPage && window.open(project.detailPage, '_blank')}
             >
-              <div className="relative overflow-hidden bg-gradient-to-br from-primary/5 to-primary/10 p-8">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-48 mx-auto rounded-2xl shadow-large group-hover:scale-105 transition-transform duration-500"
-                />
+              <div className="flex flex-col md:flex-row">
+                <div className="relative overflow-hidden bg-gradient-to-br from-primary/5 to-primary/10 p-6 md:w-1/3 flex items-center justify-center">
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-32 rounded-xl shadow-large group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+                
+                <div className="md:w-2/3 flex flex-col">
+                  <CardHeader className="pb-3">
+                    <CardTitle className="text-xl">{project.title}</CardTitle>
+                    <CardDescription className="text-sm">
+                      {project.description}
+                    </CardDescription>
+                  </CardHeader>
+
+                  <CardContent className="space-y-3 pt-0">
+                    <div className="flex flex-wrap gap-2">
+                      {project.tags.map((tag, tagIndex) => (
+                        <Badge key={tagIndex} variant="secondary" className="text-xs">
+                          {tag}
+                        </Badge>
+                      ))}
+                    </div>
+
+                    <div className="flex gap-3">
+                      <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <Github className="h-4 w-4" />
+                        Code
+                      </a>
+                      <a
+                        href={project.appStore}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <ExternalLink className="h-4 w-4" />
+                        App Store
+                      </a>
+                    </div>
+                  </CardContent>
+                </div>
               </div>
-              
-              <CardHeader>
-                <CardTitle className="text-2xl">{project.title}</CardTitle>
-                <CardDescription className="text-base">
-                  {project.description}
-                </CardDescription>
-              </CardHeader>
-
-              <CardContent className="space-y-4">
-                <div className="flex flex-wrap gap-2">
-                  {project.tags.map((tag, tagIndex) => (
-                    <Badge key={tagIndex} variant="secondary">
-                      {tag}
-                    </Badge>
-                  ))}
-                </div>
-
-                <div className="flex gap-3 pt-2">
-                  <a
-                    href={project.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    <Github className="h-4 w-4" />
-                    Code
-                  </a>
-                  <a
-                    href={project.appStore}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    <ExternalLink className="h-4 w-4" />
-                    App Store
-                  </a>
-                </div>
-              </CardContent>
             </Card>
           ))}
         </div>
