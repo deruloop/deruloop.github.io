@@ -1,12 +1,12 @@
 import { Building2, Smartphone, Globe, Zap, Cloud, Code } from "lucide-react";
 
 const clients = [
-  { name: "TechCorp", icon: Building2 },
-  { name: "AppStudio", icon: Smartphone },
-  { name: "GlobalNet", icon: Globe },
-  { name: "FastTech", icon: Zap },
-  { name: "CloudSys", icon: Cloud },
-  { name: "DevHub", icon: Code },
+  { name: "TechCorp", icon: Building2, url: "https://techcorp.com" },
+  { name: "AppStudio", icon: Smartphone, url: "https://appstudio.com" },
+  { name: "GlobalNet", icon: Globe, url: "https://globalnet.com" },
+  { name: "FastTech", icon: Zap, url: "https://fasttech.com" },
+  { name: "CloudSys", icon: Cloud, url: "https://cloudsys.com" },
+  { name: "DevHub", icon: Code, url: "https://devhub.com" },
 ];
 
 const Clients = () => {
@@ -24,27 +24,27 @@ const Clients = () => {
           <div className="flex animate-scroll-horizontal hover:pause">
             {/* First set of logos */}
             {clients.map((client, index) => (
-              <div
+              <a
                 key={`first-${index}`}
-                className="flex-shrink-0 mx-8 flex items-center justify-center"
+                href={client.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-shrink-0 mx-8 flex items-center justify-center opacity-60 hover:opacity-100 transition-opacity"
               >
-                <div className="flex flex-col items-center gap-2 opacity-60 hover:opacity-100 transition-opacity">
-                  <client.icon className="h-12 w-12 text-primary" />
-                  <span className="text-sm font-medium">{client.name}</span>
-                </div>
-              </div>
+                <client.icon className="h-16 w-16 text-primary" />
+              </a>
             ))}
             {/* Duplicate for infinite scroll */}
             {clients.map((client, index) => (
-              <div
+              <a
                 key={`second-${index}`}
-                className="flex-shrink-0 mx-8 flex items-center justify-center"
+                href={client.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-shrink-0 mx-8 flex items-center justify-center opacity-60 hover:opacity-100 transition-opacity"
               >
-                <div className="flex flex-col items-center gap-2 opacity-60 hover:opacity-100 transition-opacity">
-                  <client.icon className="h-12 w-12 text-primary" />
-                  <span className="text-sm font-medium">{client.name}</span>
-                </div>
-              </div>
+                <client.icon className="h-16 w-16 text-primary" />
+              </a>
             ))}
           </div>
         </div>
