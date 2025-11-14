@@ -129,10 +129,10 @@ export default {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "scroll-horizontal-mobile": "scroll-horizontal-mobile 16s linear infinite",        // mobile, più lungo
+        "scroll-horizontal-mobile": "scroll-horizontal-mobile 60s linear infinite",        // mobile, più lungo
         "scroll-horizontal": "scroll-horizontal 16s linear infinite",   // desktop, più corto
 
-        "scroll-horizontal-mobile-reverse": "scroll-horizontal-mobile-reverse 16s linear infinite",        // mobile, più lungo
+        "scroll-horizontal-mobile-reverse": "scroll-horizontal-mobile-reverse 60s linear infinite",        // mobile, più lungo
         "scroll-horizontal-reverse": "scroll-horizontal-reverse 16s linear infinite",  
       },
     },
