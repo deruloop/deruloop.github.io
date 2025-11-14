@@ -101,6 +101,14 @@ export default {
             transform: "translateX(-100%)",
           },
         },
+        "scroll-horizontal-reverse": {
+          "0%": {
+            transform: "translateX(-100%)",
+          },
+          "100%": {
+            transform: "translateX(0)",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -108,6 +116,9 @@ export default {
         "scroll-horizontal": "scroll-horizontal 16s linear infinite",
         "scroll-horizontal-fast": "scroll-horizontal 10s linear infinite",
         "scroll-horizontal-ultra": "scroll-horizontal 6s linear infinite",
+        "scroll-horizontal-reverse": "scroll-horizontal-reverse 16s linear infinite",
+        "scroll-horizontal-reverse-fast": "scroll-horizontal-reverse 10s linear infinite",
+        "scroll-horizontal-reverse-ultra": "scroll-horizontal-reverse 6s linear infinite",
       },
     },
   },
