@@ -3,7 +3,8 @@ name: Build and Publish (main/docs)
 on:
   push:
     branches: [main]
-    paths-ignore: ['docs/**']
+    paths-ignore:
+      - 'docs/**'
 
 permissions:
   contents: write
@@ -20,7 +21,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: '20'
 
       - name: Install dependencies
         run: npm ci
