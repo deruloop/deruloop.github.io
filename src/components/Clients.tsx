@@ -27,6 +27,17 @@ const clients: Client[] = [
   { name: "Piksel", logo: piksel, url: "https://piksel.com", height: 8, width: 60 },
 ];
 
+const clientsReverse: Client[] = [
+  { name: "Spindox", logo: spindox, url: "https://makeamark.spindox.it", height: 12, width: 80 },
+  { name: "Isybank", logo: isybank, url: "https://www.isybank.com/it/", height: 8, width: 60 },
+  { name: "Telepass", logo: telepass, url: "https://www.telepass.com/it", height: 8, width: 60 },
+  { name: "Piksel", logo: piksel, url: "https://piksel.com", height: 8, width: 60 },
+  { name: "NuanceAudio", logo: nuance, url: "https://www.nuanceaudio.com/it-it", height: 12, width: 80 },
+  { name: "IntesaSanpaolo", logo: intesa, url: "https://www.intesasanpaolo.com", height: 8, width: 100 },
+  { name: "Reply", logo: reply, url: "https://www.reply.com/it", height: 12, width: 60 },
+  { name: "Opentech", logo: opentech, url: "https://opentech.com", height: 12, width: 80 },
+];
+
 const Clients = () => {
   return (
     <section className="py-16 overflow-hidden bg-muted/30">
@@ -94,7 +105,7 @@ const Clients = () => {
         <div className="relative mt-16">
           <div className="relative">
             <div className="flex animate-scroll-horizontal-mobile-reverse sm:animate-scroll-horizontal-reverse hover:pause">
-              {clients.map((client, index) => (
+              {clientsReverse.map((client, index) => (
                 <a
                   key={`first-${index}`}
                   href={client.url}
@@ -110,7 +121,7 @@ const Clients = () => {
                 </a>
               ))}
               {/* Duplicate for infinite scroll */}
-              {clients.map((client, index) => (
+              {clientsReverse.map((client, index) => (
                 <a
                   key={`second-${index}`}
                   href={client.url}
@@ -126,7 +137,7 @@ const Clients = () => {
                 </a>
               ))}
               {/* Duplicate for infinite scroll */}
-              {clients.map((client, index) => (
+              {clientsReverse.map((client, index) => (
                 <a
                   key={`third-${index}`}
                   href={client.url}
