@@ -1,13 +1,18 @@
-name: Build and Publish (main/docs)
+name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main]
-    # This file was corrupted (duplicated sections) previously.
-    # A clean publish workflow is available at .github/workflows/publish-docs.yml
-    # Keep this placeholder in the repo to avoid accidental re-use of the old, broken file.
+    branches:
+      - main
+
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
   build:
@@ -15,13 +20,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: 20
+          cache: npm
 
       - name: Install dependencies
         run: npm ci
@@ -34,82 +38,18 @@ jobs:
           if [ -f dist/index.html ]; then cp dist/index.html dist/404.html || true; fi
           if [ -f CNAME ]; then cp CNAME dist/CNAME || true; fi
 
-      - name: Commit dist -> docs on main
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          set -e
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
 
-          rm -rf docs || true
-          mkdir -p docs
-          cp -a dist/. docs/
-
-          git add docs
-          if git diff --cached --quiet; then
-            echo "No changes in docs/ — nothing to commit"
-          else
-            git commit -m "ci: update docs site [skip ci]"
-            git push origin HEAD:main
-          fi
-name: Build and Publish (main/docs)
-
-on:
-  push:
-    branches: [main]
-    name: Build and Publish (main/docs)
-
-    on:
-      push:
-        branches: [main]
-        paths-ignore:
-          - 'docs/**'
-
-    permissions:
-      contents: write
-
-    jobs:
-      build:
-        runs-on: ubuntu-latest
-        steps:
-          - name: Checkout
-            uses: actions/checkout@v4
-            with:
-              fetch-depth: 0
-
-          - name: Setup Node.js
-            uses: actions/setup-node@v4
-            with:
-              node-version: '20'
-
-          - name: Install dependencies
-            run: npm ci
-
-          - name: Build
-            run: npm run build
-
-          - name: Copy SPA fallback and CNAME into dist
-            run: |
-              if [ -f dist/index.html ]; then cp dist/index.html dist/404.html || true; fi
-              if [ -f CNAME ]; then cp CNAME dist/CNAME || true; fi
-
-          - name: Commit dist -> docs on main
-            env:
-              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            run: |
-              set -e
-              git config user.name "github-actions[bot]"
-              git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-              rm -rf docs || true
-              mkdir -p docs
-              cp -a dist/. docs/
-
-              git add docs
-              if git diff --cached --quiet; then
-                echo "No changes in docs/ — nothing to commit"
-              else
-                git commit -m "ci: update docs site [skip ci]"
-                git push origin HEAD:main
-              fi
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
