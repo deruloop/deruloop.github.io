@@ -116,3 +116,9 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  .hover\:pause:hover {
+    animation-play-state: paused;
+  }
+}

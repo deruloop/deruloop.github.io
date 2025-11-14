@@ -21,12 +21,14 @@ const Contact = () => {
                   href="mailto:cristiano@calicchia.dev"
                   className="group"
                 >
-                  <div className="p-6 rounded-lg border-2 hover:border-primary transition-all duration-300 hover:shadow-medium">
-                    <Mail className="h-8 w-8 text-primary mx-auto mb-3" />
-                    <p className="font-semibold mb-1">Email</p>
-                    <p className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">
-                      cristiano@calicchia.dev
-                    </p>
+                  <div className="p-4 rounded-lg border-2 hover:border-primary transition-all duration-300 hover:shadow-medium flex items-center gap-3">
+                    <Mail className="h-6 w-6 text-primary flex-shrink-0" />
+                    <div className="text-left">
+                      <p className="font-semibold text-sm">Email</p>
+                      <p className="text-xs text-muted-foreground group-hover:text-foreground transition-colors">
+                        cristiano@calicchia.dev
+                      </p>
+                    </div>
                   </div>
                 </a>
 
@@ -36,12 +38,14 @@ const Contact = () => {
                   rel="noopener noreferrer"
                   className="group"
                 >
-                  <div className="p-6 rounded-lg border-2 hover:border-primary transition-all duration-300 hover:shadow-medium">
-                    <Linkedin className="h-8 w-8 text-primary mx-auto mb-3" />
-                    <p className="font-semibold mb-1">LinkedIn</p>
-                    <p className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">
-                      Connect with me
-                    </p>
+                  <div className="p-4 rounded-lg border-2 hover:border-primary transition-all duration-300 hover:shadow-medium flex items-center gap-3">
+                    <Linkedin className="h-6 w-6 text-primary flex-shrink-0" />
+                    <div className="text-left">
+                      <p className="font-semibold text-sm">LinkedIn</p>
+                      <p className="text-xs text-muted-foreground group-hover:text-foreground transition-colors">
+                        Connect with me
+                      </p>
+                    </div>
                   </div>
                 </a>
 
@@ -51,12 +55,14 @@ const Contact = () => {
                   rel="noopener noreferrer"
                   className="group"
                 >
-                  <div className="p-6 rounded-lg border-2 hover:border-primary transition-all duration-300 hover:shadow-medium">
-                    <Github className="h-8 w-8 text-primary mx-auto mb-3" />
-                    <p className="font-semibold mb-1">GitHub</p>
-                    <p className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">
-                      View my code
-                    </p>
+                  <div className="p-4 rounded-lg border-2 hover:border-primary transition-all duration-300 hover:shadow-medium flex items-center gap-3">
+                    <Github className="h-6 w-6 text-primary flex-shrink-0" />
+                    <div className="text-left">
+                      <p className="font-semibold text-sm">GitHub</p>
+                      <p className="text-xs text-muted-foreground group-hover:text-foreground transition-colors">
+                        View my code
+                      </p>
+                    </div>
                   </div>
                 </a>
 
@@ -66,12 +72,14 @@ const Contact = () => {
                   rel="noopener noreferrer"
                   className="group"
                 >
-                  <div className="p-6 rounded-lg border-2 hover:border-primary transition-all duration-300 hover:shadow-medium">
-                    <MessageSquare className="h-8 w-8 text-primary mx-auto mb-3" />
-                    <p className="font-semibold mb-1">X</p>
-                    <p className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">
-                      Follow updates
-                    </p>
+                  <div className="p-4 rounded-lg border-2 hover:border-primary transition-all duration-300 hover:shadow-medium flex items-center gap-3">
+                    <MessageSquare className="h-6 w-6 text-primary flex-shrink-0" />
+                    <div className="text-left">
+                      <p className="font-semibold text-sm">X</p>
+                      <p className="text-xs text-muted-foreground group-hover:text-foreground transition-colors">
+                        Follow updates
+                      </p>
+                    </div>
                   </div>
                 </a>
               </div>
