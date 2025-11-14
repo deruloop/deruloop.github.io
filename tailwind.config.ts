@@ -101,9 +101,25 @@ export default {
             transform: "translateX(-100%)",
           },
         },
+        "scroll-horizontal-mobile": {
+          "0%": {
+            transform: "translateX(0)",
+          },
+          "100%": {
+            transform: "translateX(-200%)",
+          },
+        },
         "scroll-horizontal-reverse": {
           "0%": {
             transform: "translateX(-100%)",
+          },
+          "100%": {
+            transform: "translateX(0)",
+          },
+        },
+        "scroll-horizontal-mobile-reverse": {
+          "0%": {
+            transform: "translateX(-200%)",
           },
           "100%": {
             transform: "translateX(0)",
@@ -113,12 +129,11 @@ export default {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "scroll-horizontal": "scroll-horizontal 16s linear infinite",
-        "scroll-horizontal-fast": "scroll-horizontal 10s linear infinite",
-        "scroll-horizontal-ultra": "scroll-horizontal 6s linear infinite",
-        "scroll-horizontal-reverse": "scroll-horizontal-reverse 16s linear infinite",
-        "scroll-horizontal-reverse-fast": "scroll-horizontal-reverse 10s linear infinite",
-        "scroll-horizontal-reverse-ultra": "scroll-horizontal-reverse 6s linear infinite",
+        "scroll-horizontal-mobile": "scroll-horizontal-mobile 16s linear infinite",        // mobile, più lungo
+        "scroll-horizontal": "scroll-horizontal 16s linear infinite",   // desktop, più corto
+
+        "scroll-horizontal-mobile-reverse": "scroll-horizontal-mobile-reverse 16s linear infinite",        // mobile, più lungo
+        "scroll-horizontal-reverse": "scroll-horizontal-reverse 16s linear infinite",  
       },
     },
   },
