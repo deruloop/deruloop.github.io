@@ -39,7 +39,7 @@ const Clients = () => {
         </div>
 
         <div className="relative">
-          <div className="flex animate-scroll-horizontal hover:pause">
+          <div className="flex animate-scroll-horizontal-fast sm:animate-scroll-horizontal hover:pause">
             {/* First set of logos */}
             {clients.map((client, index) => (
               <a

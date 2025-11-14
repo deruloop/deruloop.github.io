@@ -106,6 +106,8 @@ export default {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "scroll-horizontal": "scroll-horizontal 16s linear infinite",
+        "scroll-horizontal-fast": "scroll-horizontal 10s linear infinite",
+        "scroll-horizontal-ultra": "scroll-horizontal 6s linear infinite",
       },
     },
   },
