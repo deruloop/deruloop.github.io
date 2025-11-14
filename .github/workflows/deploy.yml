@@ -28,10 +28,14 @@ jobs:
           cache: npm
 
       - name: Install dependencies
-        run: npm install
+        run: npm install   # <--- cambiato da npm ci
 
       - name: Build
-        run: npm run build
+        run: |
+          set -x
+          node -v
+          npm -v
+          npm run build -- --logLevel info
 
       - name: Copy SPA fallback and CNAME into dist
         run: |
