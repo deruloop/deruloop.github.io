@@ -1,19 +1,15 @@
 name: Build and Publish (main/docs)
 
-name: Build and Publish (main/docs)
-
 on:
   push:
-    branches:
-      - main
-    paths-ignore:
-      - 'docs/**'
+    branches: [main]
+    paths-ignore: ['docs/**']
 
 permissions:
   contents: write
 
 jobs:
-  build-and-publish-to-docs:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -34,9 +30,7 @@ jobs:
 
       - name: Copy SPA fallback and CNAME into dist
         run: |
-          # ensure a 404 fallback for client-side routing
           if [ -f dist/index.html ]; then cp dist/index.html dist/404.html || true; fi
-          # copy CNAME if present in repo
           if [ -f CNAME ]; then cp CNAME dist/CNAME || true; fi
 
       - name: Commit dist -> docs on main
@@ -44,16 +38,13 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -e
-          # prepare docs folder
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
           rm -rf docs || true
           mkdir -p docs
           cp -a dist/. docs/
 
-          # configure git
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-          # only commit if there are changes
           git add docs
           if git diff --cached --quiet; then
             echo "No changes in docs/ — nothing to commit"
