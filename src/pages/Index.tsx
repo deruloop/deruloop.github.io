@@ -18,7 +18,7 @@ const Index = () => {
       {/* Footer */}
       <footer className="py-8 border-t border-border bg-muted/30">
         <div className="container mx-auto px-4 text-center text-muted-foreground">
-          <p>© 2024 iOS Developer Portfolio. Built with passion and Swift.</p>
+          <p>© 2024 iOS Developer Portfolio. Built with passion.</p>
         </div>
       </footer>
     </div>

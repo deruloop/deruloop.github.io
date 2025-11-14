@@ -98,14 +98,14 @@ export default {
             transform: "translateX(0)",
           },
           "100%": {
-            transform: "translateX(-50%)",
+            transform: "translateX(-100%)",
           },
         },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "scroll-horizontal": "scroll-horizontal 20s linear infinite",
+        "scroll-horizontal": "scroll-horizontal 16s linear infinite",
       },
     },
   },
