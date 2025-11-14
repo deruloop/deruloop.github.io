@@ -3,7 +3,7 @@ import intesa from "@/assets/intesa.svg";
 import reply from "@/assets/reply.png";
 import opentech from "@/assets/opentech.svg";
 import spindox from "@/assets/spindox.png";
-import isybank from "@/assets/isybank.svg";
+import isybank from "@/assets/isy.png";
 import telepass from "@/assets/telepass.png";
 import piksel from "@/assets/piksel.png";
 import { Building2, Smartphone, Globe, Zap, Cloud, Code } from "lucide-react";
