@@ -36,7 +36,7 @@ const Hero = () => {
               size="lg" 
               className="group text-lg px-8 py-6 shadow-medium hover:shadow-large transition-all duration-300"
               onClick={() => {
-                document.getElementById('projects')?.scrollIntoView({ 
+                document.getElementById('clients')?.scrollIntoView({ 
                   behavior: 'smooth',
                   block: 'start'
                 });

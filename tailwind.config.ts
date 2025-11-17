@@ -98,14 +98,42 @@ export default {
             transform: "translateX(0)",
           },
           "100%": {
-            transform: "translateX(-50%)",
+            transform: "translateX(-100%)",
+          },
+        },
+        "scroll-horizontal-mobile": {
+          "0%": {
+            transform: "translateX(0)",
+          },
+          "100%": {
+            transform: "translateX(-200%)",
+          },
+        },
+        "scroll-horizontal-reverse": {
+          "0%": {
+            transform: "translateX(-100%)",
+          },
+          "100%": {
+            transform: "translateX(0)",
+          },
+        },
+        "scroll-horizontal-mobile-reverse": {
+          "0%": {
+            transform: "translateX(-200%)",
+          },
+          "100%": {
+            transform: "translateX(0)",
           },
         },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "scroll-horizontal": "scroll-horizontal 20s linear infinite",
+        "scroll-horizontal-mobile": "scroll-horizontal-mobile 60s linear infinite",        // mobile, più lungo
+        "scroll-horizontal": "scroll-horizontal 16s linear infinite",   // desktop, più corto
+
+        "scroll-horizontal-mobile-reverse": "scroll-horizontal-mobile-reverse 60s linear infinite",        // mobile, più lungo
+        "scroll-horizontal-reverse": "scroll-horizontal-reverse 16s linear infinite",  
       },
     },
   },
