@@ -6,6 +6,7 @@ import spindox from "@/assets/spindox.png";
 import isybank from "@/assets/isy.png";
 import telepass from "@/assets/telepass.png";
 import piksel from "@/assets/piksel.png";
+import hoc from "@/assets/hoc.png";
 import { Building2, Smartphone, Globe, Zap, Cloud, Code } from "lucide-react";
 
 type Client = {
@@ -20,6 +21,7 @@ const clients: Client[] = [
   { name: "NuanceAudio", logo: nuance, url: "https://www.nuanceaudio.com/it-it", height: 12, width: 80 },
   { name: "IntesaSanpaolo", logo: intesa, url: "https://www.intesasanpaolo.com", height: 8, width: 100 },
   { name: "Reply", logo: reply, url: "https://www.reply.com/it", height: 12, width: 60 },
+  { name: "Hoc", logo: hoc, url: "https://houseofcreators.com", height: 12, width: 60 },
   { name: "Opentech", logo: opentech, url: "https://opentech.com", height: 12, width: 80 },
   { name: "Spindox", logo: spindox, url: "https://makeamark.spindox.it", height: 12, width: 80 },
   { name: "Isybank", logo: isybank, url: "https://www.isybank.com/it/", height: 8, width: 60 },
@@ -32,6 +34,7 @@ const clientsReverse: Client[] = [
   { name: "Isybank", logo: isybank, url: "https://www.isybank.com/it/", height: 8, width: 60 },
   { name: "Telepass", logo: telepass, url: "https://www.telepass.com/it", height: 8, width: 60 },
   { name: "Piksel", logo: piksel, url: "https://piksel.com", height: 8, width: 60 },
+  { name: "Hoc", logo: hoc, url: "https://houseofcreators.com", height: 12, width: 60 },
   { name: "Reply", logo: reply, url: "https://www.reply.com/it", height: 12, width: 60 },
   { name: "Opentech", logo: opentech, url: "https://opentech.com", height: 12, width: 80 },
   { name: "NuanceAudio", logo: nuance, url: "https://www.nuanceaudio.com/it-it", height: 12, width: 80 },
