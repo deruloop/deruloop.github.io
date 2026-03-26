@@ -70,7 +70,7 @@ const Projects = () => {
                   <CardContent className="space-y-3 pt-0">
                     <div className="flex flex-wrap gap-2">
                       {project.tags.map((tag, tagIndex) => (
-                        <Badge key={tagIndex} variant="secondary" className="text-xs">
+                        <Badge key={tagIndex} className="text-xs bg-accent text-accent-foreground border-transparent">
                           {tag}
                         </Badge>
                       ))}
