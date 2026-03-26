@@ -60,7 +60,7 @@ const Hero = () => {
             <Button 
               size="lg" 
               variant="outline" 
-              className="text-lg px-8 py-6 border-2 hover:bg-muted/50 transition-all duration-300"
+              className="text-lg px-8 py-6 border-2 hover:text-accent hover:border-accent hover:bg-transparent transition-all duration-300"
               onClick={() => {
                 document.getElementById('contact')?.scrollIntoView({ 
                   behavior: 'smooth',
