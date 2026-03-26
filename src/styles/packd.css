@@ -2,7 +2,9 @@
 .packd-page {
   /* Basic container-level styles (used to replace previous body rules) */
   display: block;
-  margin: 100px auto;
+  margin: 0 auto;
+  padding-top: 100px;
+  min-height: 100vh;
   color: black;
   text-align: center;
   font-family: "Nunito-Regular", sans-serif;
