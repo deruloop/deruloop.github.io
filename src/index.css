@@ -28,8 +28,11 @@ All colors MUST be HSL.
     --muted: 36 30% 85%;
     --muted-foreground: 200 15% 40%;
 
-    --accent: 24 75% 50%;
+    --accent: 39 78% 46%;
     --accent-foreground: 0 0% 100%;
+    --accent-hex: #D2931A;
+    --accent-highlight: 40 59% 71%;
+    --accent-highlight-hex: #E1C48B;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
@@ -79,8 +82,11 @@ All colors MUST be HSL.
     --muted: 200 20% 18%;
     --muted-foreground: 24 15% 60%;
 
-    --accent: 24 75% 50%;
+    --accent: 39 78% 46%;
     --accent-foreground: 0 0% 100%;
+    --accent-hex: #D2931A;
+    --accent-highlight: 40 59% 71%;
+    --accent-highlight-hex: #E1C48B;
 
     --destructive: 0 62.8% 50%;
     --destructive-foreground: 0 0% 98%;
@@ -119,5 +125,52 @@ All colors MUST be HSL.
 @layer utilities {
   .pause {
     animation-play-state: paused;
+  }
+
+  @keyframes accent-shimmer {
+    from {
+      background-position: 0% 50%;
+    }
+    to {
+      background-position: 200% 50%;
+    }
+  }
+
+  @keyframes accent-scan {
+    0% { --scan-x: -100%; }
+    100% { --scan-x: 200%; }
+  }
+
+  .text-accent-shimmer {
+    --scan-width: 22%;
+    --scan-x: -100%;
+    background-image:
+      radial-gradient(circle at 50% 50%, hsl(var(--accent-highlight)) 99%, transparent 100%),
+      radial-gradient(circle at 50% 50%, hsl(var(--accent-highlight)) 99%, transparent 100%),
+      linear-gradient(90deg, hsl(var(--accent-highlight)) 0 100%),
+      linear-gradient(90deg, hsl(var(--accent)) 0 100%);
+    background-size:
+      var(--scan-width) var(--scan-width),
+      var(--scan-width) var(--scan-width),
+      var(--scan-width) 100%,
+      100% 100%;
+    background-position:
+      var(--scan-x) 50%,
+      var(--scan-x) 50%,
+      var(--scan-x) 50%,
+      50% 50%;
+    background-repeat: no-repeat;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    will-change: background-position;
+    animation: accent-scan 12s linear infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .text-accent-shimmer {
+      animation: none;
+      background-position: 50% 50%;
+    }
   }
 }
