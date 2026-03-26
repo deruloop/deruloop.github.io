@@ -17,6 +17,18 @@ const Hero = () => {
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4 py-20 text-center">
         <div className="max-w-4xl mx-auto space-y-8 animate-in fade-in duration-700">
+          {/* Animated Logo */}
+          <div className="flex justify-center">
+            <video
+              src="/logo-animation.mp4"
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="w-32 h-32 md:w-40 md:h-40 object-contain rounded-full"
+            />
+          </div>
+
           <div className="space-y-4">
             <p className="text-muted-foreground text-lg font-medium tracking-wide">
               iOS DEVELOPER
