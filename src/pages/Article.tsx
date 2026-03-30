@@ -4,12 +4,26 @@ import TabSwitcher from "@/components/TabSwitcher";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { ArrowLeft, Calendar, Tag } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, ReactNode } from "react";
 
 interface Heading {
   id: string;
   text: string;
   level: number;
+}
+
+function slugify(text: string): string {
+  return text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+}
+
+function getTextContent(node: ReactNode): string {
+  if (typeof node === "string") return node;
+  if (typeof node === "number") return String(node);
+  if (Array.isArray(node)) return node.map(getTextContent).join("");
+  if (node && typeof node === "object" && "props" in node) {
+    return getTextContent((node as any).props.children);
+  }
+  return "";
 }
 
 function extractHeadings(markdown: string): Heading[] {
@@ -19,8 +33,7 @@ function extractHeadings(markdown: string): Heading[] {
     const match = line.match(/^(#{2,3})\s+(.+)$/);
     if (match) {
       const text = match[2].trim();
-      const id = text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
-      headings.push({ id, text, level: match[1].length });
+      headings.push({ id: slugify(text), text, level: match[1].length });
     }
   }
   return headings;
@@ -39,21 +52,24 @@ const Article = () => {
 
   useEffect(() => {
     if (headings.length === 0) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            setActiveId(entry.target.id);
+    // Small delay to ensure DOM is rendered
+    const timeout = setTimeout(() => {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          const visible = entries.filter((e) => e.isIntersecting);
+          if (visible.length > 0) {
+            setActiveId(visible[0].target.id);
           }
-        }
-      },
-      { rootMargin: "-80px 0px -60% 0px" }
-    );
-    headings.forEach((h) => {
-      const el = document.getElementById(h.id);
-      if (el) observer.observe(el);
-    });
-    return () => observer.disconnect();
+        },
+        { rootMargin: "0px 0px -70% 0px", threshold: 0.1 }
+      );
+      headings.forEach((h) => {
+        const el = document.getElementById(h.id);
+        if (el) observer.observe(el);
+      });
+      return () => observer.disconnect();
+    }, 200);
+    return () => clearTimeout(timeout);
   }, [headings]);
 
   if (!article) {
@@ -66,7 +82,10 @@ const Article = () => {
 
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+      setActiveId(id);
+    }
   };
 
   return (
@@ -109,13 +128,11 @@ const Article = () => {
             remarkPlugins={[remarkGfm]}
             components={{
               h2: ({ children, ...props }) => {
-                const text = String(children);
-                const id = text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+                const id = slugify(getTextContent(children));
                 return <h2 id={id} className="scroll-mt-20" {...props}>{children}</h2>;
               },
               h3: ({ children, ...props }) => {
-                const text = String(children);
-                const id = text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+                const id = slugify(getTextContent(children));
                 return <h3 id={id} className="scroll-mt-20" {...props}>{children}</h3>;
               },
               pre: ({ children, ...props }) => (
