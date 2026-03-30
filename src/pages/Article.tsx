@@ -128,13 +128,11 @@ const Article = () => {
             remarkPlugins={[remarkGfm]}
             components={{
               h2: ({ children, ...props }) => {
-                const text = String(children);
-                const id = text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+                const id = slugify(getTextContent(children));
                 return <h2 id={id} className="scroll-mt-20" {...props}>{children}</h2>;
               },
               h3: ({ children, ...props }) => {
-                const text = String(children);
-                const id = text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+                const id = slugify(getTextContent(children));
                 return <h3 id={id} className="scroll-mt-20" {...props}>{children}</h3>;
               },
               pre: ({ children, ...props }) => (
