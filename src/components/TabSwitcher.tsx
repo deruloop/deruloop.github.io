@@ -6,7 +6,7 @@ const tabs = [
   { label: "Articles", path: "/articles" },
 ];
 
-const TabSwitcher = () => {
+const TabSwitcher = ({ isStatic = false }: { isStatic?: boolean }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -16,7 +16,7 @@ const TabSwitcher = () => {
   };
 
   return (
-    <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50">
+    <div className={isStatic ? "" : "fixed top-4 left-1/2 -translate-x-1/2 z-50"}>
       <div className="flex bg-card/80 backdrop-blur-md border border-border rounded-full p-1 shadow-soft">
         {tabs.map((tab) => (
           <button
