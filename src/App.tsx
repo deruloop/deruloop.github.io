@@ -4,6 +4,8 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
+import Articles from "./pages/Articles";
+import Article from "./pages/Article";
 import Packd from "./pages/Packd";
 import PackdPrivacy from "./pages/packd/Privacy";
 import PackdTerms from "./pages/packd/Terms";
