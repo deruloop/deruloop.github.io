@@ -4,10 +4,12 @@ import Skills from "@/components/Skills";
 import Clients from "@/components/Clients";
 import About from "@/components/About";
 import Contact from "@/components/Contact";
+import TabSwitcher from "@/components/TabSwitcher";
 
 const Index = () => {
   return (
     <div className="min-h-screen">
+      <TabSwitcher />
       <Hero />
       <Clients />
       <Projects />
