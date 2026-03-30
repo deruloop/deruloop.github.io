@@ -6,7 +6,7 @@ const tabs = [
   { label: "Articles", path: "/articles" },
 ];
 
-const TabSwitcher = () => {
+const TabSwitcher = ({ isStatic = false }: { isStatic?: boolean }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
