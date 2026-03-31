@@ -52,24 +52,35 @@ const Article = () => {
 
   useEffect(() => {
     if (headings.length === 0) return;
-    // Small delay to ensure DOM is rendered
-    const timeout = setTimeout(() => {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          const visible = entries.filter((e) => e.isIntersecting);
-          if (visible.length > 0) {
-            setActiveId(visible[0].target.id);
+
+    const handleScroll = () => {
+      const ids = headings.map((h) => h.id);
+      let currentId = ids[0] || "";
+
+      for (const id of ids) {
+        const el = document.getElementById(id);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          // Pick the last heading whose top is above 30% of the viewport
+          if (rect.top <= window.innerHeight * 0.3) {
+            currentId = id;
+          } else {
+            break;
           }
-        },
-        { rootMargin: "0px 0px 0px 0px", threshold: 0 }
-      );
-      headings.forEach((h) => {
-        const el = document.getElementById(h.id);
-        if (el) observer.observe(el);
-      });
-      return () => observer.disconnect();
-    }, 200);
-    return () => clearTimeout(timeout);
+        }
+      }
+
+      setActiveId(currentId);
+    };
+
+    // Initial check after DOM renders
+    const timeout = setTimeout(handleScroll, 200);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      clearTimeout(timeout);
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, [headings]);
 
   if (!article) {
