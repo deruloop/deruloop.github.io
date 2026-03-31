@@ -61,7 +61,7 @@ const Article = () => {
             setActiveId(visible[0].target.id);
           }
         },
-        { rootMargin: "0px 0px -70% 0px", threshold: 0.1 }
+        { rootMargin: "0px 0px 0px 0px", threshold: 0 }
       );
       headings.forEach((h) => {
         const el = document.getElementById(h.id);
