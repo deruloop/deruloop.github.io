@@ -7,23 +7,26 @@ export interface Article {
   content: string;
 }
 
-function parseFrontmatter(raw: string): { meta: Record<string, any>; content: string } {
+type FrontmatterValue = string | string[];
+type Frontmatter = Record<string, FrontmatterValue | undefined>;
+
+function parseFrontmatter(raw: string): { meta: Frontmatter; content: string } {
   const match = raw.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
   if (!match) return { meta: {}, content: raw };
 
   const metaBlock = match[1];
   const content = match[2].trim();
-  const meta: Record<string, any> = {};
+  const meta: Frontmatter = {};
 
   for (const line of metaBlock.split('\n')) {
     const colonIdx = line.indexOf(':');
     if (colonIdx === -1) continue;
     const key = line.slice(0, colonIdx).trim();
-    let value: any = line.slice(colonIdx + 1).trim();
+    let value: FrontmatterValue = line.slice(colonIdx + 1).trim();
 
     // Parse arrays like [tag1, tag2]
-    if (value.startsWith('[') && value.endsWith(']')) {
-      value = value.slice(1, -1).split(',').map((s: string) => s.trim());
+    if (typeof value === 'string' && value.startsWith('[') && value.endsWith(']')) {
+      value = value.slice(1, -1).split(',').map((s) => s.trim());
     }
 
     meta[key] = value;
@@ -36,20 +39,20 @@ const modules = import.meta.glob('/src/content/articles/*.md', {
   query: '?raw',
   import: 'default',
   eager: true,
-});
+}) as Record<string, string>;
 
 export function getAllArticles(): Article[] {
   const articles: Article[] = [];
 
   for (const [path, raw] of Object.entries(modules)) {
     const slug = path.split('/').pop()!.replace('.md', '');
-    const { meta, content } = parseFrontmatter(raw as string);
+    const { meta, content } = parseFrontmatter(raw);
 
     articles.push({
       slug,
-      title: meta.title || slug,
-      date: meta.date || '',
-      excerpt: meta.excerpt || '',
+      title: typeof meta.title === 'string' ? meta.title : slug,
+      date: typeof meta.date === 'string' ? meta.date : '',
+      excerpt: typeof meta.excerpt === 'string' ? meta.excerpt : '',
       tags: Array.isArray(meta.tags) ? meta.tags : [],
       content,
     });

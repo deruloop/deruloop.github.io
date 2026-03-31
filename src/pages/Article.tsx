@@ -4,7 +4,7 @@ import TabSwitcher from "@/components/TabSwitcher";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { ArrowLeft, Calendar, Tag } from "lucide-react";
-import { useEffect, useMemo, useState, ReactNode } from "react";
+import { useEffect, useMemo, useState, ReactNode, isValidElement } from "react";
 
 interface Heading {
   id: string;
@@ -20,8 +20,8 @@ function getTextContent(node: ReactNode): string {
   if (typeof node === "string") return node;
   if (typeof node === "number") return String(node);
   if (Array.isArray(node)) return node.map(getTextContent).join("");
-  if (node && typeof node === "object" && "props" in node) {
-    return getTextContent((node as any).props.children);
+  if (isValidElement(node)) {
+    return getTextContent(node.props.children);
   }
   return "";
 }

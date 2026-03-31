@@ -5,8 +5,6 @@ excerpt: A comprehensive guide to building your first SwiftUI application with m
 tags: [SwiftUI, iOS, Tutorial]
 ---
 
-# Getting Started with SwiftUI
-
 SwiftUI has revolutionized the way we build iOS applications. Since its introduction at WWDC 2019, it has matured into a robust framework that many developers now prefer over UIKit for new projects. In this article, we'll explore the fundamentals, understand the philosophy behind SwiftUI's design decisions, and build a simple app from scratch that demonstrates the core concepts you'll use every day.
 
 ## Why SwiftUI?

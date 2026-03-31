@@ -5,8 +5,6 @@ excerpt: Deep dive into async/await, actors, and structured concurrency in Swift
 tags: [Swift, Concurrency, Advanced]
 ---
 
-# Advanced Swift Concurrency
-
 Swift's modern concurrency model, introduced in Swift 5.5, brings safety and clarity to asynchronous programming. Before async/await, iOS developers relied heavily on completion handlers, delegation patterns, and third-party libraries like PromiseKit or Combine to manage asynchronous work. While these approaches worked, they often led to deeply nested callbacks, difficult error handling, and subtle bugs related to thread safety. The new concurrency model addresses all of these pain points with first-class language support.
 
 ## Async/Await
