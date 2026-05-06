@@ -9,6 +9,8 @@ A pragmatic evolution of iOS architecture across ViewModel, Dependency Injection
 
 ![Evolution of iOS architectures](/blog/infographic-map.svg)
 
+## MVC: where it all started
+
 For years the starting point of iOS architecture was MVC. Today it is more accurate to read it as the primordial prototype of mobile architecture rather than a sufficient solution for modern apps. The idea was simple — Model, View, Controller — but in practice the `UIViewController` ended up holding navigation, networking, validation, state, errors, persistence, analytics and coordination. The Controller, originally a mediator, became the place where the app tried to hold everything together.
 
 ![MVC: the Massive View Controller](/blog/infographic-mvc.svg)
