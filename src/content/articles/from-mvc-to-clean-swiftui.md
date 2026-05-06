@@ -9,11 +9,11 @@ tags: [iOS, SwiftUI, Architecture]
 
 A pragmatic evolution of iOS architecture across ViewModel, Dependency Injection, Interactors, AppState, Service–Store and TCA.
 
-![Evolution of iOS architectures](/blog/infographic-map.png)
+![Evolution of iOS architectures](/blog/infographic-map.svg)
 
 For years the starting point of iOS architecture was MVC. Today it is more accurate to read it as the primordial prototype of mobile architecture rather than a sufficient solution for modern apps. The idea was simple — Model, View, Controller — but in practice the `UIViewController` ended up holding navigation, networking, validation, state, errors, persistence, analytics and coordination. The Controller, originally a mediator, became the place where the app tried to hold everything together.
 
-![MVC: the Massive View Controller](/blog/infographic-mvc.png)
+![MVC: the Massive View Controller](/blog/infographic-mvc.svg)
 
 This is the origin of UIKit's historical problem: the **Massive View Controller**. MVVM, VIPER, Clean Architecture, Redux-like, Service–Store and TCA are all different answers to the same question:
 
@@ -43,7 +43,7 @@ final class TripListViewModel: ObservableObject {
 
 It works well at small scale. The problem emerges as the app grows: networking, validation, retry, error mapping, formatting, analytics, navigation, caching and sync all end up inside the ViewModel. The Massive View Controller becomes a **Massive ViewModel**.
 
-![MVVM and the Massive ViewModel risk](/blog/infographic-mvvm.png)
+![MVVM and the Massive ViewModel risk](/blog/infographic-mvvm.svg)
 
 There is also a less visible problem: MVVM does not enforce a **Dependency Injection** strategy. One feature uses initializer injection, another `EnvironmentObject`, another calls `APIClient.shared` directly. DI ends up "all over the place" exactly like state management. And navigation, which in SwiftUI is itself state, has no clear owner: View, ViewModel, Coordinator or Router?
 
@@ -59,7 +59,7 @@ The opposite risk to MVVM is clear: MVVM concentrates too much in too few object
 
 With SwiftUI the question changes: no longer "how do I lighten the ViewController?", but **how do I organise state, side effects, business logic, navigation and dependencies in a declarative UI?**
 
-![Clean SwiftUI Architecture](/blog/infographic-clean.png)
+![Clean SwiftUI Architecture](/blog/infographic-clean.svg)
 
 The approach (see *clean-architecture-swiftui* by Alexey Naumov) replaces `View + ViewModel` with five roles: **View, AppState, Interactors, Repositories, DIContainer**. The View reads state and sends intents; the Interactor executes use cases; the Repository abstracts the data; the AppState holds shared state; the DIContainer composes the graph.
 
@@ -125,7 +125,7 @@ It applies inside different architectures — MVVM, Clean, Service–Store, TCA 
 
 Service–Store separates **Store** (observable state), **Service** (operations and side effects) and **View** (rendering + intents).
 
-![Service–Store Architecture](/blog/infographic-service-store.png)
+![Service–Store Architecture](/blog/infographic-service-store.svg)
 
 ```swift
 @MainActor @Observable
@@ -146,7 +146,7 @@ The flow is `View → Service → Store mutation → View`: a *soft* Redux-like,
 
 TCA is much more specific and is built on **State, Action, Reducer, Effect, Store, Dependencies**.
 
-![TCA: Unidirectional Flow](/blog/infographic-tca.png)
+![TCA: Unidirectional Flow](/blog/infographic-tca.svg)
 
 The View does not call services: it sends actions. The Reducer decides what changes in the state and which Effects to launch. Dependencies are not a choice left to the feature, they are part of the system:
 
