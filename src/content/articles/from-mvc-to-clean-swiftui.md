@@ -61,7 +61,7 @@ With SwiftUI the question changes: no longer "how do I lighten the ViewControlle
 
 ![Clean SwiftUI Architecture](/blog/infographic-clean.svg)
 
-The approach (see [*clean-architecture-swiftui*](https://github.com/nalexn/clean-architecture-swiftui) by Alexey Naumov) replaces `View + ViewModel` with five roles: **View, AppState, Interactors, Repositories, DIContainer**. The View reads state and sends intents; the Interactor executes use cases; the Repository abstracts the data; the AppState holds shared state; the DIContainer composes the graph.
+The approach (see [_clean-architecture-swiftui_](https://github.com/nalexn/clean-architecture-swiftui) by Alexey Naumov) replaces `View + ViewModel` with five roles: **View, AppState, Interactors, Repositories, DIContainer**. The View reads state and sends intents; the Interactor executes use cases; the Repository abstracts the data; the AppState holds shared state; the DIContainer composes the graph.
 
 ```swift
 struct TripListView: View {
@@ -105,11 +105,11 @@ The DIContainer can have `live`, `preview`, `test` variants. The risk is that it
 
 ## Where do we go from here? Closure-based Dependency Injection
 
-Clean Architecture answers the *structural* question — who owns state, who runs use cases, who exposes data. It leaves open the *implementation* question: **how do dependencies actually get into Interactors, Repositories and Services?** The classic answer is "protocols + concrete types + a mock for tests". It works, but every dependency costs you a protocol, an implementation, a mock, and often a wrapper just to make initializers compile.
+Clean Architecture answers the _structural_ question — who owns state, who runs use cases, who exposes data. It leaves open the _implementation_ question: **how do dependencies actually get into Interactors, Repositories and Services?** The classic answer is "protocols + concrete types + a mock for tests". It works, but every dependency costs you a protocol, an implementation, a mock, and often a wrapper just to make initializers compile.
 
-Kyle Browning explored this exact tension in [*Dependency Injection in SwiftUI*](https://kylebrowning.com/posts/dependency-injection-in-swiftui/), arguing that the protocol-heavy approach common in UIKit does not translate well to SwiftUI's value-type, preview-driven world. The article asks a simple question: if SwiftUI previews and tests need lightweight, swappable dependencies, why make the substitution mechanism heavy?
+Kyle Browning explored this exact tension in [_Dependency Injection in SwiftUI without the cerimony_](https://kylebrowning.com/posts/dependency-injection-in-swiftui/), arguing that the protocol-heavy approach common in UIKit does not translate well to SwiftUI's value-type, preview-driven world. The article asks a simple question: if SwiftUI previews and tests need lightweight, swappable dependencies, why make the substitution mechanism heavy?
 
-The technique popularised by Point-Free flips this: model a dependency as a **struct of closures**, not as a protocol. The "interface" is the shape of its functions; implementations are just values.
+The technique, popularised by Point-Free, flips this: model a dependency as a **struct of closures**, not as a protocol. The "interface" is the shape of its functions; implementations are just values.
 
 ```swift
 struct TripsRepository {
@@ -147,11 +147,11 @@ This is a **technique, not an architecture**. It applies inside MVVM, Clean, Ser
 
 ## Service–Store: a pragmatic SwiftUI variant
 
-Once dependencies are values, the next question is whether the *layered* shape of Clean Architecture is still the best fit for SwiftUI. Naumov's Clean Architecture is **layer-oriented**: the app is sliced horizontally into View / AppState / Interactors / Repositories / Services, and a feature is a path that crosses all layers. Service–Store is **feature-store-oriented**: the app is sliced vertically by feature, and each feature owns its own observable Store and its own Service.
+Another point touched by Kyle in the article, is about whether the _layered_ shape of Clean Architecture is still the best fit for SwiftUI. Naumov's Clean Architecture is **layer-oriented**: the app is sliced horizontally into View / AppState / Interactors / Repositories / Services, and a feature is a path that crosses all layers. Service–Store is **feature-store-oriented**: the app is sliced vertically by feature, and each feature owns its own observable Store and its own Service.
 
 ![Service–Store Architecture](/blog/infographic-service-store.svg)
 
-The Store is the observable truth for *one feature*; the Service is the set of operations that can mutate that Store and trigger side effects; the View renders the Store and sends intents to the Service.
+The Store is the observable truth for _one feature_; the Service is the set of operations that can mutate that Store and trigger side effects; the View renders the Store and sends intents to the Service.
 
 ```swift
 @MainActor @Observable
@@ -205,7 +205,7 @@ Compared to Clean Architecture, the trade-off is clear:
 - **Naumov Clean Architecture is layer-oriented.** A global `AppState` and shared Interactors/Repositories give you a coherent picture of the whole app, at the cost of more ceremony per feature and a single composition root that has to know about everything.
 - **Service–Store is feature-store-oriented.** Each feature is a self-contained `(Store, Service)` pair built on top of the same closure-based dependencies. It scales naturally with the number of features and maps directly onto SwiftUI's `@Observable` world, but it gives up the global compass — there is no single AppState, so cross-feature state has to be designed explicitly.
 
-The flow `View → Service → Store mutation → View` is a *soft* Redux-like, or *TCA-inspired, but not TCA*. The main risk is that lightness becomes disorder: a Service can easily turn into a new Manager if the feature boundary is not kept honest.
+The flow `View → Service → Store mutation → View` is a _soft_ Redux-like, or _TCA-inspired, but not TCA_. The main risk is that lightness becomes disorder: a Service can easily turn into a new Manager if the feature boundary is not kept honest.
 
 ## TCA: the formalised unidirectional flow
 
