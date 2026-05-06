@@ -145,9 +145,9 @@ let interactor = TripsInteractor(
 
 This is a **technique, not an architecture**. It applies inside MVVM, Clean, Service–Store and TCA. It removes protocol boilerplate, makes substitution a one-liner, and turns "configuring the app for tests" into building a different `DIContainer` value. It is the natural bridge between Naumov-style Clean Architecture and the more SwiftUI-native shapes that follow.
 
-## Service–Store: a pragmatic SwiftUI variant
+## Service–Store: a pragmatic Clean Architecture variant
 
-Another point touched by Kyle in the article, is about whether the _layered_ shape of Clean Architecture is still the best fit for SwiftUI. Naumov's Clean Architecture is **layer-oriented**: the app is sliced horizontally into View / AppState / Interactors / Repositories / Services, and a feature is a path that crosses all layers. Service–Store is **feature-store-oriented**: the app is sliced vertically by feature, and each feature owns its own observable Store and its own Service.
+Another point that caught my interest in Kyle's article, is the pragmatic approach he took to implement Clean Architecture patterns. While Naumov's Clean Architecture is **layer-oriented**: the app is sliced horizontally into View / AppState / Interactors / Repositories / Services, and a feature is a path that crosses all layers. Service–Store is **feature-store-oriented**: the app is sliced vertically by feature, and each feature owns its own observable Store and its own Service.
 
 ![Service–Store Architecture](/blog/infographic-service-store.svg)
 
