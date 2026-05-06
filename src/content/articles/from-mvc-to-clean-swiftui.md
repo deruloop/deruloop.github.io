@@ -61,7 +61,7 @@ With SwiftUI the question changes: no longer "how do I lighten the ViewControlle
 
 ![Clean SwiftUI Architecture](/blog/infographic-clean.svg)
 
-The approach (see *clean-architecture-swiftui* by Alexey Naumov) replaces `View + ViewModel` with five roles: **View, AppState, Interactors, Repositories, DIContainer**. The View reads state and sends intents; the Interactor executes use cases; the Repository abstracts the data; the AppState holds shared state; the DIContainer composes the graph.
+The approach (see [*clean-architecture-swiftui*](https://github.com/nalexn/clean-architecture-swiftui) by Alexey Naumov) replaces `View + ViewModel` with five roles: **View, AppState, Interactors, Repositories, DIContainer**. The View reads state and sends intents; the Interactor executes use cases; the Repository abstracts the data; the AppState holds shared state; the DIContainer composes the graph.
 
 ```swift
 struct TripListView: View {
