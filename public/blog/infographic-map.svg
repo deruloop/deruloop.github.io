@@ -3,60 +3,103 @@
     <style>
       .bg{fill:#F8EFDC}
       .ink{fill:#0F1B23}
-      .muted{fill:#0F1B23;opacity:.55}
+      .muted{fill:#0F1B23;opacity:.6}
       .gold{fill:#D2931A}
-      .line{stroke:#0F1B23;stroke-width:1.5;fill:none}
-      .lineDash{stroke:#0F1B23;stroke-width:1.5;fill:none;stroke-dasharray:3 4;opacity:.5}
-      .node{fill:#F6E8CE;stroke:#0F1B23;stroke-width:1.5}
-      .nodeAccent{fill:#D2931A;stroke:#0F1B23;stroke-width:1.5}
-      text{fill:#0F1B23}
-      .label{font-size:13px;font-weight:600}
-      .sub{font-size:10px;opacity:.6}
-      .cap{font-size:10px;letter-spacing:1.5px;opacity:.55;font-weight:600}
+      .card{fill:#F1E4C6;stroke:#0F1B23;stroke-width:1.2}
+      .cardAccent{fill:#D2931A;stroke:#0F1B23;stroke-width:1.2}
+      .arrow{stroke:#0F1B23;stroke-width:1.2;fill:none;opacity:.55}
+      .cap{font-size:10px;letter-spacing:1.8px;font-weight:700;fill:#0F1B23}
+      .capMuted{font-size:9px;letter-spacing:1.5px;font-weight:700;fill:#0F1B23;opacity:.5}
+      .name{font-size:14px;font-weight:700;fill:#0F1B23}
+      .nameOn{font-size:14px;font-weight:700;fill:#F8EFDC}
+      .trait{font-size:10px;fill:#0F1B23;opacity:.75}
+      .traitOn{font-size:10px;fill:#F8EFDC;opacity:.9}
+      .pain{font-size:9.5px;font-style:italic;fill:#0F1B23;opacity:.55}
     </style>
+    <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#0F1B23" opacity=".55"/>
+    </marker>
   </defs>
+
   <rect class="bg" width="800" height="280"/>
-  <text class="cap" x="40" y="40">EVOLUTION OF iOS ARCHITECTURES</text>
 
-  <!-- timeline -->
-  <line class="line" x1="60" y1="160" x2="740" y2="160"/>
+  <text class="cap" x="40" y="32">EVOLUTION OF iOS ARCHITECTURES</text>
+  <text class="capMuted" x="40" y="48">FROM ONE MASSIVE OBJECT TO EXPLICIT, COMPOSABLE LAYERS</text>
 
-  <g transform="translate(100,160)">
-    <circle class="node" r="22"/>
-    <text class="label" text-anchor="middle" y="5">MVC</text>
-    <text class="sub" text-anchor="middle" y="50">Massive VC</text>
+  <!-- axis labels -->
+  <text class="capMuted" x="40" y="78">PROBLEM</text>
+  <text class="capMuted" x="40" y="148">APPROACH</text>
+  <text class="capMuted" x="40" y="232">TRADE-OFF</text>
+
+  <!-- vertical guides -->
+  <line x1="155" y1="60" x2="155" y2="250" stroke="#0F1B23" stroke-width=".5" opacity=".15"/>
+
+  <!-- 6 stages -->
+  <!-- positions: x centers -->
+  <!-- MVC -->
+  <g transform="translate(220,0)">
+    <text class="pain" text-anchor="middle" x="0" y="78">everything in VC</text>
+    <rect class="card" x="-52" y="100" width="104" height="58" rx="8"/>
+    <text class="name" text-anchor="middle" x="0" y="125">MVC</text>
+    <text class="trait" text-anchor="middle" x="0" y="143">UIKit default</text>
+    <text class="pain" text-anchor="middle" x="0" y="222">Massive VC</text>
   </g>
 
-  <g transform="translate(220,160)">
-    <circle class="node" r="22"/>
-    <text class="label" text-anchor="middle" y="5">MVVM</text>
-    <text class="sub" text-anchor="middle" y="50">Massive VM</text>
+  <!-- MVVM -->
+  <g transform="translate(320,0)">
+    <text class="pain" text-anchor="middle" x="0" y="78">VC too heavy</text>
+    <rect class="card" x="-52" y="100" width="104" height="58" rx="8"/>
+    <text class="name" text-anchor="middle" x="0" y="125">MVVM</text>
+    <text class="trait" text-anchor="middle" x="0" y="143">VM holds state</text>
+    <text class="pain" text-anchor="middle" x="0" y="222">Massive VM</text>
   </g>
 
-  <g transform="translate(340,160)">
-    <circle class="node" r="22"/>
-    <text class="label" text-anchor="middle" y="5">VIPER</text>
-    <text class="sub" text-anchor="middle" y="50">over-split</text>
+  <!-- VIPER -->
+  <g transform="translate(420,0)">
+    <text class="pain" text-anchor="middle" x="0" y="78">unclear roles</text>
+    <rect class="card" x="-52" y="100" width="104" height="58" rx="8"/>
+    <text class="name" text-anchor="middle" x="0" y="125">VIPER</text>
+    <text class="trait" text-anchor="middle" x="0" y="143">5 actors / feature</text>
+    <text class="pain" text-anchor="middle" x="0" y="222">over-split</text>
   </g>
 
-  <g transform="translate(460,160)">
-    <circle class="nodeAccent" r="26"/>
-    <text class="label" text-anchor="middle" y="5" fill="#fff">Clean</text>
-    <text class="sub" text-anchor="middle" y="54">compass</text>
+  <!-- Clean SwiftUI (accent / pivot) -->
+  <g transform="translate(525,0)">
+    <text class="pain" text-anchor="middle" x="0" y="78">DI everywhere</text>
+    <rect class="cardAccent" x="-58" y="95" width="116" height="68" rx="9"/>
+    <text class="nameOn" text-anchor="middle" x="0" y="123">Clean SwiftUI</text>
+    <text class="traitOn" text-anchor="middle" x="0" y="141">layered + DI root</text>
+    <text class="traitOn" text-anchor="middle" x="0" y="155" opacity=".7">(Naumov)</text>
+    <text class="pain" text-anchor="middle" x="0" y="222">layer-oriented</text>
   </g>
 
-  <g transform="translate(580,160)">
-    <circle class="node" r="22"/>
-    <text class="label" text-anchor="middle" y="5">Service</text>
-    <text class="sub" text-anchor="middle" y="50">SwiftUI shape</text>
+  <!-- Service-Store -->
+  <g transform="translate(640,0)">
+    <text class="pain" text-anchor="middle" x="0" y="78">layers feel rigid</text>
+    <rect class="card" x="-58" y="100" width="116" height="58" rx="8"/>
+    <text class="name" text-anchor="middle" x="0" y="125">Service–Store</text>
+    <text class="trait" text-anchor="middle" x="0" y="143">feature-store shape</text>
+    <text class="pain" text-anchor="middle" x="0" y="222">SwiftUI-native</text>
   </g>
 
-  <g transform="translate(700,160)">
-    <circle class="node" r="22"/>
-    <text class="label" text-anchor="middle" y="5">TCA</text>
-    <text class="sub" text-anchor="middle" y="50">rigorous</text>
+  <!-- TCA -->
+  <g transform="translate(745,0)">
+    <text class="pain" text-anchor="middle" x="0" y="78">no rules at scale</text>
+    <rect class="card" x="-40" y="100" width="80" height="58" rx="8"/>
+    <text class="name" text-anchor="middle" x="0" y="125">TCA</text>
+    <text class="trait" text-anchor="middle" x="0" y="143">unidirectional</text>
+    <text class="pain" text-anchor="middle" x="0" y="222">strict + rigorous</text>
   </g>
 
-  <text class="sub" x="60" y="220">complexity in one object</text>
-  <text class="sub" x="640" y="220">explicit, unidirectional</text>
+  <!-- arrows between cards along approach row (y=129) -->
+  <line class="arrow" x1="275" y1="129" x2="265" y2="129" marker-end="url(#ah)"/>
+  <line class="arrow" x1="375" y1="129" x2="365" y2="129" marker-end="url(#ah)"/>
+  <line class="arrow" x1="475" y1="129" x2="465" y2="129" marker-end="url(#ah)"/>
+  <line class="arrow" x1="585" y1="129" x2="575" y2="129" marker-end="url(#ah)"/>
+  <line class="arrow" x1="700" y1="129" x2="690" y2="129" marker-end="url(#ah)"/>
+
+  <!-- bottom hint bar -->
+  <line x1="180" y1="246" x2="780" y2="246" stroke="#0F1B23" stroke-width=".5" opacity=".15"/>
+  <text class="capMuted" x="180" y="264">CONCENTRATED</text>
+  <text class="capMuted" x="700" y="264" text-anchor="end">EXPLICIT &amp; COMPOSABLE</text>
 </svg>
