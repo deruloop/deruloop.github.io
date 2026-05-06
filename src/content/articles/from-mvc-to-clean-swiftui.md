@@ -1,29 +1,29 @@
 ---
 title: From MVC/MVVM to Clean SwiftUI Architecture
 date: 2026-05-06
-excerpt: Evoluzione pragmatica dell'architettura iOS tra ViewModel, Dependency Injection, Interactors, AppState, Service–Store e TCA.
+excerpt: A pragmatic evolution of iOS architecture across ViewModel, Dependency Injection, Interactors, AppState, Service–Store and TCA.
 tags: [iOS, SwiftUI, Architecture]
 ---
 
 # From MVC/MVVM to Clean SwiftUI Architecture
 
-Evoluzione pragmatica dell'architettura iOS tra ViewModel, Dependency Injection, Interactors, AppState, Service–Store e TCA.
+A pragmatic evolution of iOS architecture across ViewModel, Dependency Injection, Interactors, AppState, Service–Store and TCA.
 
-![Evoluzione delle architetture iOS](/blog/infographic-map.png)
+![Evolution of iOS architectures](/blog/infographic-map.png)
 
-Per anni il punto di partenza dell'architettura iOS è stato MVC. Oggi è più corretto leggerlo come il prototipo primordiale dell'architettura mobile che come una soluzione sufficiente per app moderne. L'idea era semplice — Model, View, Controller — ma nella pratica dentro il `UIViewController` finivano navigazione, networking, validazione, stato, errori, persistenza, analytics e coordinamento. Il Controller, da mediatore, diventava il posto in cui l'app cercava di tenere insieme tutto.
+For years the starting point of iOS architecture was MVC. Today it is more accurate to read it as the primordial prototype of mobile architecture rather than a sufficient solution for modern apps. The idea was simple — Model, View, Controller — but in practice the `UIViewController` ended up holding navigation, networking, validation, state, errors, persistence, analytics and coordination. The Controller, originally a mediator, became the place where the app tried to hold everything together.
 
-![MVC: il Massive View Controller](/blog/infographic-mvc.png)
+![MVC: the Massive View Controller](/blog/infographic-mvc.png)
 
-Da qui nasce il problema storico di UIKit: il **Massive View Controller**. MVVM, VIPER, Clean Architecture, Redux-like, Service–Store e TCA sono tutte risposte diverse alla stessa domanda:
+This is the origin of UIKit's historical problem: the **Massive View Controller**. MVVM, VIPER, Clean Architecture, Redux-like, Service–Store and TCA are all different answers to the same question:
 
-> Come evitiamo che la complessità dell'app si accumuli in un unico oggetto?
+> How do we prevent the app's complexity from accumulating in a single object?
 
-Ce n'è però una seconda, spesso meno esplicita: **come arrivano le dipendenze alla business logic senza accoppiare tutta l'app?** Molte architetture sembrano pulite sulla carta ma diventano confuse quando bisogna decidere chi crea un Repository, chi possiede un Service, dove si configura un mock, e come si costruisce l'app per preview, test e produzione.
+There is also a second, often less explicit one: **how do dependencies reach the business logic without coupling the entire app?** Many architectures look clean on paper but become confusing when you have to decide who creates a Repository, who owns a Service, where a mock is configured, and how the app is assembled for previews, tests and production.
 
-## MVVM: alleggerire il Controller, ma non abbastanza
+## MVVM: lightening the Controller, but not enough
 
-MVVM sposta parte della logica del Controller dentro il ViewModel: la View dichiara cosa mostrare, il ViewModel prepara i dati, espone stato osservabile e gestisce loading, errori e mapping. Con SwiftUI questo modello sembra ancora più naturale, perché la UI è già una funzione dello stato.
+MVVM moves part of the Controller's logic into the ViewModel: the View declares what to show, the ViewModel prepares the data, exposes observable state and handles loading, errors and mapping. With SwiftUI this model feels even more natural, because the UI is already a function of state.
 
 ```swift
 final class TripListViewModel: ObservableObject {
@@ -41,27 +41,27 @@ final class TripListViewModel: ObservableObject {
 }
 ```
 
-Funziona bene su scala piccola. Il problema emerge quando l'app cresce: networking, validazione, retry, mapping errori, formattazione, analytics, navigazione, caching e sync finiscono tutti dentro il ViewModel. Il Massive View Controller diventa un **Massive ViewModel**.
+It works well at small scale. The problem emerges as the app grows: networking, validation, retry, error mapping, formatting, analytics, navigation, caching and sync all end up inside the ViewModel. The Massive View Controller becomes a **Massive ViewModel**.
 
-![MVVM e il rischio del Massive ViewModel](/blog/infographic-mvvm.png)
+![MVVM and the Massive ViewModel risk](/blog/infographic-mvvm.png)
 
-C'è poi un problema meno visibile: MVVM non impone una strategia di **Dependency Injection**. Una feature usa initializer injection, un'altra `EnvironmentObject`, un'altra ancora chiama direttamente `APIClient.shared`. La DI diventa "all over the place" esattamente come lo state management. E la navigazione, che in SwiftUI è essa stessa stato, non ha un proprietario chiaro: View, ViewModel, Coordinator o Router?
+There is also a less visible problem: MVVM does not enforce a **Dependency Injection** strategy. One feature uses initializer injection, another `EnvironmentObject`, another calls `APIClient.shared` directly. DI ends up "all over the place" exactly like state management. And navigation, which in SwiftUI is itself state, has no clear owner: View, ViewModel, Coordinator or Router?
 
-MVVM, da solo, non risolve questi problemi: li sposta.
+MVVM, on its own, does not solve these problems: it moves them.
 
-## VIPER: separare tutto in attori più piccoli
+## VIPER: splitting everything into smaller actors
 
-VIPER risponde in modo radicale dividendo una feature in **View, Interactor, Presenter, Entity, Router**. Il merito è che prende sul serio la separazione delle responsabilità e rende esplicito il grafo della feature in un Builder/Assembly. Il costo è alto: anche una schermata semplice richiede molti file, protocolli e passaggi.
+VIPER answers radically by dividing a feature into **View, Interactor, Presenter, Entity, Router**. Its merit is that it takes separation of concerns seriously and makes the feature graph explicit through a Builder/Assembly. The cost is high: even a simple screen requires many files, protocols and indirections.
 
-Il rischio opposto rispetto a MVVM è chiaro: MVVM concentra troppo in pochi oggetti, VIPER distribuisce troppo in troppi.
+The opposite risk to MVVM is clear: MVVM concentrates too much in too few objects, VIPER spreads too much across too many.
 
 ## Clean Architecture in SwiftUI
 
-Con SwiftUI la domanda cambia: non più "come alleggerisco il ViewController?", ma **come organizzo stato, side effects, business logic, navigazione e dipendenze in una UI dichiarativa?**
+With SwiftUI the question changes: no longer "how do I lighten the ViewController?", but **how do I organise state, side effects, business logic, navigation and dependencies in a declarative UI?**
 
 ![Clean SwiftUI Architecture](/blog/infographic-clean.png)
 
-L'approccio (vedi *clean-architecture-swiftui* di Alexey Naumov) sostituisce `View + ViewModel` con cinque ruoli: **View, AppState, Interactors, Repositories, DIContainer**. La View legge stato e invia intenti; l'Interactor esegue use case; il Repository astrae i dati; l'AppState contiene lo stato condiviso; il DIContainer compone il grafo.
+The approach (see *clean-architecture-swiftui* by Alexey Naumov) replaces `View + ViewModel` with five roles: **View, AppState, Interactors, Repositories, DIContainer**. The View reads state and sends intents; the Interactor executes use cases; the Repository abstracts the data; the AppState holds shared state; the DIContainer composes the graph.
 
 ```swift
 struct TripListView: View {
@@ -90,7 +90,7 @@ struct TripsInteractor {
 }
 ```
 
-La composizione vive in un unico punto — la **composition root**:
+Composition lives in a single place — the **composition root**:
 
 ```swift
 struct DIContainer {
@@ -101,11 +101,11 @@ struct DIContainer {
 }
 ```
 
-Il DIContainer può avere varianti `live`, `preview`, `test`. Il rischio è che diventi un Service Locator: per evitarlo conviene iniettare dipendenze più specifiche per feature e usare `Environment` con disciplina. La regola sull'AppState è simile: stato locale alla View se serve solo lì, stato di feature se serve a una feature, AppState condiviso solo per ciò che è davvero globale.
+The DIContainer can have `live`, `preview`, `test` variants. The risk is that it turns into a Service Locator: to avoid this, inject more specific dependencies per feature and use `Environment` with discipline. The rule about AppState is similar: local state in the View if it is only needed there, feature state if it is shared across one feature, AppState only for what is truly global.
 
-## Closure-based Dependency Injection: tecnica, non architettura
+## Closure-based Dependency Injection: technique, not architecture
 
-Modellare le dipendenze come valori (idea resa popolare da Point-Free) è una **tecnica**, non un'architettura:
+Modelling dependencies as values (an idea popularised by Point-Free) is a **technique**, not an architecture:
 
 ```swift
 struct TripsRepository {
@@ -119,11 +119,11 @@ extension TripsRepository {
 }
 ```
 
-Si applica dentro architetture diverse — MVVM, Clean, Service–Store, TCA — riducendo il boilerplate dei protocolli e rendendo banale sostituire implementazioni in test e preview.
+It applies inside different architectures — MVVM, Clean, Service–Store, TCA — reducing protocol boilerplate and making it trivial to swap implementations in tests and previews.
 
-## Service–Store: una variante pragmatica SwiftUI
+## Service–Store: a pragmatic SwiftUI variant
 
-Service–Store separa **Store** (stato osservabile), **Service** (operazioni e side effects) e **View** (rendering + intenti).
+Service–Store separates **Store** (observable state), **Service** (operations and side effects) and **View** (rendering + intents).
 
 ![Service–Store Architecture](/blog/infographic-service-store.png)
 
@@ -140,15 +140,15 @@ struct PackingService {
 }
 ```
 
-Il flusso è `View → Service → Store mutation → View`: un Redux-like *soft*, o un *TCA-inspired, but not TCA*. Non è meglio o peggio di Clean Architecture, è diversa: Clean dà la bussola concettuale, Service–Store la forma SwiftUI-native, Closure-based DI la tecnica di implementazione. Il rischio principale è che la leggerezza diventi disordine — un Service può facilmente trasformarsi in un nuovo Manager se non si tengono confini chiari.
+The flow is `View → Service → Store mutation → View`: a *soft* Redux-like, or a *TCA-inspired, but not TCA*. It is not better or worse than Clean Architecture, just different: Clean gives the conceptual compass, Service–Store the SwiftUI-native shape, Closure-based DI the implementation technique. The main risk is that lightness becomes disorder — a Service can easily turn into a new Manager if clear boundaries are not kept.
 
-## TCA: il flusso unidirezionale formalizzato
+## TCA: the formalised unidirectional flow
 
-TCA è molto più specifica e si basa su **State, Action, Reducer, Effect, Store, Dependencies**.
+TCA is much more specific and is built on **State, Action, Reducer, Effect, Store, Dependencies**.
 
 ![TCA: Unidirectional Flow](/blog/infographic-tca.png)
 
-La View non chiama servizi: invia azioni. Il Reducer decide cosa cambia nello stato e quali Effect lanciare. Le dipendenze non sono una scelta lasciata alla feature, sono parte del sistema:
+The View does not call services: it sends actions. The Reducer decides what changes in the state and which Effects to launch. Dependencies are not a choice left to the feature, they are part of the system:
 
 ```swift
 @Reducer
@@ -188,18 +188,18 @@ struct PackingFeature {
 }
 ```
 
-TCA è probabilmente l'architettura più rigorosa e completa nel mondo Swift moderno: utile con feature complesse, molti stati intermedi, side effects, cancellazione, debounce, deep link, team grandi e test deterministici. Il vantaggio è che rende tutto esplicito; lo svantaggio è che richiede di adottare l'intero modello. **Worth the step? Non necessariamente.** Si può ottenere gran parte dei suoi benefici con una soluzione più leggera: Clean come bussola, AppState/FeatureState, Interactors o Services, Repositories e closure-based dependencies.
+TCA is probably the most rigorous and complete architecture in the modern Swift world: useful with complex features, many intermediate states, side effects, cancellation, debounce, deep links, large teams and deterministic tests. The advantage is that it makes everything explicit; the downside is that it requires adopting the whole model. **Worth the step? Not necessarily.** You can get most of its benefits with a lighter solution: Clean as the compass, AppState/FeatureState, Interactors or Services, Repositories and closure-based dependencies.
 
-## Conclusione
+## Conclusion
 
-Tutti questi pattern provano a rispondere a tre domande: **dove vive lo stato, dove avvengono i side effects, dove vengono composte le dipendenze.** La qualità di un'architettura dipende da quanto sono chiare queste tre risposte. Se non sai dove vive lo stato, avrai bug difficili da tracciare; se non sai dove avvengono i side effects, avrai codice difficile da testare; se non sai dove sono composte le dipendenze, avrai coupling nascosto.
+All of these patterns try to answer three questions: **where state lives, where side effects happen, where dependencies are composed.** The quality of an architecture depends on how clear these three answers are. If you don't know where state lives, you'll have bugs that are hard to trace; if you don't know where side effects happen, you'll have code that is hard to test; if you don't know where dependencies are composed, you'll have hidden coupling.
 
-Il passaggio da MVVM/VIPER verso Clean Architecture ha senso perché sposta l'attenzione dalla singola schermata al flusso complessivo dell'app. Ma il passaggio successivo non è "dopo Clean arriva Closure-based DI": è più corretto dire che **Clean Architecture dà la bussola, Closure-based DI dà la tecnica, Service–Store dà la forma SwiftUI-native, TCA dà il riferimento più rigoroso**. La forma finale può essere sintetizzata così:
+The move from MVVM/VIPER toward Clean Architecture makes sense because it shifts attention from the single screen to the overall flow of the app. But the next step is not "after Clean comes Closure-based DI": it is more accurate to say that **Clean Architecture gives the compass, Closure-based DI gives the technique, Service–Store gives the SwiftUI-native shape, TCA gives the most rigorous reference**. The final shape can be summarised like this:
 
 - **View** = rendering
-- **State / Store** = verità osservabile
-- **Interactor / Service** = intenzione e side effects
-- **Repository** = accesso ai dati
-- **Dependency system** = composizione
+- **State / Store** = observable truth
+- **Interactor / Service** = intent and side effects
+- **Repository** = data access
+- **Dependency system** = composition
 
-Il vero nemico non è MVC, MVVM o Clean Architecture. È sempre lo stesso: **complessità accumulata nel posto sbagliato**. E quella complessità non riguarda solo lo stato o la business logic — riguarda anche le dipendenze. Chi le crea, chi le possiede, chi può usarle, chi può sostituirle, e quanto è facile capire tutto questo leggendo il codice.
+The real enemy is not MVC, MVVM or Clean Architecture. It is always the same: **complexity accumulated in the wrong place**. And that complexity is not only about state or business logic — it is also about dependencies. Who creates them, who owns them, who can use them, who can replace them, and how easy it is to understand all of this just by reading the code.
