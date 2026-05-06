@@ -5,6 +5,58 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { ArrowLeft, Calendar, Tag } from "lucide-react";
 import { useEffect, useMemo, useState, ReactNode } from "react";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+
+// Custom palette-aligned theme for code blocks (cream/gold/black site palette)
+const codeTheme: { [key: string]: React.CSSProperties } = {
+  'pre[class*="language-"]': {
+    background: "transparent",
+    color: "hsl(36 52% 91%)", // cream (default text)
+    fontFamily:
+      'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
+    fontSize: "0.875rem",
+    lineHeight: "1.6",
+    margin: 0,
+    padding: 0,
+    whiteSpace: "pre",
+  },
+  'code[class*="language-"]': {
+    background: "transparent",
+    color: "hsl(36 52% 91%)",
+    fontFamily:
+      'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
+  },
+  comment: { color: "hsl(24 15% 55%)", fontStyle: "italic" },
+  prolog: { color: "hsl(24 15% 55%)" },
+  doctype: { color: "hsl(24 15% 55%)" },
+  cdata: { color: "hsl(24 15% 55%)" },
+  punctuation: { color: "hsl(36 30% 75%)" },
+  property: { color: "hsl(40 59% 71%)" }, // accent-highlight
+  tag: { color: "hsl(40 59% 71%)" },
+  boolean: { color: "hsl(39 78% 60%)" }, // gold lighter
+  number: { color: "hsl(39 78% 60%)" },
+  constant: { color: "hsl(39 78% 60%)" },
+  symbol: { color: "hsl(39 78% 60%)" },
+  selector: { color: "hsl(40 59% 71%)" },
+  "attr-name": { color: "hsl(40 59% 71%)" },
+  string: { color: "hsl(24 50% 78%)" }, // warm taupe-cream
+  char: { color: "hsl(24 50% 78%)" },
+  builtin: { color: "hsl(40 70% 65%)" },
+  inserted: { color: "hsl(40 70% 65%)" },
+  operator: { color: "hsl(36 30% 75%)" },
+  entity: { color: "hsl(36 30% 75%)", cursor: "help" },
+  url: { color: "hsl(40 59% 71%)" },
+  variable: { color: "hsl(36 52% 91%)" },
+  atrule: { color: "hsl(39 78% 60%)" },
+  "attr-value": { color: "hsl(24 50% 78%)" },
+  function: { color: "hsl(39 78% 56%)" }, // accent gold
+  "class-name": { color: "hsl(40 59% 78%)" },
+  keyword: { color: "hsl(39 78% 56%)", fontWeight: "600" }, // accent gold, bold
+  regex: { color: "hsl(24 50% 78%)" },
+  important: { color: "hsl(39 78% 56%)", fontWeight: "bold" },
+  bold: { fontWeight: "bold" },
+  italic: { fontStyle: "italic" },
+};
 
 interface Heading {
   id: string;
