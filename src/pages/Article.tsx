@@ -186,7 +186,7 @@ const Article = () => {
 
         <h1 className="text-4xl font-bold mb-8">{article.title}</h1>
 
-        <div className="prose prose-neutral max-w-none prose-headings:text-foreground prose-headings:font-bold prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-4 prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-3 prose-p:text-foreground/80 prose-strong:text-foreground prose-a:text-accent prose-code:bg-muted prose-code:text-accent prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:font-mono prose-code:before:content-none prose-code:after:content-none prose-pre:bg-primary prose-pre:text-primary-foreground prose-pre:rounded-lg prose-pre:border prose-pre:border-border prose-pre:overflow-x-auto prose-img:rounded-2xl prose-img:border prose-img:border-border/60 prose-img:shadow-medium prose-img:my-6 prose-img:mx-auto prose-img:max-w-lg prose-img:w-full prose-img:bg-card">
+        <div className="prose prose-neutral max-w-none prose-headings:text-foreground prose-headings:font-bold prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-4 prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-3 prose-p:text-foreground/80 prose-strong:text-foreground prose-a:text-accent prose-a:font-bold prose-a:no-underline hover:prose-a:underline prose-code:bg-primary prose-code:text-primary-foreground prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:font-mono prose-code:before:content-none prose-code:after:content-none prose-pre:bg-primary prose-pre:text-primary-foreground prose-pre:rounded-lg prose-pre:border prose-pre:border-border prose-pre:overflow-x-auto prose-img:rounded-2xl prose-img:border prose-img:border-border/60 prose-img:shadow-medium prose-img:my-6 prose-img:mx-auto prose-img:max-w-lg prose-img:w-full prose-img:bg-card">
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             components={{
@@ -198,24 +198,45 @@ const Article = () => {
                 const id = slugify(getTextContent(children));
                 return <h3 id={id} className="scroll-mt-20 text-2xl font-bold mt-8 mb-3" {...props}>{children}</h3>;
               },
-              pre: ({ children, ...props }) => (
-                <pre className="bg-primary text-primary-foreground p-4 rounded-lg border border-border overflow-x-auto text-sm leading-relaxed" {...props}>
+              a: ({ children, ...props }) => (
+                <a
+                  {...props}
+                  target={props.href?.startsWith("http") ? "_blank" : undefined}
+                  rel={props.href?.startsWith("http") ? "noopener noreferrer" : undefined}
+                  className="text-accent font-bold no-underline hover:underline"
+                >
                   {children}
-                </pre>
+                </a>
               ),
               code: ({ className, children, ...props }) => {
+                const match = /language-(\w+)/.exec(className || "");
                 const isInline = !className;
                 if (isInline) {
                   return (
-                    <code className="bg-primary text-accent px-1.5 py-0.5 rounded text-sm font-mono" {...props}>
+                    <code className="bg-primary text-primary-foreground px-1.5 py-0.5 rounded text-sm font-mono" {...props}>
                       {children}
                     </code>
                   );
                 }
+                const language = match?.[1] || "swift";
                 return (
-                  <code className={`${className} text-sm font-mono`} {...props}>
-                    {children}
-                  </code>
+                  <SyntaxHighlighter
+                    language={language}
+                    style={codeTheme}
+                    PreTag="pre"
+                    customStyle={{
+                      background: "hsl(var(--primary))",
+                      color: "hsl(var(--primary-foreground))",
+                      padding: "1rem",
+                      borderRadius: "0.5rem",
+                      border: "1px solid hsl(var(--border))",
+                      overflowX: "auto",
+                      margin: "1.25rem 0",
+                    }}
+                    codeTagProps={{ className: "text-sm font-mono" }}
+                  >
+                    {String(children).replace(/\n$/, "")}
+                  </SyntaxHighlighter>
                 );
               },
             }}
