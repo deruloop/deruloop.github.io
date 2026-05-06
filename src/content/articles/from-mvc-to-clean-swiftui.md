@@ -103,29 +103,53 @@ struct DIContainer {
 
 The DIContainer can have `live`, `preview`, `test` variants. The risk is that it turns into a Service Locator: to avoid this, inject more specific dependencies per feature and use `Environment` with discipline. The rule about AppState is similar: local state in the View if it is only needed there, feature state if it is shared across one feature, AppState only for what is truly global.
 
-## Closure-based Dependency Injection: technique, not architecture
+## Where do we go from here? Closure-based Dependency Injection
 
-Modelling dependencies as values (an idea popularised by Point-Free) is a **technique**, not an architecture:
+Clean Architecture answers the *structural* question — who owns state, who runs use cases, who exposes data. It leaves open the *implementation* question: **how do dependencies actually get into Interactors, Repositories and Services?** The classic answer is "protocols + concrete types + a mock for tests". It works, but every dependency costs you a protocol, an implementation, a mock, and often a wrapper just to make initializers compile.
+
+The technique popularised by Point-Free flips this: model a dependency as a **struct of closures**, not as a protocol. The "interface" is the shape of its functions; implementations are just values.
 
 ```swift
 struct TripsRepository {
     var fetchTrips: () async throws -> [Trip]
+    var save: (Trip) async throws -> Void
 }
 
 extension TripsRepository {
-    static let live = TripsRepository(fetchTrips: { try await apiClient.fetchTrips() })
-    static let mock = TripsRepository(fetchTrips: { [.mock] })
-    static let preview = TripsRepository(fetchTrips: { [.romeTrip, .tokyoTrip] })
+    static let live = TripsRepository(
+        fetchTrips: { try await APIClient.shared.fetchTrips() },
+        save:       { try await APIClient.shared.save($0) }
+    )
+    static let preview = TripsRepository(
+        fetchTrips: { [.romeTrip, .tokyoTrip] },
+        save:       { _ in }
+    )
+    static let failing = TripsRepository(
+        fetchTrips: { throw URLError(.notConnectedToInternet) },
+        save:       { _ in }
+    )
 }
 ```
 
-It applies inside different architectures — MVVM, Clean, Service–Store, TCA — reducing protocol boilerplate and making it trivial to swap implementations in tests and previews.
+The same Interactor from the Clean section becomes trivial to instantiate in any context — production, SwiftUI previews, unit tests — by swapping a value instead of writing a new class:
+
+```swift
+let interactor = TripsInteractor(
+    appState: appState,
+    tripsRepository: .preview,        // or .live, .failing, custom...
+    analyticsService: .noop
+)
+```
+
+This is a **technique, not an architecture**. It applies inside MVVM, Clean, Service–Store and TCA. It removes protocol boilerplate, makes substitution a one-liner, and turns "configuring the app for tests" into building a different `DIContainer` value. It is the natural bridge between Naumov-style Clean Architecture and the more SwiftUI-native shapes that follow.
 
 ## Service–Store: a pragmatic SwiftUI variant
 
-Service–Store separates **Store** (observable state), **Service** (operations and side effects) and **View** (rendering + intents).
+Once dependencies are values, the next question is whether the *layered* shape of Clean Architecture is still the best fit for SwiftUI. Naumov's Clean Architecture is **layer-oriented**: the app is sliced horizontally into View / AppState / Interactors / Repositories / Services, and a feature is a path that crosses all layers. Service–Store is **feature-store-oriented**: the app is sliced vertically by feature, and each feature owns its own observable Store and its own Service.
 
 ![Service–Store Architecture](/blog/infographic-service-store.svg)
+
+The Store is the observable truth for *one feature*; the Service is the set of operations that can mutate that Store and trigger side effects; the View renders the Store and sends intents to the Service.
 
 ```swift
 @MainActor @Observable
@@ -138,9 +162,48 @@ struct PackingService {
     var loadItems: () async -> Void
     var markAsPacked: (NeededItem.ID) async -> Void
 }
+
+extension PackingService {
+    static func live(store: PackingStore,
+                     repository: NeededItemRepository) -> PackingService {
+        PackingService(
+            loadItems: {
+                store.loadingState = .loading
+                do {
+                    store.items = try await repository.fetchItems()
+                    store.loadingState = .loaded
+                } catch {
+                    store.loadingState = .failed(error)
+                }
+            },
+            markAsPacked: { id in
+                try? await repository.markAsPacked(id)
+                if let i = store.items.firstIndex(where: { $0.id == id }) {
+                    store.items[i].isPacked = true
+                }
+            }
+        )
+    }
+}
+
+struct PackingView: View {
+    let store: PackingStore
+    let service: PackingService
+    var body: some View {
+        List(store.items) { item in
+            Button(item.name) { Task { await service.markAsPacked(item.id) } }
+        }
+        .task { await service.loadItems() }
+    }
+}
 ```
 
-The flow is `View → Service → Store mutation → View`: a *soft* Redux-like, or a *TCA-inspired, but not TCA*. It is not better or worse than Clean Architecture, just different: Clean gives the conceptual compass, Service–Store the SwiftUI-native shape, Closure-based DI the implementation technique. The main risk is that lightness becomes disorder — a Service can easily turn into a new Manager if clear boundaries are not kept.
+Compared to Clean Architecture, the trade-off is clear:
+
+- **Naumov Clean Architecture is layer-oriented.** A global `AppState` and shared Interactors/Repositories give you a coherent picture of the whole app, at the cost of more ceremony per feature and a single composition root that has to know about everything.
+- **Service–Store is feature-store-oriented.** Each feature is a self-contained `(Store, Service)` pair built on top of the same closure-based dependencies. It scales naturally with the number of features and maps directly onto SwiftUI's `@Observable` world, but it gives up the global compass — there is no single AppState, so cross-feature state has to be designed explicitly.
+
+The flow `View → Service → Store mutation → View` is a *soft* Redux-like, or *TCA-inspired, but not TCA*. The main risk is that lightness becomes disorder: a Service can easily turn into a new Manager if the feature boundary is not kept honest.
 
 ## TCA: the formalised unidirectional flow
 
