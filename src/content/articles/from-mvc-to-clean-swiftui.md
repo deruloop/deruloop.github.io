@@ -107,6 +107,8 @@ The DIContainer can have `live`, `preview`, `test` variants. The risk is that it
 
 Clean Architecture answers the *structural* question — who owns state, who runs use cases, who exposes data. It leaves open the *implementation* question: **how do dependencies actually get into Interactors, Repositories and Services?** The classic answer is "protocols + concrete types + a mock for tests". It works, but every dependency costs you a protocol, an implementation, a mock, and often a wrapper just to make initializers compile.
 
+Kyle Browning explored this exact tension in [*Dependency Injection in SwiftUI*](https://kylebrowning.com/posts/dependency-injection-in-swiftui/), arguing that the protocol-heavy approach common in UIKit does not translate well to SwiftUI's value-type, preview-driven world. The article asks a simple question: if SwiftUI previews and tests need lightweight, swappable dependencies, why make the substitution mechanism heavy?
+
 The technique popularised by Point-Free flips this: model a dependency as a **struct of closures**, not as a protocol. The "interface" is the shape of its functions; implementations are just values.
 
 ```swift
