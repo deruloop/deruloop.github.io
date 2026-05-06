@@ -134,17 +134,17 @@ const Article = () => {
 
         <h1 className="text-4xl font-bold mb-8">{article.title}</h1>
 
-        <div className="prose prose-neutral max-w-none prose-headings:text-foreground prose-p:text-muted-foreground prose-strong:text-foreground prose-a:text-accent prose-code:bg-primary prose-code:text-accent prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:font-mono prose-pre:bg-primary prose-pre:text-primary-foreground prose-pre:rounded-lg prose-pre:border prose-pre:border-border prose-pre:overflow-x-auto prose-img:rounded-xl prose-img:border prose-img:border-border prose-img:shadow-sm prose-img:my-8">
+        <div className="prose prose-neutral max-w-none prose-headings:text-foreground prose-headings:font-bold prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-4 prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-3 prose-p:text-foreground/80 prose-strong:text-foreground prose-a:text-accent prose-code:bg-muted prose-code:text-accent prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:font-mono prose-code:before:content-none prose-code:after:content-none prose-pre:bg-primary prose-pre:text-primary-foreground prose-pre:rounded-lg prose-pre:border prose-pre:border-border prose-pre:overflow-x-auto prose-img:rounded-2xl prose-img:border prose-img:border-border prose-img:shadow-sm prose-img:my-4 prose-img:mx-auto prose-img:max-w-md prose-img:w-full">
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             components={{
               h2: ({ children, ...props }) => {
                 const id = slugify(getTextContent(children));
-                return <h2 id={id} className="scroll-mt-20" {...props}>{children}</h2>;
+                return <h2 id={id} className="scroll-mt-20 text-3xl font-bold mt-12 mb-4" {...props}>{children}</h2>;
               },
               h3: ({ children, ...props }) => {
                 const id = slugify(getTextContent(children));
-                return <h3 id={id} className="scroll-mt-20" {...props}>{children}</h3>;
+                return <h3 id={id} className="scroll-mt-20 text-2xl font-bold mt-8 mb-3" {...props}>{children}</h3>;
               },
               pre: ({ children, ...props }) => (
                 <pre className="bg-primary text-primary-foreground p-4 rounded-lg border border-border overflow-x-auto text-sm leading-relaxed" {...props}>
