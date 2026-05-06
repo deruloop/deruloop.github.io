@@ -1,67 +1,65 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 380" font-family="-apple-system, system-ui, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 420" font-family="-apple-system, system-ui, sans-serif">
   <defs>
     <style>
       .bg{fill:#F8EFDC}
       .box{fill:#F6E8CE;stroke:#0F1B23;stroke-width:1.5}
       .gold{fill:#D2931A;stroke:#0F1B23;stroke-width:1.5}
       .arrow{stroke:#0F1B23;stroke-width:1.5;fill:none;marker-end:url(#a)}
+      .dashed{stroke:#0F1B23;stroke-width:1.2;fill:none;stroke-dasharray:4 4;opacity:.5}
       text{fill:#0F1B23;font-size:12px}
       .cap{font-size:10px;letter-spacing:1.5px;opacity:.55;font-weight:600}
       .h{font-size:13px;font-weight:700}
-      .sub{font-size:10px;opacity:.6}
+      .sub{font-size:10px;opacity:.65}
       .muted{fill:#0F1B23;opacity:.6;font-size:11px}
     </style>
     <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#0F1B23"/>
     </marker>
   </defs>
-  <rect class="bg" width="800" height="380"/>
-  <text class="cap" x="40" y="36">CLEAN SwiftUI  ·  FIVE ROLES, ONE COMPOSITION ROOT</text>
+  <rect class="bg" width="820" height="420"/>
+  <text class="cap" x="40" y="34">CLEAN SwiftUI  ·  FIVE ROLES, ONE COMPOSITION ROOT</text>
 
-  <!-- View -->
-  <rect class="box" x="60" y="80" width="160" height="60" rx="10"/>
-  <text class="h" x="140" y="110" text-anchor="middle">View</text>
-  <text class="sub" x="140" y="128" text-anchor="middle">reads state · sends intents</text>
+  <!-- Row 1: View -> AppState -->
+  <rect class="box" x="80" y="60" width="180" height="64" rx="10"/>
+  <text class="h" x="170" y="90" text-anchor="middle">View</text>
+  <text class="sub" x="170" y="108" text-anchor="middle">reads state · sends intents</text>
 
-  <!-- AppState (right of View) -->
-  <rect class="box" x="260" y="80" width="160" height="60" rx="10"/>
-  <text class="h" x="340" y="110" text-anchor="middle">AppState</text>
-  <text class="sub" x="340" y="128" text-anchor="middle">shared observable state</text>
+  <rect class="box" x="560" y="60" width="180" height="64" rx="10"/>
+  <text class="h" x="650" y="90" text-anchor="middle">AppState</text>
+  <text class="sub" x="650" y="108" text-anchor="middle">shared observable state</text>
 
-  <!-- Interactor -->
-  <rect class="gold" x="60" y="190" width="160" height="60" rx="10"/>
-  <text class="h" x="140" y="220" text-anchor="middle" fill="#fff">Interactor</text>
-  <text x="140" y="238" text-anchor="middle" fill="#fff" font-size="10" opacity=".9">use cases</text>
+  <!-- Row 2: Interactor center -->
+  <rect class="gold" x="320" y="170" width="180" height="64" rx="10"/>
+  <text class="h" x="410" y="200" text-anchor="middle" fill="#fff">Interactor</text>
+  <text x="410" y="218" text-anchor="middle" fill="#fff" font-size="10" opacity=".9">use cases</text>
 
-  <!-- Repository -->
-  <rect class="box" x="260" y="190" width="160" height="60" rx="10"/>
-  <text class="h" x="340" y="220" text-anchor="middle">Repository</text>
-  <text class="sub" x="340" y="238" text-anchor="middle">data abstraction</text>
+  <!-- Row 3: Repository | Service -->
+  <rect class="box" x="80" y="280" width="180" height="64" rx="10"/>
+  <text class="h" x="170" y="310" text-anchor="middle">Repository</text>
+  <text class="sub" x="170" y="328" text-anchor="middle">data access</text>
 
-  <!-- Service -->
-  <rect class="box" x="460" y="190" width="160" height="60" rx="10"/>
-  <text class="h" x="540" y="220" text-anchor="middle">Service</text>
-  <text class="sub" x="540" y="238" text-anchor="middle">analytics, etc.</text>
+  <rect class="box" x="560" y="280" width="180" height="64" rx="10"/>
+  <text class="h" x="650" y="310" text-anchor="middle">Service</text>
+  <text class="sub" x="650" y="328" text-anchor="middle">analytics, push, …</text>
+
+  <!-- Arrows: View -> Interactor (intents) -->
+  <path class="arrow" d="M170,124 C170,150 280,160 318,190"/>
+  <!-- Interactor -> AppState (writes state) -->
+  <path class="arrow" d="M500,200 C560,180 580,160 600,124"/>
+  <!-- AppState -> View (observed) -->
+  <path class="dashed" d="M560,92 L262,92"/>
+  <text class="muted" x="411" y="84" text-anchor="middle">observes</text>
+
+  <!-- Interactor -> Repository / Service -->
+  <path class="arrow" d="M340,234 C300,260 240,270 220,278"/>
+  <path class="arrow" d="M480,234 C520,260 580,270 600,278"/>
 
   <!-- DIContainer -->
-  <rect x="60" y="290" width="560" height="60" rx="10" fill="#0F1B23"/>
-  <text class="h" x="340" y="320" text-anchor="middle" fill="#F8EFDC">DIContainer  ·  composition root</text>
-  <text x="340" y="338" text-anchor="middle" fill="#F8EFDC" font-size="10" opacity=".7">live · preview · test</text>
-
-  <!-- arrows -->
-  <line class="arrow" x1="140" y1="140" x2="140" y2="188"/>
-  <line class="arrow" x1="220" y1="220" x2="258" y2="220"/>
-  <line class="arrow" x1="420" y1="220" x2="458" y2="220"/>
-  <line class="arrow" x1="220" y1="110" x2="258" y2="110"/>
-  <line class="arrow" x1="180" y1="250" x2="180" y2="288"/>
-  <line class="arrow" x1="380" y1="250" x2="380" y2="288"/>
-  <line class="arrow" x1="500" y1="250" x2="500" y2="288"/>
-
-  <!-- side note -->
-  <g transform="translate(660,80)">
-    <text class="cap" x="0" y="0">SCOPE RULES</text>
-    <text class="muted" x="0" y="22">local → in View</text>
-    <text class="muted" x="0" y="42">feature → FeatureState</text>
-    <text class="muted" x="0" y="62">global → AppState</text>
-  </g>
+  <rect x="80" y="370" width="660" height="40" rx="10" fill="#0F1B23"/>
+  <text class="h" x="410" y="389" text-anchor="middle" fill="#F8EFDC">DIContainer · composition root</text>
+  <text x="410" y="403" text-anchor="middle" fill="#F8EFDC" font-size="10" opacity=".7">live · preview · test</text>
+  <!-- DI feeds into roles -->
+  <line class="dashed" x1="170" y1="370" x2="170" y2="344"/>
+  <line class="dashed" x1="410" y1="370" x2="410" y2="234"/>
+  <line class="dashed" x1="650" y1="370" x2="650" y2="344"/>
 </svg>
