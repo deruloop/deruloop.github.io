@@ -5,8 +5,6 @@ excerpt: Beyond async/await — how actors, task groups, Sendable, and strict co
 tags: [Swift, Concurrency, Advanced]
 ---
 
-# Advanced Swift Concurrency
-
 Swift Concurrency is one of those changes that looks simple at first because `async` and `await` are easy to read. Then you start using actors, task groups, `Sendable`, and strict concurrency checking, and you realise the feature is not just a nicer way to write completion handlers.
 
 It changes how Swift wants you to think about asynchronous work.
@@ -202,3 +200,29 @@ Structured concurrency gives you a cleaner model: the task should live only as l
 Swift Concurrency does not make every async problem simple. You still need to understand isolation, cancellation, reentrancy, and the difference between structured and unstructured tasks. But the direction is better. Instead of relying on comments and team discipline, more of the rules are expressed in the type system and checked by the compiler.
 
 The result is a safer async code.
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
