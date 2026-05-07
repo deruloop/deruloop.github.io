@@ -12,9 +12,9 @@ A pragmatic evolution of iOS architecture across ViewModel, Dependency Injection
 One of my many loop thoughts in mobile software development is the choice of the correct architecture to implement.
 What i consider to be a perfect architecture is one that addresses this 3 concepts:
 
-- _high scalability_,: it has to be modular enough to implement easily new services, features or tools with the less possibile rewriting of source code
-- _robust testing_ : it has to be supported by strong acceptance, integration and unit tests, granting realiablity over time
-- _knowledge transfer_ : it has to be clear enough to anyone who needs to touch the code or interact with it
+- **high scalability** : it has to be modular enough to implement easily new services, features or tools with the less possibile rewriting of source code
+- **robust testing** : it has to be supported by strong acceptance, integration and unit tests, granting realiablity over time
+- **knowledge transfer** : it has to be clear enough to anyone who needs to touch the code or interact with it
 
 ## MVC: where it all started
 
