@@ -298,3 +298,10 @@ All of these patterns try to answer three questions: **where state lives, where 
 It is also important to mention that there is no real final perfect architecture (old me would be so pissed about this sentence), but it really depends on the complexity of what you are building, the services you need and the platforms you are developing for.
 
 The real enemy is not MVC, MVVM or Clean Architecture. It is always the same: **complexity accumulated in the wrong place**.
+
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
