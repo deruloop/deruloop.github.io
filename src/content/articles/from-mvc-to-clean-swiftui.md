@@ -85,7 +85,7 @@ With SwiftUI the question changes: no longer "how do I lighten the ViewControlle
 
 ![Clean SwiftUI Architecture](/blog/infographic-clean.svg)
 
-The approach i liked the most was [_clean-architecture-swiftui_](https://github.com/nalexn/clean-architecture-swiftui) by Alexey Naumov. This idea is a first similar to VIPER, but oriented to the global state of the app.
+The approach i liked the most was [_clean-architecture-swiftui_](https://github.com/nalexn/clean-architecture-swiftui) by Alexey Naumov. This idea is at first similar to VIPER, but with a Combine observability pattern and way more focused to the global state of the app.
 The main concepts are this five roles: **View, AppState, Interactors, Repositories, DIContainer**. The View reads state and sends intents; the Interactor executes use cases; the Repository abstracts the data; the AppState holds shared state; the DIContainer composes the graph.
 
 ```swift
