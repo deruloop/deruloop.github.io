@@ -79,7 +79,7 @@ The opposite risk to MVVM is clear: MVVM concentrates too much in too few object
 
 ## Clean Architecture in SwiftUI
 
-While the architectures before came to me, mostly expiriencing them on many companies i had the pleasure to work with, this one is when i went exploring and started to overfocus on what was new about architectural patterns. Since the Apple presentation of Combine framework i had this little idea in my head that there was more to know about state management for SwiftUI. Also this framework and the arrival of `NavigationStack` created a firm belief that the time was mature enough to bring this ideas in production.
+While the architectures before directly hit me, mostly experiencing them on many companies i had the pleasure to work with, this one is when i went exploring and started to overfocus on what was new about architectural patterns. Since the Apple presentation of Combine framework i had this little idea in my head that there was more to know about state management for SwiftUI. Also this framework and the arrival of `NavigationStack` created a firm belief that the time was mature enough to bring this ideas in production.
 
 With SwiftUI the question changes: no longer "how do I lighten the ViewController?", but **how do I organise state, side effects, business logic, navigation and dependencies in a declarative UI?**
 
