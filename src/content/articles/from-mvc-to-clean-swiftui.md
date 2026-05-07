@@ -305,3 +305,13 @@ The real enemy is not MVC, MVVM or Clean Architecture. It is always the same: **
 &nbsp;
 
 &nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
