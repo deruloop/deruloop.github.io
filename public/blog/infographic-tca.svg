@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 380" font-family="-apple-system, system-ui, sans-serif">
+  <defs>
+    <style>
+      .bg{fill:#F8EFDC}
+      .box{fill:#F6E8CE;stroke:#0F1B23;stroke-width:1.5}
+      .gold{fill:#D2931A;stroke:#0F1B23;stroke-width:1.5}
+      .arrow{stroke:#0F1B23;stroke-width:1.5;fill:none;marker-end:url(#a)}
+      .arrowDash{stroke:#0F1B23;stroke-width:1.5;fill:none;marker-end:url(#a);stroke-dasharray:4 4;opacity:.7}
+      text{fill:#0F1B23;font-size:12px}
+      .cap{font-size:10px;letter-spacing:1.5px;opacity:.55;font-weight:600}
+      .h{font-size:13px;font-weight:700}
+      .sub{font-size:10px;opacity:.65}
+      .lbl{font-size:11px;font-weight:600}
+    </style>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#0F1B23"/>
+    </marker>
+  </defs>
+  <rect class="bg" width="800" height="380"/>
+  <text class="cap" x="40" y="36">TCA  ·  UNIDIRECTIONAL FLOW</text>
+
+  <!-- Nodes around horizontal loop -->
+  <rect class="box" x="60" y="160" width="140" height="60" rx="10"/>
+  <text class="h" x="130" y="190" text-anchor="middle">View</text>
+  <text class="sub" x="130" y="208" text-anchor="middle">sends actions</text>
+
+  <rect class="box" x="260" y="160" width="140" height="60" rx="10"/>
+  <text class="h" x="330" y="190" text-anchor="middle">Action</text>
+  <text class="sub" x="330" y="208" text-anchor="middle">.onAppear, .markAsPacked…</text>
+
+  <rect class="gold" x="460" y="160" width="140" height="60" rx="10"/>
+  <text class="h" x="530" y="190" text-anchor="middle" fill="#fff">Reducer</text>
+  <text x="530" y="208" text-anchor="middle" fill="#fff" font-size="10" opacity=".9">state + action → state</text>
+
+  <rect class="box" x="660" y="160" width="120" height="60" rx="10"/>
+  <text class="h" x="720" y="190" text-anchor="middle">State</text>
+  <text class="sub" x="720" y="208" text-anchor="middle">items · loading</text>
+
+  <!-- horizontal arrows -->
+  <line class="arrow" x1="200" y1="190" x2="258" y2="190"/>
+  <line class="arrow" x1="400" y1="190" x2="458" y2="190"/>
+  <line class="arrow" x1="600" y1="190" x2="658" y2="190"/>
+
+  <!-- State -> View loop back -->
+  <path class="arrow" d="M720,160 Q720,90 130,90 L130,158"/>
+  <text class="lbl" x="420" y="80" text-anchor="middle">renders new state</text>
+
+  <!-- Effect side branch -->
+  <rect class="box" x="460" y="280" width="140" height="60" rx="10"/>
+  <text class="h" x="530" y="310" text-anchor="middle">Effect</text>
+  <text class="sub" x="530" y="328" text-anchor="middle">async side effects</text>
+
+  <line class="arrow" x1="530" y1="220" x2="530" y2="278"/>
+  <path class="arrowDash" d="M460,310 Q330,310 330,222"/>
+  <text class="lbl" x="395" y="302" text-anchor="middle">re-emits action</text>
+
+  <!-- Dependencies node -->
+  <rect class="box" x="660" y="280" width="120" height="60" rx="10"/>
+  <text class="h" x="720" y="310" text-anchor="middle">Dependencies</text>
+  <text class="sub" x="720" y="328" text-anchor="middle">repository · analytics</text>
+  <line class="arrow" x1="660" y1="310" x2="602" y2="310"/>
+</svg>

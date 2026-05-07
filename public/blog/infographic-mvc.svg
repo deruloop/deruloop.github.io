@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 360" font-family="-apple-system, system-ui, sans-serif">
+  <defs>
+    <style>
+      .bg{fill:#F8EFDC}
+      .ink{fill:#0F1B23}
+      .muted{fill:#0F1B23;opacity:.6}
+      .gold{fill:#D2931A}
+      .box{fill:#F6E8CE;stroke:#0F1B23;stroke-width:1.5}
+      .line{stroke:#0F1B23;stroke-width:1.5;fill:none}
+      .arrow{stroke:#0F1B23;stroke-width:1.5;fill:none;marker-end:url(#a)}
+      text{fill:#0F1B23;font-size:12px}
+      .cap{font-size:10px;letter-spacing:1.5px;opacity:.55;font-weight:600}
+      .h{font-size:14px;font-weight:700}
+      .pill{fill:#D2931A}
+      .pillTxt{fill:#fff;font-size:10px;font-weight:600}
+    </style>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#0F1B23"/>
+    </marker>
+  </defs>
+  <rect class="bg" width="800" height="360"/>
+  <text class="cap" x="40" y="36">THE MASSIVE VIEW CONTROLLER</text>
+
+  <!-- View -->
+  <rect class="box" x="60" y="120" width="120" height="60" rx="8"/>
+  <text class="h" x="120" y="155" text-anchor="middle">View</text>
+
+  <!-- Model -->
+  <rect class="box" x="620" y="120" width="120" height="60" rx="8"/>
+  <text class="h" x="680" y="155" text-anchor="middle">Model</text>
+
+  <!-- Controller (huge) -->
+  <rect x="240" y="70" width="320" height="220" rx="12" fill="#D2931A" opacity=".15" stroke="#D2931A" stroke-width="1.5"/>
+  <rect class="box" x="280" y="130" width="240" height="60" rx="8" fill="#D2931A"/>
+  <text class="h" x="400" y="165" text-anchor="middle" fill="#fff">UIViewController</text>
+
+  <line class="arrow" x1="180" y1="150" x2="278" y2="158"/>
+  <line class="arrow" x1="522" y1="158" x2="618" y2="150"/>
+
+  <!-- responsibility pills crammed inside -->
+  <g font-size="10" font-weight="600">
+    <rect class="pill" x="260" y="80" width="70" height="18" rx="9"/><text class="pillTxt" x="295" y="93" text-anchor="middle">networking</text>
+    <rect class="pill" x="335" y="80" width="62" height="18" rx="9"/><text class="pillTxt" x="366" y="93" text-anchor="middle">validation</text>
+    <rect class="pill" x="402" y="80" width="46" height="18" rx="9"/><text class="pillTxt" x="425" y="93" text-anchor="middle">state</text>
+    <rect class="pill" x="453" y="80" width="50" height="18" rx="9"/><text class="pillTxt" x="478" y="93" text-anchor="middle">errors</text>
+    <rect class="pill" x="508" y="80" width="38" height="18" rx="9"/><text class="pillTxt" x="527" y="93" text-anchor="middle">nav</text>
+
+    <rect class="pill" x="260" y="200" width="68" height="18" rx="9"/><text class="pillTxt" x="294" y="213" text-anchor="middle">persistence</text>
+    <rect class="pill" x="333" y="200" width="60" height="18" rx="9"/><text class="pillTxt" x="363" y="213" text-anchor="middle">analytics</text>
+    <rect class="pill" x="398" y="200" width="74" height="18" rx="9"/><text class="pillTxt" x="435" y="213" text-anchor="middle">coordination</text>
+    <rect class="pill" x="477" y="200" width="60" height="18" rx="9"/><text class="pillTxt" x="507" y="213" text-anchor="middle">formatting</text>
+
+    <rect class="pill" x="320" y="240" width="48" height="18" rx="9"/><text class="pillTxt" x="344" y="253" text-anchor="middle">retry</text>
+    <rect class="pill" x="373" y="240" width="60" height="18" rx="9"/><text class="pillTxt" x="403" y="253" text-anchor="middle">caching</text>
+    <rect class="pill" x="438" y="240" width="50" height="18" rx="9"/><text class="pillTxt" x="463" y="253" text-anchor="middle">sync</text>
+  </g>
+
+  <text class="muted" x="400" y="320" text-anchor="middle">The Controller, born as mediator, ends up holding everything.</text>
+</svg>

@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 360" font-family="-apple-system, system-ui, sans-serif">
+  <defs>
+    <style>
+      .bg{fill:#F8EFDC}
+      .box{fill:#F6E8CE;stroke:#0F1B23;stroke-width:1.5}
+      .gold{fill:#D2931A;stroke:#0F1B23;stroke-width:1.5}
+      text{fill:#0F1B23}
+      .cap{font-size:11px;letter-spacing:2px;font-weight:700;opacity:.6}
+      .name{font-size:16px;font-weight:700;text-anchor:middle}
+      .nameLight{font-size:16px;font-weight:700;text-anchor:middle;fill:#F8EFDC}
+      .year{font-size:10px;text-anchor:middle;opacity:.6;letter-spacing:1px}
+      .yearLight{font-size:10px;text-anchor:middle;fill:#F8EFDC;opacity:.85;letter-spacing:1px}
+      .foot{font-size:11px;text-anchor:middle;opacity:.65}
+    </style>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#0F1B23"/>
+    </marker>
+  </defs>
+  <rect class="bg" width="800" height="360"/>
+
+  <text class="cap" x="400" y="50" text-anchor="middle">EVOLUTION OF iOS ARCHITECTURES</text>
+
+  <!-- Row 1: MVC -> MVVM -> VIPER -->
+  <g transform="translate(80,140)">
+    <rect class="box" width="160" height="70" rx="12"/>
+    <text class="name" x="80" y="40">MVC</text>
+  </g>
+  <path d="M250,175 L300,175" stroke="#0F1B23" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+
+  <g transform="translate(310,140)">
+    <rect class="box" width="160" height="70" rx="12"/>
+    <text class="name" x="80" y="40">MVVM</text>
+  </g>
+  <path d="M480,175 L530,175" stroke="#0F1B23" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+
+  <g transform="translate(540,140)">
+    <rect class="box" width="160" height="70" rx="12"/>
+    <text class="name" x="80" y="40">VIPER</text>
+  </g>
+
+  <!-- bend down arrow VIPER -> Clean -->
+  <path d="M620,215 L620,245" stroke="#0F1B23" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+
+  <!-- Row 2 (reversed): Clean SwiftUI (gold) -> Service-Store -> TCA -->
+  <g transform="translate(540,255)">
+    <rect class="gold" width="160" height="70" rx="12"/>
+    <text class="nameLight" x="80" y="40">Clean SwiftUI</text>
+  </g>
+  <path d="M530,290 L480,290" stroke="#0F1B23" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+
+  <g transform="translate(310,255)">
+    <rect class="box" width="160" height="70" rx="12"/>
+    <text class="name" x="80" y="40">Service–Store</text>
+  </g>
+  <path d="M300,290 L250,290" stroke="#0F1B23" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+
+  <g transform="translate(80,255)">
+    <rect class="box" width="160" height="70" rx="12"/>
+    <text class="name" x="80" y="40">TCA</text>
+  </g>
+</svg>

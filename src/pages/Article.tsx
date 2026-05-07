@@ -4,7 +4,58 @@ import TabSwitcher from "@/components/TabSwitcher";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { ArrowLeft, Calendar, Tag } from "lucide-react";
-import { useEffect, useMemo, useState, ReactNode, isValidElement } from "react";
+import { useEffect, useMemo, useState, ReactNode, CSSProperties, isValidElement } from "react";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+
+const codeTheme: Record<string, CSSProperties> = {
+  'pre[class*="language-"]': {
+    background: "transparent",
+    color: "hsl(36 52% 91%)", // cream (default text)
+    fontFamily:
+      'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
+    fontSize: "0.875rem",
+    lineHeight: "1.6",
+    margin: 0,
+    padding: 0,
+    whiteSpace: "pre",
+  },
+  'code[class*="language-"]': {
+    background: "transparent",
+    color: "hsl(36 52% 91%)",
+    fontFamily:
+      'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
+  },
+  comment: { color: "hsl(24 15% 55%)", fontStyle: "italic" },
+  prolog: { color: "hsl(24 15% 55%)" },
+  doctype: { color: "hsl(24 15% 55%)" },
+  cdata: { color: "hsl(24 15% 55%)" },
+  punctuation: { color: "hsl(36 30% 75%)" },
+  property: { color: "hsl(40 59% 71%)" }, // accent-highlight
+  tag: { color: "hsl(40 59% 71%)" },
+  boolean: { color: "hsl(39 78% 60%)" }, // gold lighter
+  number: { color: "hsl(39 78% 60%)" },
+  constant: { color: "hsl(39 78% 60%)" },
+  symbol: { color: "hsl(39 78% 60%)" },
+  selector: { color: "hsl(40 59% 71%)" },
+  "attr-name": { color: "hsl(40 59% 71%)" },
+  string: { color: "hsl(24 50% 78%)" }, // warm taupe-cream
+  char: { color: "hsl(24 50% 78%)" },
+  builtin: { color: "hsl(40 70% 65%)" },
+  inserted: { color: "hsl(40 70% 65%)" },
+  operator: { color: "hsl(36 30% 75%)" },
+  entity: { color: "hsl(36 30% 75%)", cursor: "help" },
+  url: { color: "hsl(40 59% 71%)" },
+  variable: { color: "hsl(36 52% 91%)" },
+  atrule: { color: "hsl(39 78% 60%)" },
+  "attr-value": { color: "hsl(24 50% 78%)" },
+  function: { color: "hsl(39 78% 56%)" }, // accent gold
+  "class-name": { color: "hsl(40 59% 78%)" },
+  keyword: { color: "hsl(39 78% 56%)", fontWeight: "600" }, // accent gold, bold
+  regex: { color: "hsl(24 50% 78%)" },
+  important: { color: "hsl(39 78% 56%)", fontWeight: "bold" },
+  bold: { fontWeight: "bold" },
+  italic: { fontStyle: "italic" },
+};
 
 interface Heading {
   id: string;
@@ -134,36 +185,58 @@ const Article = () => {
 
         <h1 className="text-4xl font-bold mb-8">{article.title}</h1>
 
-        <div className="prose prose-neutral max-w-none prose-headings:text-foreground prose-p:text-muted-foreground prose-strong:text-foreground prose-a:text-accent prose-code:bg-primary prose-code:text-accent prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:font-mono prose-pre:bg-primary prose-pre:text-primary-foreground prose-pre:rounded-lg prose-pre:border prose-pre:border-border prose-pre:overflow-x-auto">
+        <div className="prose prose-neutral max-w-none prose-headings:text-foreground prose-headings:font-bold prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-4 prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-3 prose-p:text-foreground/80 prose-strong:text-foreground prose-a:text-accent prose-a:font-bold prose-a:no-underline hover:prose-a:underline prose-code:bg-primary prose-code:text-primary-foreground prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:font-mono prose-code:before:content-none prose-code:after:content-none prose-pre:bg-primary prose-pre:text-primary-foreground prose-pre:rounded-lg prose-pre:border prose-pre:border-border prose-pre:overflow-x-auto prose-img:rounded-2xl prose-img:border prose-img:border-border/60 prose-img:shadow-medium prose-img:my-6 prose-img:mx-auto prose-img:max-w-lg prose-img:w-full prose-img:bg-card">
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             components={{
               h2: ({ children, ...props }) => {
                 const id = slugify(getTextContent(children));
-                return <h2 id={id} className="scroll-mt-20" {...props}>{children}</h2>;
+                return <h2 id={id} className="scroll-mt-20 text-3xl font-bold mt-12 mb-4" {...props}>{children}</h2>;
               },
               h3: ({ children, ...props }) => {
                 const id = slugify(getTextContent(children));
-                return <h3 id={id} className="scroll-mt-20" {...props}>{children}</h3>;
+                return <h3 id={id} className="scroll-mt-20 text-2xl font-bold mt-8 mb-3" {...props}>{children}</h3>;
               },
-              pre: ({ children, ...props }) => (
-                <pre className="bg-primary text-primary-foreground p-4 rounded-lg border border-border overflow-x-auto text-sm leading-relaxed" {...props}>
+              a: ({ children, ...props }) => (
+                <a
+                  {...props}
+                  target={props.href?.startsWith("http") ? "_blank" : undefined}
+                  rel={props.href?.startsWith("http") ? "noopener noreferrer" : undefined}
+                  className="text-accent font-bold no-underline hover:underline"
+                >
                   {children}
-                </pre>
+                </a>
               ),
+              pre: ({ children }) => <>{children}</>,
               code: ({ className, children, ...props }) => {
+                const match = /language-(\w+)/.exec(className || "");
                 const isInline = !className;
                 if (isInline) {
                   return (
-                    <code className="bg-primary text-accent px-1.5 py-0.5 rounded text-sm font-mono" {...props}>
+                    <code className="bg-primary text-primary-foreground px-1.5 py-0.5 rounded text-sm font-mono" {...props}>
                       {children}
                     </code>
                   );
                 }
+                const language = match?.[1] || "swift";
                 return (
-                  <code className={`${className} text-sm font-mono`} {...props}>
-                    {children}
-                  </code>
+                  <SyntaxHighlighter
+                    language={language}
+                    style={codeTheme}
+                    PreTag="pre"
+                    customStyle={{
+                      background: "hsl(var(--primary))",
+                      color: "hsl(var(--primary-foreground))",
+                      padding: "1rem",
+                      borderRadius: "0.5rem",
+                      border: "1px solid hsl(var(--border))",
+                      overflowX: "auto",
+                      margin: "1.25rem 0",
+                    }}
+                    codeTagProps={{ className: "text-sm font-mono" }}
+                  >
+                    {String(children).replace(/\n$/, "")}
+                  </SyntaxHighlighter>
                 );
               },
             }}
@@ -176,13 +249,13 @@ const Article = () => {
       {/* Bottom paragraph nav */}
       {headings.length > 0 && (
         <div className="fixed bottom-0 left-0 right-0 bg-card/90 backdrop-blur-md border-t border-border z-40">
-          <div className="container mx-auto px-4 max-w-3xl">
-            <div className="flex items-center gap-1 py-2 overflow-x-auto scrollbar-hide">
+          <div className="w-full px-4">
+            <div className="flex flex-wrap items-center gap-1 py-2">
               {headings.map((h) => (
                 <button
                   key={h.id}
                   onClick={() => scrollTo(h.id)}
-                  className={`whitespace-nowrap px-3 py-1 rounded-full text-xs font-medium transition-all duration-200 flex-shrink-0 ${
+                  className={`px-3 py-1 rounded-full text-xs font-medium transition-all duration-200 ${
                     activeId === h.id
                       ? "bg-accent text-accent-foreground"
                       : "text-muted-foreground hover:text-foreground hover:bg-muted"
