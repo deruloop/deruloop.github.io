@@ -35,9 +35,11 @@ There is also a second, often less explicit one: **how do dependencies reach the
 
 MVVM introduces a new actor, the ViewModel. This is a specialized actor oriented to the View needs.
 Its main purpose is to keep the View as dumb as possible, taking responsibility for preparing the data the View needs, exposing visual state, handling updates, refreshing content, and coordinating the UI state transitions.
+
 With the arrival of SwiftUI, the View became already declarative and state-driven, since SwiftUI Views already know how to refresh themselves when state changes through `@State`, `@Binding`, `@Observable`, `@StateObject`, `@Environment`, and so on.
-However, the idea behind the ViewModel did not disappear. With the complexity of a real app these tools SwiftUI had naturally embedded did not seem like enought at first. The Combine framework was a very new approach to observe states and not many applications felt confident to use it's true powers.
-Another crucial point was the fact that navigation in SwiftUI was very poor at the early stages making people still prefer the UIKit Coordinator pattern approaches.
+However, the idea behind the ViewModel did not disappear. In the complex world of a real app in production these tools SwiftUI had naturally embedded did not seem like enought at first. The Combine framework was a very new approach to observe states and not many applications felt confident to use it's true powers.
+
+Another crucial point was the fact that navigation in SwiftUI was very poor at the early stages making people still prefer the UIKit Coordinator pattern approach.
 For these main reasons the remaning presence of a Viewmodel helped a lot to "navigate"(pun eheh) the mess of dependecies, presentation logics and state management.
 
 ```swift
@@ -61,7 +63,7 @@ You guessed it, it all ends up inside the ViewModel. The Massive View Controller
 
 ![MVVM and the Massive ViewModel risk](/blog/infographic-mvvm.svg)
 
-MVVM, on its own, is not really the culprit of this problem, but the issue is that it doesn not provide a solution to that.
+MVVM, on its own, is not really the culprit of this problem, but the issue is that it doesn not provide a rule to it.
 So what is more likely to happen in a production MVVM app is going to be that a feature uses initializer injection, another `EnvironmentObject`, another calls `APIClient.shared` directly. DI ends up "all over the place" exactly like state management.
 And navigation, has no clear owner: View, ViewModel, Coordinator or Router?
 
