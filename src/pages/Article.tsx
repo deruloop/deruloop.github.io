@@ -4,7 +4,7 @@ import TabSwitcher from "@/components/TabSwitcher";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { ArrowLeft, Calendar, Tag } from "lucide-react";
-import { useEffect, useMemo, useState, ReactNode, CSSProperties, isValidElement } from "react";
+import { useEffect, useMemo, useRef, useState, ReactNode, CSSProperties, isValidElement } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 
 const codeTheme: Record<string, CSSProperties> = {
@@ -101,6 +101,8 @@ const Article = () => {
     [article]
   );
 
+  const paragraphNavRef = useRef<HTMLDivElement | null>(null);
+
   useEffect(() => {
     if (headings.length === 0) return;
 
@@ -133,6 +135,16 @@ const Article = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [headings]);
+
+  useEffect(() => {
+    if (!activeId) return;
+    const container = paragraphNavRef.current;
+    if (!container) return;
+
+    const activeButton = container.querySelector<HTMLButtonElement>(`button[data-id="${activeId}"]`);
+    if (!activeButton) return;
+    activeButton.scrollIntoView({ block: "nearest", inline: "center" });
+  }, [activeId]);
 
   if (!article) {
     return (
@@ -250,12 +262,13 @@ const Article = () => {
       {headings.length > 0 && (
         <div className="fixed bottom-0 left-0 right-0 bg-card/90 backdrop-blur-md border-t border-border z-40">
           <div className="w-full px-4">
-            <div className="flex flex-wrap items-center gap-1 py-2">
+            <div ref={paragraphNavRef} className="flex flex-nowrap items-center gap-1 py-2 overflow-x-auto">
               {headings.map((h) => (
                 <button
                   key={h.id}
                   onClick={() => scrollTo(h.id)}
-                  className={`px-3 py-1 rounded-full text-xs font-medium transition-all duration-200 ${
+                  data-id={h.id}
+                  className={`flex-shrink-0 min-w-[9.5rem] max-w-[70vw] sm:min-w-0 sm:max-w-none px-2.5 py-1 rounded-full text-[11px] sm:text-xs font-medium transition-all duration-200 truncate ${
                     activeId === h.id
                       ? "bg-accent text-accent-foreground"
                       : "text-muted-foreground hover:text-foreground hover:bg-muted"
