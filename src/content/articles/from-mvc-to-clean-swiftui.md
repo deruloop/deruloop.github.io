@@ -69,11 +69,11 @@ And navigation, has no clear owner: View, ViewModel, Coordinator or Router?
 
 ## VIPER: splitting everything into smaller actors
 
-VIPER answers radically by dividing a feature into View, Interactor, Presenter, Entity, Router. Its merit is that it takes separation of concerns seriously and makes the feature graph explicit, usually through a Builder, Configurator, or Assembly that wires all the pieces together.
+VIPER answers radically by dividing a feature into **View, Interactor, Presenter, Entity, Router**. Its merit is that it takes separation of concerns seriously and makes the feature graph explicit, usually through a **Builder, Configurator, or Assembly** that wires all the pieces together.
 
-In this architecture, the View only displays UI and forwards user interactions. The Presenter handles presentation logic, formats data for the UI, and tells the View what to show. The Interactor contains the business logic and coordinates repositories or services. The Entity represents the domain/data model. The Router owns navigation and screen transitions.
+In this architecture, the **View** only displays UI and forwards user interactions. The **Presenter** handles presentation logic, formats data for the UI, and tells the View what to show. The **Interactor** contains the business logic and coordinates repositories or services. The **Entity** represents the domain/data model. The **Router** owns navigation and screen transitions.
 
-There are also other versions of this approach which involves a Worker or a COnfigurator, the names changes but the main concept remains. Separate the actor and move responsability constantly from one to another.
+There are also other versions of this approach which involves a **Worker** for low level business logic. Point is that the names may change but the main concept remains. Separate the actor and move responsability constantly from one to another.
 
 The opposite risk to MVVM is clear: MVVM concentrates too much in too few objects, VIPER spreads too much across too many.
 
