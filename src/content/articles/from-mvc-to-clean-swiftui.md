@@ -230,8 +230,8 @@ struct PackingView: View {
 
 Compared to Clean Architecture, the trade-off is clear:
 
-- **Naumov Clean Architecture is layer-oriented.** A global `AppState` and shared Interactors/Repositories give you a coherent picture of the whole app, at the cost of more ceremony per feature and a single composition root that has to know about everything.
-- **Service–Store is feature-store-oriented.** Each feature is a self-contained `(Store, Service)` pair built on top of the same closure-based dependencies. It scales naturally with the number of features and maps directly onto SwiftUI's `@Observable` world, but it gives up the global compass — there is no single AppState, so cross-feature state has to be designed explicitly.
+- For **Naumov Clean Architecture** a global `AppState` and shared Interactors/Repositories give you a coherent picture of the whole app, at the cost of more ceremony per feature and a single composition root that has to know about everything.
+- For **Kyle Service–Store Clean Architecture** each feature is a self-contained `(Store, Service)` pair built on top of the same closure-based dependencies. It scales naturally with the number of features and maps directly onto SwiftUI's `@Observable` world, but it gives up the global compass — there is no single AppState, so cross-feature state has to be designed explicitly.
 
 The flow `View → Service → Store mutation → View` is a _soft_ Redux-like, or _TCA-inspired, but not TCA_. The main risk is that lightness becomes disorder: a Service can easily turn into a new Manager if the feature boundary is not kept honest.
 
