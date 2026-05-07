@@ -1,8 +1,8 @@
 ---
 title: From MVC/MVVM to Clean SwiftUI Architecture
-date: 2026-05-06
+date: 2026-05-07
 excerpt: A pragmatic evolution of iOS architecture across ViewModel, Dependency Injection, Interactors, AppState, Service–Store and TCA.
-tags: [iOS, SwiftUI, Architecture]
+tags: [iOS, Android, SwiftUI, Architecture]
 ---
 
 A pragmatic evolution of iOS architecture across ViewModel, Dependency Injection, Interactors, AppState, Service–Store and TCA.
@@ -298,7 +298,6 @@ All of these patterns try to answer three questions: **where state lives, where 
 It is also important to mention that there is no real final perfect architecture (old me would be so pissed about this sentence), but it really depends on the complexity of what you are building, the services you need and the platforms you are developing for.
 
 The real enemy is not MVC, MVVM or Clean Architecture. It is always the same: **complexity accumulated in the wrong place**.
-
 
 &nbsp;
 
