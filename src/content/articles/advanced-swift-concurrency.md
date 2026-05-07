@@ -1,63 +1,101 @@
 ---
 title: Advanced Swift Concurrency
 date: 2025-01-20
-excerpt: Deep dive into async/await, actors, and structured concurrency in Swift.
+excerpt: Beyond async/await — how actors, task groups, Sendable, and strict concurrency change the way Swift wants you to think about async work.
 tags: [Swift, Concurrency, Advanced]
 ---
 
 # Advanced Swift Concurrency
 
-Swift's modern concurrency model, introduced in Swift 5.5, brings safety and clarity to asynchronous programming. Before async/await, iOS developers relied heavily on completion handlers, delegation patterns, and third-party libraries like PromiseKit or Combine to manage asynchronous work. While these approaches worked, they often led to deeply nested callbacks, difficult error handling, and subtle bugs related to thread safety. The new concurrency model addresses all of these pain points with first-class language support.
+Swift Concurrency is one of those changes that looks simple at first because `async` and `await` are easy to read. Then you start using actors, task groups, `Sendable`, and strict concurrency checking, and you realise the feature is not just a nicer way to write completion handlers.
+
+It changes how Swift wants you to think about asynchronous work.
+
+Before Swift 5.5, most iOS code handled async work with completion closures, delegates, `DispatchQueue`, Combine, or a promise library. All of those approaches worked. Plenty of solid apps were built that way. But the code could get messy fast, especially when several async operations depended on each other.
+
+Error handling ended up split across closures. Cancellation was easy to forget. Shared mutable state was usually protected by convention, not by the compiler. If somebody touched a property from the wrong queue six months later, the bug might only show up on a busy device with bad network conditions.
+
+Swift Concurrency does not magically remove complexity, but it moves a lot of it into the language.
 
 ## Async/Await
 
-The `async`/`await` pattern replaces completion handlers with clean, linear code that reads top-to-bottom, just like synchronous code. Functions marked with `async` can suspend execution at `await` points, freeing up the thread to do other work while waiting for a result. This eliminates the "pyramid of doom" that was common with nested completion handlers and makes error handling straightforward with standard `try`/`catch` syntax.
+`async` and `await` let asynchronous code read almost like normal Swift. Instead of passing a completion handler and jumping to another closure when the result is ready, an async function can return a value directly.
 
 ```swift
 func fetchUser() async throws -> User {
     let url = URL(string: "https://api.example.com/user")!
     let (data, response) = try await URLSession.shared.data(from: url)
-    
     guard let httpResponse = response as? HTTPURLResponse,
           httpResponse.statusCode == 200 else {
         throw NetworkError.invalidResponse
     }
-    
     return try JSONDecoder().decode(User.self, from: data)
 }
 ```
 
-One important thing to understand is that `await` doesn't block the current thread — it suspends the current task and allows the system to use that thread for other work. When the awaited operation completes, the task resumes, potentially on a different thread. This is a fundamental difference from blocking I/O in other languages and is key to understanding Swift's concurrency performance characteristics.
+The big thing to remember: `await` does not block the thread.
+
+When the code reaches this line:
+
+```swift
+let (data, response) = try await URLSession.shared.data(from: url)
+```
+
+the task is suspended. The thread is free to do something else. When the network request finishes, Swift resumes the task. That resume does not have to happen on the same thread.
+
+That detail matters. A lot of older iOS code was written with a mental model based on queues and threads. With Swift Concurrency, it is better to think in terms of tasks, suspension points, and isolation. The thread is an implementation detail most of the time.
+
+This is also why async/await is not just "completion handlers with nicer syntax". The control flow is cleaner, but the runtime behaviour is different too.
 
 ## Actors
 
-Actors are a new reference type in Swift that protect their mutable state from data races at compile time. Before actors, developers had to manually synchronize access to shared mutable state using locks, serial dispatch queues, or other synchronization primitives — and getting it wrong would lead to crashes, corrupted data, or subtle bugs that only appeared under heavy load. Actors solve this by ensuring that only one task can access the actor's mutable state at a time.
+Actors exist because shared mutable state is where concurrent code usually gets ugly.
+
+Before actors, you would usually protect shared state with a serial queue, a lock, or some custom synchronization rule that lived mostly in people's heads. That works until someone bypasses the rule. Then you get a race condition that is hard to reproduce and even harder to explain.
+
+An actor gives the state an owner.
 
 ```swift
 actor UserStore {
     private var users: [User] = []
     private var cache: [String: User] = [:]
-    
+
     func add(_ user: User) {
         users.append(user)
         cache[user.id] = user
     }
-    
+
     func getAll() -> [User] {
-        return users
+        users
     }
-    
+
     func find(byId id: String) -> User? {
-        return cache[id]
+        cache[id]
     }
 }
 ```
 
-When you call a method on an actor from outside, you must use `await` because the call might need to wait for exclusive access. The compiler enforces this, making data races a compile-time error rather than a runtime mystery. The `@MainActor` attribute is a special global actor that ensures code runs on the main thread, which is essential for UI updates and replaces the common `DispatchQueue.main.async` pattern.
+From inside `UserStore`, the actor can read and mutate its own properties normally. From outside, access is isolated. Calling an actor method from another concurrency context requires `await`, because the caller may need to wait for the actor to become available.
+
+That is the useful part: the compiler forces you to respect the boundary.
+
+You cannot casually reach into the actor and mutate its array from some random task. The state belongs to the actor. If another part of the app wants to interact with it, it has to go through the actor's interface.
+
+`@MainActor` uses the same idea for UI work. Instead of writing this everywhere:
+
+```swift
+DispatchQueue.main.async {
+    self.title = "Loaded"
+}
+```
+
+you can isolate UI-related code to the main actor. In SwiftUI, this is especially useful for view models or observable types that update state read by the view.
 
 ## Task Groups
 
-Structured concurrency with task groups enables parallel execution while maintaining clear parent-child relationships between tasks. When a parent task is cancelled, all child tasks are automatically cancelled too. This prevents resource leaks and orphaned work that were common problems with unstructured concurrency approaches like `DispatchQueue.async`.
+Task groups are useful when you have several pieces of async work that should run in parallel, but still belong to one parent operation.
+
+Downloading a batch of images is a good example.
 
 ```swift
 func fetchAllImages(urls: [URL]) async throws -> [UIImage] {
@@ -71,7 +109,7 @@ func fetchAllImages(urls: [URL]) async throws -> [UIImage] {
                 return (index, image)
             }
         }
-        
+
         var images = Array<UIImage?>(repeating: nil, count: urls.count)
         for try await (index, image) in group {
             images[index] = image
@@ -81,15 +119,23 @@ func fetchAllImages(urls: [URL]) async throws -> [UIImage] {
 }
 ```
 
-Task groups also support dynamic concurrency limits using `TaskGroup`'s `addTaskUnlessCancelled` method, and you can process results as they arrive rather than waiting for all tasks to complete. This is particularly useful for implementing features like progressive image loading, where you want to show each image as soon as it's downloaded rather than waiting for the entire batch.
+The nice part here is not only that the downloads run in parallel. It is that the work is still structured.
+
+The child tasks belong to the task group. If one throws, the group handles that through the throwing task group mechanism. If the parent task is cancelled, the child tasks do not keep running forever in the background like forgotten `DispatchQueue.async` blocks.
+
+The example also keeps the original order of the URLs. Downloads finish whenever they finish, so each child task returns its index together with the image. Without that, the returned array would be ordered by completion time, which is rarely what you want in UI code.
+
+Task groups are also handy when you want to process results as soon as they arrive. For example, a gallery screen could start showing images one by one instead of waiting for the whole batch. You do not always need that, but when you do, task groups fit the problem well.
 
 ## Sendable and Data Safety
 
-The `Sendable` protocol is the foundation of Swift's compile-time data race safety. A type that conforms to `Sendable` is safe to share across concurrency domains — meaning it can be passed between actors and tasks without risk of data races. Value types like structs and enums are implicitly `Sendable` when all their stored properties are also `Sendable`. Classes can conform to `Sendable` if they're `final` and all their stored properties are immutable.
+`Sendable` is where Swift Concurrency starts to feel stricter.
 
-Understanding `Sendable` is crucial because the compiler will increasingly enforce these rules in future Swift versions. When you pass a closure to `Task` or a task group, the compiler checks that everything captured by the closure is `Sendable`. This might feel restrictive at first, but it catches real bugs — bugs that would otherwise manifest as intermittent crashes or corrupted data in production.
+A `Sendable` type is safe to pass across concurrency boundaries. That means it can move between tasks, actors, and isolated contexts without creating obvious data-race problems.
 
-The `@Sendable` attribute on closures works hand-in-hand with the protocol. When a closure is marked `@Sendable`, the compiler verifies that it doesn't capture any mutable references to non-`Sendable` types. This is particularly important when working with `Task` and `TaskGroup`, where closures inherently cross concurrency boundaries. Consider the following example where the compiler would flag an issue:
+Structs and enums usually fit this model well. If their stored properties are also `Sendable`, Swift can often infer conformance. Classes are harder, because they are reference types. A mutable class instance can be shared by two tasks, and both tasks can touch the same memory.
+
+That is exactly the kind of thing Swift is trying to stop.
 
 ```swift
 class MutableCounter {
@@ -97,21 +143,62 @@ class MutableCounter {
 }
 
 let counter = MutableCounter()
-
 Task {
     // Compiler error: capture of non-Sendable 'counter'
     counter.count += 1
 }
 ```
 
-To fix this, you'd either make `MutableCounter` an actor, or make it a struct (a value type). In practice, adopting `Sendable` often means rethinking your data model — favoring value types, using actors for shared mutable state, and leveraging `nonisolated` and `@unchecked Sendable` only as escape hatches when you're absolutely sure of your synchronization. The payoff is enormous: the compiler becomes your concurrency safety net, catching race conditions before they ever reach your users.
+The compiler complains because `counter` is a mutable reference object being captured by a task. There is no guarantee that another task is not using the same instance at the same time.
 
-## Conclusion
+A better version depends on what the counter is supposed to do.
 
-Swift concurrency represents a paradigm shift in how we write asynchronous code on Apple platforms. The combination of async/await for linear asynchronous flow, actors for safe mutable state, structured concurrency for managing task lifetimes, and `Sendable` for compile-time safety creates a comprehensive system that eliminates entire categories of bugs.
+If it is shared mutable state, make it an actor:
 
-The migration from GCD and completion handlers takes effort, but the resulting code is safer, more readable, and easier to reason about. Teams that have adopted Swift concurrency report significantly fewer threading-related crashes in production and find that new developers can understand concurrent code much more quickly because the control flow is explicit rather than hidden in callback chains.
+```swift
+actor Counter {
+    private var count = 0
 
-One area worth watching is the evolution of strict concurrency checking. Swift 5.10 introduced complete concurrency checking as an opt-in compiler flag, and Swift 6 makes it the default. This means code that compiled without warnings in Swift 5.9 may produce errors in Swift 6 if it passes non-`Sendable` types across isolation boundaries. Preparing for this transition now — by enabling strict concurrency checking in your build settings and resolving warnings incrementally — will make the Swift 6 migration significantly smoother.
+    func increment() {
+        count += 1
+    }
 
-Beyond the technical benefits, Swift concurrency also changes how we architect applications. The actor model naturally leads to clearer separation of concerns, where each actor owns a specific piece of state and exposes a well-defined interface. Combined with structured concurrency's automatic cancellation propagation, you get applications that are not only safe but also responsive — cancelling in-flight network requests when a user navigates away, cleaning up resources when a view disappears, and gracefully handling timeouts without manual bookkeeping. As the ecosystem continues to adopt these patterns, they'll become the standard way to write concurrent Swift code across all Apple platforms and beyond.
+    func value() -> Int {
+        count
+    }
+}
+```
+
+If it does not need to be shared, make it a value type and pass copies around.
+
+The temptation with `Sendable` errors is to silence them. Swift gives you tools like `@unchecked Sendable`, and sometimes they are the right answer, especially around older APIs or types that are internally synchronized. But it should feel like taking responsibility, not like adding a random annotation until the warning disappears.
+
+A lot of concurrency warnings are design feedback. They are Swift telling you: "This object crosses a boundary, but I cannot prove it is safe."
+
+That can be annoying. It is also useful.
+
+## Strict Concurrency
+
+Strict concurrency checking is the part that tends to surprise teams during migration.
+
+Code that looked fine in Swift 5.9 can start producing warnings or errors once stricter checking is enabled. The most common problems are non-`Sendable` values crossing actor boundaries, mutable state being captured by `@Sendable` closures, or UI state being touched outside the main actor.
+
+The worst way to handle this is to wait until the Swift 6 migration and then fix everything at once.
+
+A better approach is to turn on stricter checking earlier, module by module if needed, and treat the warnings as cleanup work. Some fixes are small: add `@MainActor`, make a model conform to `Sendable`, change a class to a struct. Others reveal deeper design problems, especially around singleton services, caches, and shared mutable managers.
+
+Those are the places where actors usually help.
+
+## What This Changes in App Architecture
+
+Swift Concurrency nudges code toward clearer ownership.
+
+A networking layer can expose async functions instead of completion handlers. A cache can become an actor. A view model that updates UI state can live on the main actor. A long-running operation can create child tasks and know they will be cancelled when the parent goes away.
+
+That last point is easy to underestimate. In app code, cancellation matters all the time. A user leaves a screen. A search query changes. A cell gets reused. A view disappears. With older patterns, it was common to leave work running and then add checks afterward to avoid applying stale results.
+
+Structured concurrency gives you a cleaner model: the task should live only as long as the thing that needs it.
+
+Swift Concurrency does not make every async problem simple. You still need to understand isolation, cancellation, reentrancy, and the difference between structured and unstructured tasks. But the direction is better. Instead of relying on comments and team discipline, more of the rules are expressed in the type system and checked by the compiler.
+
+The result is a safer async code.
