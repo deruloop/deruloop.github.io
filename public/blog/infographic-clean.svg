@@ -53,9 +53,9 @@
   <text class="lbl" x="539" y="132" text-anchor="middle">writes</text>
 
   <!-- AppState observed by View -->
-  <path class="obs" d="M670,184 C670,244 150,244 150,186"/>
-  <rect x="320" y="218" width="180" height="22" rx="11" fill="#FBF4E3" stroke="#0F1B23" stroke-width="1.2"/>
-  <text class="lblstrong" x="410" y="233" text-anchor="middle">View observes AppState</text>
+  <path class="obs" d="M670,184 C670,260 150,260 150,186"/>
+  <rect x="340" y="240" width="140" height="22" rx="11" fill="#FBF4E3" stroke="#0F1B23" stroke-width="1.2"/>
+  <text class="lblstrong" x="410" y="255" text-anchor="middle">View observes AppState</text>
 
   <!-- Middle row: Repository & Service -->
   <rect class="box" x="200" y="270" width="180" height="60" rx="12"/>
@@ -68,10 +68,10 @@
 
   <path class="flow" d="M380,184 C360,215 320,240 300,268"/>
   <path class="flow" d="M440,184 C460,215 500,240 520,268"/>
-  <rect x="290" y="252" width="56" height="20" rx="10" fill="#FBF4E3" stroke="#0F1B23" stroke-width="1.2"/>
-  <text class="lblstrong" x="318" y="266" text-anchor="middle">calls</text>
-  <rect x="474" y="252" width="56" height="20" rx="10" fill="#FBF4E3" stroke="#0F1B23" stroke-width="1.2"/>
-  <text class="lblstrong" x="502" y="266" text-anchor="middle">calls</text>
+  <rect x="312" y="217" width="56" height="20" rx="10" fill="#FBF4E3" stroke="#0F1B23" stroke-width="1.2"/>
+  <text class="lblstrong" x="340" y="231" text-anchor="middle">calls</text>
+  <rect x="452" y="217" width="56" height="20" rx="10" fill="#FBF4E3" stroke="#0F1B23" stroke-width="1.2"/>
+  <text class="lblstrong" x="480" y="231" text-anchor="middle">calls</text>
 
   <!-- Environments row at bottom inside the container -->
   <text class="lblg" x="48" y="370">SAME WIRING, SWAPPABLE IMPLEMENTATIONS PER ENVIRONMENT</text>
