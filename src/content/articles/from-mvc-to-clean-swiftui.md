@@ -241,7 +241,7 @@ I'm going to talk deeper about ATDD development in another future article
 
 ## TCA: the formalised unidirectional flow
 
-It would be wrong to finish this article without talking about the big elephant in the room, The Composable Architecture.
+It would be wrong to finish this article without talking about the big elephant in the room, **The Composable Architecture**.
 
 TCA is a much more specific and defined architecture built on **State, Action, Reducer, Effect, Store, Dependencies**.
 
