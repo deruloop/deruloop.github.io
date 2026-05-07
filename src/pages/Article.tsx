@@ -250,12 +250,12 @@ const Article = () => {
       {headings.length > 0 && (
         <div className="fixed bottom-0 left-0 right-0 bg-card/90 backdrop-blur-md border-t border-border z-40">
           <div className="container mx-auto px-4 max-w-3xl">
-            <div className="flex items-center gap-1 py-2 overflow-x-auto scrollbar-hide">
+            <div className="flex flex-wrap items-center gap-1 py-2">
               {headings.map((h) => (
                 <button
                   key={h.id}
                   onClick={() => scrollTo(h.id)}
-                  className={`whitespace-nowrap px-3 py-1 rounded-full text-xs font-medium transition-all duration-200 flex-shrink-0 ${
+                  className={`px-3 py-1 rounded-full text-xs font-medium transition-all duration-200 ${
                     activeId === h.id
                       ? "bg-accent text-accent-foreground"
                       : "text-muted-foreground hover:text-foreground hover:bg-muted"
