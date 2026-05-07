@@ -5,7 +5,7 @@ excerpt: A pragmatic evolution of iOS architecture across ViewModel, Dependency 
 tags: [iOS, SwiftUI, Architecture]
 ---
 
-## A pragmatic evolution of iOS architecture across ViewModel, Dependency Injection, Interactors, AppState, Service–Store and TCA.
+A pragmatic evolution of iOS architecture across ViewModel, Dependency Injection, Interactors, AppState, Service–Store and TCA.
 
 ![Evolution of iOS architectures](/blog/infographic-map.svg)
 
