@@ -30,6 +30,7 @@ export default function Packd() {
           <img
             src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=684500&theme=light"
             alt="Packd - Trip organizer, packing list manager and more! | Product Hunt"
+            className="product-hunt-badge"
             style={{ width: "150px", height: "54px" }}
             width={150}
             height={54}
@@ -122,9 +123,9 @@ export default function Packd() {
               <div className="emoji">🌍</div>
             </div>
             <div className="feature-text">
-              <h3 className="feature-title">Speaking your languange</h3>
+            <h3 className="feature-title">Speaking your language</h3>
               <p className="feature-subtitle">
-                The app is fully localized in more than 20 languages, including the default packing list i provided
+              The app is fully localized in more than 20 languages, including the default packing list I provided
               </p>
             </div>
           </div>
@@ -145,7 +146,7 @@ export default function Packd() {
             </div>
             <div className="feature-text">
               <h3 className="feature-title">Bring an umbrella</h3>
-              <p className="feature-subtitle">Get infos about the weather conditions on the days you are going.</p>
+            <p className="feature-subtitle">Get info about the weather conditions on the days you are going.</p>
             </div>
           </div>
           <div className="feature-item">
@@ -164,7 +165,7 @@ export default function Packd() {
             <div className="feature-text">
               <h3 className="feature-title">Notifications</h3>
               <p className="feature-subtitle">
-                To warn you about unpacked item and weather updates on incoming trips.
+              To warn you about unpacked items and weather updates on incoming trips.
               </p>
             </div>
           </div>
@@ -232,7 +233,7 @@ export default function Packd() {
       <footer>
         <p>© 2024 Packd. All rights reserved.</p>
         <p>
-          <a href="/packd/privacy/">Privacy Policy</a> | <a href="/packd/terms/">Terms of Service</a>
+          <a href="/packd/privacy">Privacy Policy</a> | <a href="/packd/terms">Terms of Service</a>
         </p>
       </footer>
     </div>

@@ -1,19 +1,16 @@
 import "../../styles/packd.css";
+import packdLogo from "@/assets/packd.png?url";
 
 export default function PackdPrivacy() {
-  const sendEmail = () => {
-    window.location.href = "mailto:cristiano@calicchia.dev";
-  };
-
   return (
     <div className="packd-page">
       <div className="privacyContainer">
         <img
           className="logo"
-          src="https://deruloop.github.io/images/packd.png"
+          src={packdLogo}
           alt="Packd Logo"
         />
-        <h2 style={{ textAlign: "center", paddingTop: "15px" }}>Privacy Policy</h2>
+        <h2 className="legalTitle">Privacy Policy</h2>
         <p><strong>Effective Date:</strong> 20/12/2024</p>
         <p><strong>Last Updated:</strong> 20/12/2024</p>
         <p>
@@ -81,7 +78,8 @@ export default function PackdPrivacy() {
         <ul>
           <li>
             <div className="privacyEmail">
-              <strong>Email:</strong> <button onClick={sendEmail}>cristiano@calicchia.dev</button>
+              <strong>Email:</strong>{" "}
+              <a className="privacyEmailLink" href="mailto:cristiano@calicchia.dev">cristiano@calicchia.dev</a>
             </div>
           </li>
         </ul>
