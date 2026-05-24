@@ -56,7 +56,73 @@ export default function Packd() {
         <div className="features-grid">
           <div className="feature-item">
             <div className="feature-icon">
-              <div className="emoji">🧳</div>
+              <div className="emoji">�</div>
+            </div>
+            <div className="feature-text">
+              <h3 className="feature-title">Trips workspace</h3>
+              <p className="feature-subtitle">
+                Plan days on a timeline, check trip intelligence in Overview, keep an inbox in Vault, and execute packing in one place.
+              </p>
+            </div>
+          </div>
+          <div className="feature-item">
+            <div className="feature-icon">
+              <div className="emoji">📍</div>
+            </div>
+            <div className="feature-text">
+              <h3 className="feature-title">Current Trip dashboard</h3>
+              <p className="feature-subtitle">
+                When a trip is active, Packd boots into a glanceable view with your context, progress through days, and what’s up next.
+              </p>
+            </div>
+          </div>
+          <div className="feature-item">
+            <div className="feature-icon">
+              <div className="emoji">✨</div>
+            </div>
+            <div className="feature-text">
+              <h3 className="feature-title">Plan with AI</h3>
+              <p className="feature-subtitle">
+                Generate a complete multi-day itinerary from a destination, then refine results using your personal preferences.
+              </p>
+            </div>
+          </div>
+          <div className="feature-item">
+            <div className="feature-icon">
+              <div className="emoji">🗓️</div>
+            </div>
+            <div className="feature-text">
+              <h3 className="feature-title">Draft a day with AI</h3>
+              <p className="feature-subtitle">
+                Fill an empty day or request stop suggestions anytime, then add them individually to build the perfect schedule.
+              </p>
+            </div>
+          </div>
+          <div className="feature-item">
+            <div className="feature-icon">
+              <div className="emoji">⏭️</div>
+            </div>
+            <div className="feature-text">
+              <h3 className="feature-title">What can I do next?</h3>
+              <p className="feature-subtitle">
+                A smart assistant for today: based on your plan and the current time, it proposes a realistic next stop that fits your gap.
+              </p>
+            </div>
+          </div>
+          <div className="feature-item">
+            <div className="feature-icon">
+              <div className="emoji">🏷️</div>
+            </div>
+            <div className="feature-text">
+              <h3 className="feature-title">Inventory, instantly</h3>
+              <p className="feature-subtitle">
+                Filter with category chips and browse items in a compact card grid, keeping search and filtering on one surface.
+              </p>
+            </div>
+          </div>
+          <div className="feature-item">
+            <div className="feature-icon">
+              <div className="emoji">�</div>
             </div>
             <div className="feature-text">
               <h3 className="feature-title">Packing list</h3>
@@ -94,7 +160,7 @@ export default function Packd() {
             <div className="feature-text">
               <h3 className="feature-title">ChatGPT Integration</h3>
               <p className="feature-subtitle">
-                Let the power of AI automatically decide what you should bring based on where you are going, in which period, how much are you staying and weather conditions
+                Use AI to plan trips, draft day itineraries, refine results with your preferences, and generate packing suggestions from trip context.
               </p>
             </div>
           </div>
@@ -123,9 +189,9 @@ export default function Packd() {
               <div className="emoji">🌍</div>
             </div>
             <div className="feature-text">
-            <h3 className="feature-title">Speaking your language</h3>
+              <h3 className="feature-title">Speaking your language</h3>
               <p className="feature-subtitle">
-              The app is fully localized in more than 20 languages, including the default packing list I provided
+                The app is fully localized in more than 20 languages, including the default packing list I provided
               </p>
             </div>
           </div>
@@ -146,7 +212,7 @@ export default function Packd() {
             </div>
             <div className="feature-text">
               <h3 className="feature-title">Bring an umbrella</h3>
-            <p className="feature-subtitle">Get info about the weather conditions on the days you are going.</p>
+              <p className="feature-subtitle">Get info about the weather conditions on the days you are going.</p>
             </div>
           </div>
           <div className="feature-item">
@@ -165,7 +231,7 @@ export default function Packd() {
             <div className="feature-text">
               <h3 className="feature-title">Notifications</h3>
               <p className="feature-subtitle">
-              To warn you about unpacked items and weather updates on incoming trips.
+                To warn you about unpacked items and weather updates on incoming trips.
               </p>
             </div>
           </div>
@@ -181,7 +247,7 @@ export default function Packd() {
             <div className="feature-text">
               <h3 className="feature-title">Reviews</h3>
               <p className="feature-subtitle">
-                Read reviews of cool products i've personally tried and liked, adding them directly to your packing list
+                Read reviews of travel gear I’ve personally tried and liked, and add them directly to your packing list.
               </p>
             </div>
           </div>
@@ -192,7 +258,40 @@ export default function Packd() {
             <div className="feature-text">
               <h3 className="feature-title">Documents</h3>
               <p className="feature-subtitle">
-                Attach documents to your trip such as reservations, tickets or ids, personally stored and safely encrypted in iCloud
+                Attach tickets, PDFs, confirmations, and screenshots to a trip, stored privately and encrypted in iCloud.
+              </p>
+            </div>
+          </div>
+          <div className="feature-item">
+            <div className="feature-icon">
+              <div className="emoji">🔑</div>
+            </div>
+            <div className="feature-text">
+              <h3 className="feature-title">Bring your own AI key</h3>
+              <p className="feature-subtitle">
+                Use Packd with your personal tokens from popular AI providers, keeping AI accessible without forcing a subscription.
+              </p>
+            </div>
+          </div>
+          <div className="feature-item">
+            <div className="feature-icon">
+              <div className="emoji">📱</div>
+            </div>
+            <div className="feature-text">
+              <h3 className="feature-title">On-device AI</h3>
+              <p className="feature-subtitle">
+                Support for on-device models (when available), including Apple Intelligence Foundation models on supported devices.
+              </p>
+            </div>
+          </div>
+          <div className="feature-item">
+            <div className="feature-icon">
+              <div className="emoji">🤝</div>
+            </div>
+            <div className="feature-text">
+              <h3 className="feature-title">Share trips</h3>
+              <p className="feature-subtitle">
+                A social layer to exchange organized trips, curated packing lists, and ideas between travelers and professionals.
               </p>
             </div>
           </div>
@@ -201,8 +300,8 @@ export default function Packd() {
               <div className="emoji">💻</div>
             </div>
             <div className="feature-text">
-              <h3 className="feature-title">MacOS native</h3>
-              <p className="feature-subtitle">Improved macos version with chance to change the icon</p>
+              <h3 className="feature-title">macOS native</h3>
+              <p className="feature-subtitle">An improved macOS experience, including better windowing and icon customization.</p>
             </div>
           </div>
           <div className="feature-item">
@@ -211,7 +310,7 @@ export default function Packd() {
             </div>
             <div className="feature-text">
               <h3 className="feature-title">More icons</h3>
-              <p className="feature-subtitle">New icons to customize your experience</p>
+              <p className="feature-subtitle">New icons to customize your experience.</p>
             </div>
           </div>
           <div className="feature-item">
@@ -221,7 +320,7 @@ export default function Packd() {
             <div className="feature-text">
               <h3 className="feature-title">More AI features</h3>
               <p className="feature-subtitle">
-                Use AI to add items to your inventory given a specific category, get infos for your trip and more
+                Use AI to add items to your inventory by category, extract useful trip info, and keep expanding the planning assistant.
               </p>
             </div>
           </div>
