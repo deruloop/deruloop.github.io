@@ -56,7 +56,7 @@ export default function Packd() {
         <div className="features-grid">
           <div className="feature-item">
             <div className="feature-icon">
-              <div className="emoji">�</div>
+              <div className="emoji">🗺️</div>
             </div>
             <div className="feature-text">
               <h3 className="feature-title">Trips workspace</h3>
@@ -89,7 +89,7 @@ export default function Packd() {
           </div>
           <div className="feature-item">
             <div className="feature-icon">
-              <div className="emoji">🗓️</div>
+              <div className="emoji">�</div>
             </div>
             <div className="feature-text">
               <h3 className="feature-title">Draft a day with AI</h3>
@@ -100,7 +100,7 @@ export default function Packd() {
           </div>
           <div className="feature-item">
             <div className="feature-icon">
-              <div className="emoji">⏭️</div>
+              <div className="emoji">⏰</div>
             </div>
             <div className="feature-text">
               <h3 className="feature-title">What can I do next?</h3>
@@ -111,7 +111,7 @@ export default function Packd() {
           </div>
           <div className="feature-item">
             <div className="feature-icon">
-              <div className="emoji">🏷️</div>
+              <div className="emoji">📦</div>
             </div>
             <div className="feature-text">
               <h3 className="feature-title">Inventory, instantly</h3>
@@ -122,7 +122,18 @@ export default function Packd() {
           </div>
           <div className="feature-item">
             <div className="feature-icon">
-              <div className="emoji">�</div>
+              <div className="emoji">📎</div>
+            </div>
+            <div className="feature-text">
+              <h3 className="feature-title">Documents & images</h3>
+              <p className="feature-subtitle">
+                Attach tickets, PDFs, confirmations, and screenshots to trip stops, or collect them in Vault and assign them later.
+              </p>
+            </div>
+          </div>
+          <div className="feature-item">
+            <div className="feature-icon">
+              <div className="emoji">🧳</div>
             </div>
             <div className="feature-text">
               <h3 className="feature-title">Packing list</h3>
@@ -248,17 +259,6 @@ export default function Packd() {
               <h3 className="feature-title">Reviews</h3>
               <p className="feature-subtitle">
                 Read reviews of travel gear I’ve personally tried and liked, and add them directly to your packing list.
-              </p>
-            </div>
-          </div>
-          <div className="feature-item">
-            <div className="feature-icon">
-              <div className="emoji">📄</div>
-            </div>
-            <div className="feature-text">
-              <h3 className="feature-title">Documents</h3>
-              <p className="feature-subtitle">
-                Attach tickets, PDFs, confirmations, and screenshots to a trip, stored privately and encrypted in iCloud.
               </p>
             </div>
           </div>
