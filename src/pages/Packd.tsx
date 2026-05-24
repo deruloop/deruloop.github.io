@@ -89,17 +89,6 @@ export default function Packd() {
           </div>
           <div className="feature-item">
             <div className="feature-icon">
-              <div className="emoji">�</div>
-            </div>
-            <div className="feature-text">
-              <h3 className="feature-title">Draft a day with AI</h3>
-              <p className="feature-subtitle">
-                Fill an empty day or request stop suggestions anytime, then add them individually to build the perfect schedule.
-              </p>
-            </div>
-          </div>
-          <div className="feature-item">
-            <div className="feature-icon">
               <div className="emoji">⏰</div>
             </div>
             <div className="feature-text">
@@ -111,12 +100,12 @@ export default function Packd() {
           </div>
           <div className="feature-item">
             <div className="feature-icon">
-              <div className="emoji">📦</div>
+              <div className="emoji">🧳</div>
             </div>
             <div className="feature-text">
-              <h3 className="feature-title">Inventory, instantly</h3>
+              <h3 className="feature-title">Inventory & packing list</h3>
               <p className="feature-subtitle">
-                Filter with category chips and browse items in a compact card grid, keeping search and filtering on one surface.
+                A curated list built from real travel experience, fully editable and filterable so you can find the right items fast.
               </p>
             </div>
           </div>
@@ -128,17 +117,6 @@ export default function Packd() {
               <h3 className="feature-title">Documents & images</h3>
               <p className="feature-subtitle">
                 Attach tickets, PDFs, confirmations, and screenshots to trip stops, or collect them in Vault and assign them later.
-              </p>
-            </div>
-          </div>
-          <div className="feature-item">
-            <div className="feature-icon">
-              <div className="emoji">🧳</div>
-            </div>
-            <div className="feature-text">
-              <h3 className="feature-title">Packing list</h3>
-              <p className="feature-subtitle">
-                A curated packing list already made by me based on my travel experience, that you can edit however you want
               </p>
             </div>
           </div>
