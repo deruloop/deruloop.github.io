@@ -296,9 +296,9 @@ export default function Packd() {
               <div className="emoji">🧠</div>
             </div>
             <div className="feature-text">
-              <h3 className="feature-title">More AI features</h3>
+              <h3 className="feature-title">Even more AI features</h3>
               <p className="feature-subtitle">
-                Use AI to add items to your inventory by category, extract useful trip info, and keep expanding the planning assistant.
+                Packd’s AI layer is expanding: smarter planning flows, better trip context, and new assistants that help before and during travel.
               </p>
             </div>
           </div>
