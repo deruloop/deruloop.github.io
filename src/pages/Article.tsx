@@ -201,6 +201,14 @@ const Article = () => {
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             components={{
+              h1: ({ children, ...props }) => (
+                <h1
+                  {...props}
+                  className="text-center text-5xl sm:text-6xl font-bold italic text-accent my-12 tracking-tight"
+                >
+                  {children}
+                </h1>
+              ),
               h2: ({ children, ...props }) => {
                 const id = slugify(getTextContent(children));
                 return <h2 id={id} className="scroll-mt-20 text-3xl font-bold mt-12 mb-4" {...props}>{children}</h2>;
