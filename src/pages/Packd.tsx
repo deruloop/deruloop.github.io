@@ -52,7 +52,7 @@ export default function Packd() {
           Available for iOS, iPadOS, macOS and VisionOS
         </div>
         <br />
-        <h3>Features</h3>
+        <h3 className="section-title">Features</h3>
         <div className="features-grid">
           <div className="feature-item">
             <div className="feature-icon">
@@ -227,7 +227,7 @@ export default function Packd() {
         </div>
         <br />
         <br />
-        <h3>Upcoming Features</h3>
+        <h3 className="section-title">Upcoming Features</h3>
         <div className="features-grid">
           <div className="feature-item">
             <div className="feature-icon">
