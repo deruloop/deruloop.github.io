@@ -92,3 +92,29 @@ That's all for now, thank you very much and i salute you with my favourite app s
 # Just in case, Packd!
 
 Got it? case is a shorter, everyday way to refer to a suitcase, so... "Just put it in case, packed!" But it also means i packed something just in case...does it make any sense to you?? Isn't it genial?!? I love it, i could talk a whole day about this, i'm maniac about this stuff... the nurse is coming.... BYE 👋💀
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
