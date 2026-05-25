@@ -7,7 +7,7 @@ tags: [AI, iOS, Packd, Architecture]
 
 ## Introduction
 
-In this article i will talk about a real production example of AI Pair Programming. The app taken in exam is [Packd](https://deruloop.dev/packd/) , my own app currently available on the app store, the goal was to challenge myself to apply new developing patterns and AI workflows to understand the true power of what is currently changing the software industry and redifining the role of developers. All of this with the goal of releasing a 2.0 version, with a more articulated UI/UX and important features.
+In this article i will talk about a real production example of AI Pair Programming. The app taken in exam is [Packd](https://deruloop.dev/packd/) , my own app currently available on the app stor. The idea was to challenge myself to apply new developing patterns and AI workflows to understand the true power of what is currently changing the software industry and redifining the role of developers. All of this with the goal of releasing a 2.0 version, with a more articulated UI/UX and important features.
 
 Packd can be considered as the most primitive son of AI. It was made in one month when AI was moving his first steps. The role of AI was at the time basically asking ChatGPT model for coding help, delegating the manual work like localization in all the different languages and that's about it. Now is role has been way much different, it became the core developer, delegating to me the architectural, shaping and managing part. It is truly remarkable what i managed to achieve with this approach in just three weeks.
 
