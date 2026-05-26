@@ -11,8 +11,8 @@ export default function PackdPrivacy() {
           alt="Packd Logo"
         />
         <h2 className="legalTitle">Privacy Policy</h2>
-        <p><strong>Effective Date:</strong> 20/12/2024</p>
-        <p><strong>Last Updated:</strong> 20/12/2024</p>
+        <p><strong>Effective Date:</strong> 26/05/2026</p>
+        <p><strong>Last Updated:</strong> 26/05/2026</p>
         <p>
           Thank you for using <strong>Packd</strong>! This privacy policy explains how your data is
           handled when using our app. We prioritize your privacy and aim to ensure transparency in how your
@@ -39,18 +39,29 @@ export default function PackdPrivacy() {
           These addresses are not linked to any geolocation services and are not stored or shared by Packd.
         </p>
 
-        <h4>1.3 Interaction with OpenAI (ChatGPT Integration)</h4>
+        <h4>1.3 AI Features (OpenAI Integration)</h4>
         <p>
-          - For features such as AI-powered packing recommendations, Packd uses OpenAI APIs. Your prompts and
-          responses are sent directly to OpenAI servers via a shared API key.
+          - Packd includes optional AI features such as packing recommendations and trip planning (for example:
+          itinerary generation, stop suggestions, and “what can I do next?”). When you use these features, Packd
+          uses OpenAI APIs to generate AI outputs.
         </p>
         <p>
-          - Packd does not log or access the content of your prompts or the AI-generated responses. OpenAI handles
-          these interactions in accordance with their <a href="https://openai.com/privacy/" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.
+          - Your prompts (and any context you choose to provide, such as destination, trip dates, preferences, items,
+          or notes) are sent directly to OpenAI servers via a shared API key to generate the response.
+        </p>
+        <p>
+          - Packd does not log or store the content of your prompts or the AI-generated responses on our servers.
+          OpenAI handles these interactions in accordance with their{" "}
+          <a href="https://openai.com/privacy/" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.
         </p>
 
         <h3>2. Data Sharing</h3>
-        <p>We do not share your personal data with any third parties.</p>
+        <p>
+          Packd does not sell your data. Data is only shared with third parties when required to provide core
+          functionality:
+        </p>
+        <p>- Apple iCloud (to store and sync your trips, inventory, and packing lists).</p>
+        <p>- OpenAI (only when you use AI features, to generate AI outputs from your prompts).</p>
 
         <h3>3. Security</h3>
         <p>
@@ -60,8 +71,9 @@ export default function PackdPrivacy() {
 
         <h3>4. User Rights</h3>
         <p>
-          As your data is not stored or processed by Packd, any requests regarding data access or deletion must be
-          directed to the relevant service provider.
+          Your Packd data is stored in iCloud. You can delete your trips, inventory, and packing lists from within
+          the app, and manage iCloud data via Apple settings. If you have questions about AI request processing,
+          please refer to OpenAI’s privacy policy.
         </p>
 
         <h3>5. Cookies and Tracking Technologies</h3>
