@@ -17,6 +17,8 @@ The role of AI was at the time basically asking ChatGPT model for coding help, d
 
 For this "experiment" 👀 i've used a combination of **Lovable** and **TRAE** (but you can use whatever AI IDE in the industry). I'm going to talk about what changed in the first paragraph and how AI helped me right achieve this right after.
 
+![Packd Trips screen: before and after redesign](/blog/packd-ui-comparison-1.png)
+
 ## New architectural approach
 
 In my previous article, [From MVC to Clean SwiftUI](https://deruloop.dev/articles/from-mvc-to-clean-swiftui), I described the path that brought me to a **Clean SwiftUI** setup: Views stay declarative, business logic and side effects move into interactors/services, and data access is abstracted behind repositories with a clear **composition root**. That approach fixed the "massive view controller / massive view model" problem, but it also introduced a new kind of complexity: **protocol-heavy dependency injection** and a lot of boilerplate around wiring and mocking.
@@ -33,7 +35,7 @@ This screen is intentionally not the full workspace. It's a lightweight, glancea
 
 If there isn't an active trip, Trips stays in planning mode, showing upcoming trips and quick actions. When a trip becomes active, planning mode surfaces a clear "Resume current trip" entry so you can jump into the same dashboard. At any time, the Current Trip view provides an explicit "Other trips" action to switch back to the planning list.
 
-![Packd Trips screen: before and after redesign](/blog/packd-ui-comparison-1.png)
+![Packd Current Trip dashboard](/blog/packd-current-trip.png)
 
 Inside a single trip, the UX is organized as a workspace. You always keep basic context visible (where you're going, dates, trip status), plus quick access to edit trip details and open trip actions.
 
