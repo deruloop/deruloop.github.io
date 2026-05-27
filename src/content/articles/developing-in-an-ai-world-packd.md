@@ -33,7 +33,7 @@ This screen is intentionally not the full workspace. It's a lightweight, glancea
 
 If there isn't an active trip, Trips stays in planning mode, showing upcoming trips and quick actions. When a trip becomes active, planning mode surfaces a clear "Resume current trip" entry so you can jump into the same dashboard. At any time, the Current Trip view provides an explicit "Other trips" action to switch back to the planning list.
 
-COMPARISON IMAGE 1
+![Packd Trips screen: before and after redesign](/blog/packd-ui-comparison-1.png)
 
 Inside a single trip, the UX is organized as a workspace. You always keep basic context visible (where you're going, dates, trip status), plus quick access to edit trip details and open trip actions.
 
