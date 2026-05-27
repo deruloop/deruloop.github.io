@@ -13,7 +13,7 @@ The idea was to challenge myself to apply new development patterns and AI workfl
 
 Packd can be considered one of the most primitive sons of **AI**. It was built in one month, when AI was still taking its first steps.
 
-At the time, the role of AI basically meant asking the ChatGPT model for coding help, delegating manual work like localization in different languages, and not much more. Now its role has become very different: it has become the core developer, delegating to me the architectural, shaping, and management side. It is truly remarkable what I managed to achieve with this approach in just three weeks.
+At the time, the role of AI basically meant asking the ChatGPT model for coding help, delegating manual work like localization in different languages, and not much more. Now its role has become very different: it has become the core developer, delegating to me the architectural, shaping, and management side. It is truly remarkable what I managed to achieve with this approach in just two weeks.
 
 For this "experiment" 👀 I've used a combination of **Lovable** and **TRAE** (but you can use whatever AI IDE you prefer). I'm going to talk about what changed in the first part and how AI helped me achieve it right after.
 
@@ -27,7 +27,7 @@ Packd is the next step in that same evolution. I kept the Clean boundaries, but 
 
 ## Features: what changed in such a small time amount
 
-What surprised me the most is how much **Packd** evolved in such a short amount of time: in just three weeks it went from a simpler travel companion to a much richer product. The dashboard, which used to be mostly a text-editor to take notes, weather and outlet infos, became a full planning tool with a timeline calendar, vault logic, and a smart overview of the whole trip.
+What surprised me the most is how much **Packd** evolved in such a short amount of time: in just two weeks it went from a simpler travel companion to a much richer product. The dashboard, which used to be mostly a text-editor to take notes, weather and outlet infos, became a full planning tool with a timeline calendar, vault logic, and a smart overview of the whole trip.
 
 ![Packd Current Trip dashboard](/blog/packd-current-trip.png)
 
