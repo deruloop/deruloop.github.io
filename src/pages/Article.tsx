@@ -197,7 +197,7 @@ const Article = () => {
 
         <h1 className="text-4xl font-bold mb-8">{article.title}</h1>
 
-        <div className="prose prose-neutral max-w-none prose-headings:text-foreground prose-headings:font-bold prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-4 prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-3 prose-p:text-foreground/80 prose-strong:text-foreground prose-a:text-accent prose-a:font-bold prose-a:no-underline hover:prose-a:underline prose-code:bg-primary prose-code:text-primary-foreground prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:font-mono prose-code:before:content-none prose-code:after:content-none prose-pre:bg-primary prose-pre:text-primary-foreground prose-pre:rounded-lg prose-pre:border prose-pre:border-border prose-pre:overflow-x-auto prose-img:rounded-2xl prose-img:border prose-img:border-border/60 prose-img:shadow-medium prose-img:my-6 prose-img:mx-auto prose-img:max-w-sm sm:prose-img:max-w-lg prose-img:w-full prose-img:bg-card">
+        <div className="prose prose-neutral max-w-none prose-headings:text-foreground prose-headings:font-bold prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-4 prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-3 prose-p:text-foreground/80 prose-strong:text-foreground prose-a:text-accent prose-a:font-bold prose-a:no-underline hover:prose-a:underline prose-code:bg-primary prose-code:text-primary-foreground prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:font-mono prose-code:before:content-none prose-code:after:content-none prose-pre:bg-primary prose-pre:text-primary-foreground prose-pre:rounded-lg prose-pre:border prose-pre:border-border prose-pre:overflow-x-auto prose-img:rounded-2xl prose-img:border prose-img:border-border/60 prose-img:shadow-medium prose-img:my-6 prose-img:mx-auto prose-img:max-w-sm sm:prose-img:max-w-lg prose-img:w-full prose-img:bg-card prose-img:p-2 sm:prose-img:p-3">
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             components={{
@@ -227,6 +227,13 @@ const Article = () => {
                   {children}
                 </a>
               ),
+              p: ({ children, ...props }) => {
+                const text = getTextContent(children).trim();
+                if (text === "CLEAR_FLOAT") {
+                  return <div className="clear-both" />;
+                }
+                return <p {...props}>{children}</p>;
+              },
               img: ({ alt, ...props }) => {
                 const isCurrentTrip = (alt || "").toLowerCase().includes("current trip");
                 return (
@@ -235,7 +242,7 @@ const Article = () => {
                     {...props}
                     className={
                       isCurrentTrip
-                        ? "max-w-xs sm:max-w-sm !bg-transparent !border-0 !shadow-none !rounded-none"
+                        ? "!w-auto max-w-[8.5rem] sm:max-w-[10rem] md:max-w-[11rem] lg:max-w-[15rem] md:float-left md:mr-6 md:mb-4"
                         : undefined
                     }
                   />

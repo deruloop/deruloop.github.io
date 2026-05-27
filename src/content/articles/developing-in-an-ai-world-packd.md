@@ -27,7 +27,9 @@ Packd is the next step of that same evolution. I kept the Clean boundaries, but 
 
 ## Features: what changed in such a small time amount
 
-I revamped Packd by tightening the top-level UI into three clear surfaces: **Trips**, **Inventory**, and **Settings**. Navigation stays scoped per tab, but the core structure was already in place, so the main work was polishing behaviour and consistency at the app layer.
+What surprised me the most is how much **Packd** evolved in such a short amount of time: in just a few weeks it went from a simpler travel companion to a much richer product. The dashboard, from a simple note taking and weather became a full planning tool with timeline calendar, vault logic and smart overview of the all trip
+
+![Packd Current Trip dashboard](/blog/packd-current-trip.png)
 
 Trips became a deeper flow with explicit routing between planning and **"in-progress"** usage. If there's an active trip for today, the Trips tab boots straight into a dedicated **"Current Trip" dashboard**.
 
@@ -35,9 +37,11 @@ This screen is intentionally not the full workspace. It's a lightweight, glancea
 
 If there isn't an active trip, Trips stays in planning mode, showing upcoming trips and quick actions. When a trip becomes active, planning mode surfaces a clear "Resume current trip" entry so you can jump into the same dashboard. At any time, the Current Trip view provides an explicit "Other trips" action to switch back to the planning list.
 
-![Packd Current Trip dashboard](/blog/packd-current-trip.png)
+CLEAR_FLOAT
 
-Inside a single trip, the UX is organized as a workspace. You always keep basic context visible (where you're going, dates, trip status), plus quick access to edit trip details and open trip actions.
+Inside a single trip, the UX is organized as a workspace. You always keep basic context visible (where you're going, dates, trip status), plus quick access to edit trip details and open trip actions. The workspace is divided into 4 main sections
+
+![Packd Inventory screen: before and after redesign](/blog/packd-ui-comparison-2.png)
 
 **Day** : The operational itinerary screen. You pick a trip day, see scheduled stops, and place/edit items directly on a timeline grid. The flow is optimized for quick planning: tap a time slot, add the stop, keep moving. You can also attach documents and images to the trip stops so tickets, PDFs, confirmations, and screenshots live inside the trip context.
 
@@ -47,29 +51,24 @@ Inside a single trip, the UX is organized as a workspace. You always keep basic 
 
 **Packing** : The execution checklist. Items are grouped, you can mark packed/unpacked, adjust quantities inline, and remove entries. It also bridges inventory into the trip via **"add from inventory"**, and supports **AI-assisted generation/refinement** to bootstrap a packing list from trip context and your inventory.
 
-SECTION IMAGES WITH COMPARISON 2
 
 Inventory switched from a classic category list into a **chip-driven filter**. Instead of navigating into a category screen, you stay on one surface and use horizontal chips to scope what you're looking at: **"All"** or a specific category. That makes browsing feel instant and keeps **search + filtering** in the same place.
 
 Once a chip is selected, the content updates in place and renders items as a compact grid of cards, optimized for scanning. Adding is always one tap, and when a category chip is selected you can also edit that category directly from the header.
 
-SECTION IMAGES WITH COMPARISON 3
+![Packd Inventory screen: before and after redesign](/blog/packd-ui-comparison-3.png)
 
 ## AI inside the app: features
 
 The main features of this new version are the **AI-related** ones. Packd already had AI in it, but just to help the user choose what to pack for the amount of days established. The whole app has now become an **AI‑assisted trip planner**, helping you go from an empty schedule to a complete itinerary with just a few taps.
 
-SCREENS OF ABOVE 4
+![Packd Inventory screen: before and after redesign](/blog/packd-ui-ai.png)
 
 If you want to plan the whole trip in one go in the Trips screen there is a new fantastic **"Plan with AI"** button that, after choosing where you want to go, automatically generates a full **multi‑day itinerary**, filling every day with coherent activities while trying to keep variety across the trip.
 
-SCREENS OF ABOVE 5
-
 Inside each day of a trip, you can ask AI to suggest stops either when the day is still empty (**"Draft itinerary with AI"**) or at any time from the **"AI"** button next to **"Add stop"**: suggestions appear in a dedicated sheet and you can add them individually to build the day exactly the way you want.
 
-SCREENS OF ABOVE 6
-
-Finally, when you're already in an active trip, **"What can I do next?"** acts like a smart assistant for today: based on what you've already planned and the current time, it proposes a realistic next stop that fits your available gap. All this AI results can be refined with your **personal preferences**, describing your intentions to help the model find the perfect stop for you.
+Finally, when you're already in an active trip, **"What can I do next?"** acts like a smart assistant for today: based on what you've already planned and the current time, it proposes a realistic next stop that fits your available gap. All this AI results can be refined with your **personal preferences**, describing your intentions to help the model find the perfect stops for you.
 
 ## AI outside the app: tools that helped shape the new version
 
