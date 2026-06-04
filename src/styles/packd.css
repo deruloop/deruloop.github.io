@@ -126,7 +126,8 @@
 
 .packd-page .mockup {
   margin: 30px auto;
-  max-width: 60%;
+  width: 100%;
+  max-width: 360px;
   height: auto;
   display: block;
 }
@@ -220,7 +221,7 @@
   }
 
   .packd-page .mockup {
-    max-width: 90%;
+    max-width: 320px;
   }
 }
 
@@ -230,6 +231,6 @@
   }
 
   .packd-page .mockup {
-    max-width: 100%;
+    max-width: 280px;
   }
 }
