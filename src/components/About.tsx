@@ -20,7 +20,7 @@ const About = () => {
                   <img
                     src="/about-photo.jpg"
                     alt="Cristiano Calicchia"
-                    className="w-full h-64 md:h-full object-cover"
+                    className="w-full h-48 md:h-56 object-cover"
                     loading="lazy"
                     width={512}
                     height={640}
