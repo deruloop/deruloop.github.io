@@ -14,13 +14,13 @@ const About = () => {
 
           <Card className="border-2 overflow-hidden">
             <CardContent className="p-0">
-              <div className="flex flex-col md:flex-row">
+              <div className="flex flex-col md:grid md:grid-cols-5">
                 {/* Photo */}
-                <div className="md:w-2/5 flex-shrink-0">
+                <div className="md:col-span-2 md:h-full">
                   <img
                     src="/about-photo.jpg"
                     alt="Cristiano Calicchia"
-                    className="w-full h-48 md:h-56 object-cover"
+                    className="w-full h-48 md:h-full md:min-h-full object-cover"
                     loading="lazy"
                     width={512}
                     height={640}
@@ -28,7 +28,7 @@ const About = () => {
                 </div>
 
                 {/* Text */}
-                <div className="md:w-3/5 p-8 md:p-12 space-y-6">
+                <div className="md:col-span-3 p-8 md:p-12 space-y-6">
                   <div className="space-y-1">
                     <h3 className="text-2xl font-bold text-foreground">
                       Cristiano Calicchia
@@ -54,25 +54,26 @@ const About = () => {
                     When I'm not coding, you'll find me exploring the latest iOS features, contributing
                     to open source projects, or sharing knowledge with the developer community.
                   </p>
-
-                  <div className="pt-6 border-t border-border">
-                    <h3 className="text-xl font-semibold mb-4">Experience Highlights</h3>
-                    <ul className="space-y-3 text-muted-foreground">
-                      <li className="flex items-start">
-                        <span className="text-primary mr-3 mt-1">▹</span>
-                        <span>5+ years of professional iOS development experience</span>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="text-primary mr-3 mt-1">▹</span>
-                        <span>Worked with 10+ companies with app in production on the App Store</span>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="text-primary mr-3 mt-1">▹</span>
-                        <span>Strong focus on performance optimization and user experience</span>
-                      </li>
-                    </ul>
-                  </div>
                 </div>
+              </div>
+
+              {/* Experience Highlights — full width */}
+              <div className="p-8 md:p-12 pt-6 border-t border-border">
+                <h3 className="text-xl font-semibold mb-4">Experience Highlights</h3>
+                <ul className="space-y-3 text-muted-foreground">
+                  <li className="flex items-start">
+                    <span className="text-primary mr-3 mt-1">▹</span>
+                    <span>5+ years of professional iOS development experience</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-primary mr-3 mt-1">▹</span>
+                    <span>Worked with 10+ companies with app in production on the App Store</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-primary mr-3 mt-1">▹</span>
+                    <span>Strong focus on performance optimization and user experience</span>
+                  </li>
+                </ul>
               </div>
             </CardContent>
           </Card>
