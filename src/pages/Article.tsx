@@ -289,6 +289,36 @@ const Article = () => {
                   );
                 }
                 const language = match?.[1] || "swift";
+                if (language === "battery") {
+                  const items = String(children)
+                    .split(/\r?\n/)
+                    .map((s) => s.trim())
+                    .filter(Boolean);
+                  const columns = Math.max(items.length, 1);
+
+                  return (
+                    <div className="my-6 flex justify-center">
+                      <div className="relative w-full max-w-2xl">
+                        <div className="absolute -right-3 top-1/2 -translate-y-1/2 w-3 h-10 bg-border rounded-r-md" />
+                        <div
+                          className="grid gap-1.5 p-2.5 border border-border rounded-xl bg-card shadow-medium"
+                          style={{ gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))` }}
+                        >
+                          {items.map((label, idx) => (
+                            <div
+                              key={`${idx}-${label}`}
+                              className="flex items-center justify-center text-center px-2 py-3 rounded-lg border border-border bg-muted/40"
+                            >
+                              <span className="text-[11px] sm:text-xs font-semibold text-foreground leading-snug">
+                                {label}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                }
                 return (
                   <SyntaxHighlighter
                     language={language}

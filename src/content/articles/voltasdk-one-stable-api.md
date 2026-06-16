@@ -7,8 +7,6 @@ tags: [iOS, AI, Swift, SDK]
 
 _On-device first, cloud when it makes sense, free where it can be — and designed to grow into iOS 27 new model_
 
----
-
 ## Why I built this
 
 WWDC made one thing obvious: the question for app developers is no longer _"should my app use AI?"_ but _"which model should answer **this** call, **right now**?"_
@@ -150,27 +148,25 @@ A note for adopters: building requires **Xcode 26.4 or newer** (the 26.4 token-c
 
 This is where it gets exciting, and where the whole design pays off.
 
-On iOS 27, Apple opens the Foundation Models stack much further, and Volta's chain simply **grows**:
+On iOS 27, Apple opens the Foundation Models stack much further. Volta's chain gets new tiers (PCC, user-account providers, and additional local runtimes like MLX), but the API stays stable.
 
-- **Private Cloud Compute (PCC)** — a large server model that integrates like on-device: **no API key, no account**, built into the OS, free for the developer with a per-user **daily quota**. The critical implication: that quota can run out _mid-use_, at runtime. This is the single best argument for automatic, runtime fallback rather than a static setup choice — and Volta is built around exactly that.
-- **A public `LanguageModel` protocol** — making **multi-provider** real: Gemini, Claude, and OpenAI as **user-account** providers (the user pays, via OAuth or their own key), alongside the existing developer-key variants.
-- **Dynamic Profiles** — Apple's own declarative, SwiftUI-style API for agents. Volta will _not_ wrap or replace it. Instead it **feeds** it: you write a native Dynamic Profile and drop in `.model(orchestrator.preferred(.reasoning))`, letting Volta resolve the concrete model at runtime while Apple owns the agent. The resolution primitive that exists today (`resolveProvider()`) is designed to become exactly that `preferred(_ need:)` bridge.
+```battery
+On-device
+Local runtimes (MLX)
+Private Cloud Compute (PCC)
+Developer key
+User account
+```
 
-The emphasis is unmistakable: **privacy and powerful, free cloud compute.** PCC means an app can offer a server-class model with no key and no per-user billing, and with privacy guarantees close to on-device. Volta's job is to slot it into the chain — on-device → PCC → developer key → user account — and pick the right tier per call, disclosing every privacy crossing along the way.
+- **On-device** — private, free, and instant when available, but it can be disabled (Apple Intelligence off), unsupported on a given device, or too small for a particular prompt.
+- **Local runtimes (MLX)** — another device-local tier for teams that want to ship their own on-device models. The exact runtime can vary over time; the important part is that the resolution layer can treat it as a first-class local provider.
+- **Private Cloud Compute (PCC)** — Apple’s server-class model with “built-in” semantics: no API key, no account, and privacy properties much closer to on-device. The key runtime wrinkle is quotas: it can become unavailable mid-use.
+- **Developer key** — the bring-your-own-key tier (OpenAI/Claude/Gemini today). Powerful and flexible, but it costs money and crosses outside the device.
+- **User account** — a future-facing tier where the user authenticates and pays directly (OAuth / personal key), alongside or instead of developer-funded usage.
 
-And here's the promise that makes all of this safe to adopt **now**: it's **additive**. The public API doesn't change. iOS 27 capabilities arrive as whole new provider types that light up when the OS supports them and are silently absent when it doesn't. No rewrite on upgrade. One stable API across every phase.
+Dynamic Profiles are not something Volta should wrap or replace. Volta should **feed** them. You write a native Dynamic Profile and drop in `.model(orchestrator.preferred(.reasoning))`, letting Volta resolve the concrete model at runtime while Apple owns the agent. The primitive that exists today (`resolveProvider()`) is designed to become exactly that bridge.
 
-## What's next
-
-Beyond the iOS 27 work, the near-term roadmap includes **response streaming** (with a clear rule for when a mid-stream failure surfaces vs. falls through), **per-need fallback chains** (`.lightweight` / `.reasoning` / `.largeContext`), and **fetching model lists from the vendor APIs** so a developer picks from a real catalog instead of typing a model string.
-
-I'll be sharing more as it lands. If a clean, privacy-aware resolution layer for Apple's AI stack is your kind of thing, **follow along** — and come build with it.
-
-&nbsp;
-
-&nbsp;
-
-&nbsp;
+And that is the promise that makes the framework safe to adopt **now**: the future is **additive**. New provider types light up when the OS, device, or app configuration supports them and remain absent when they do not. No rewrite on upgrade. One stable API across every phase.
 
 &nbsp;
 
@@ -182,12 +178,3 @@ I'll be sharing more as it lands. If a clean, privacy-aware resolution layer for
 
 &nbsp;
 
-&nbsp;
-
-&nbsp;
-
-&nbsp;
-
-&nbsp;
-
-&nbsp;
