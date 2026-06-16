@@ -19,8 +19,6 @@ Picking between them is not a one-time setup decision. It changes **at runtime**
 
 So I built **VoltaSDK** to own exactly that one job, and nothing more: **resolving which model to use, per call, at runtime.**
 
----
-
 ## What it is (and what it deliberately is not)
 
 **VOLTA** stands for _Versatile Orchestration Layer for Tiered AI_. This is also a reference to Alessandro Volta, who invented the battery — a **stack of cells** where, when one layer alone isn't enough, the stack still delivers the power. That is precisely what the framework is: a **fallback chain** across models, where the next layer takes over the moment the current one can't. I know it's a stretch but I love to find these connections 😭
@@ -28,8 +26,6 @@ So I built **VoltaSDK** to own exactly that one job, and nothing more: **resolvi
 It is **not** an agent framework. It owns no sessions, no conversations, no "agent" abstraction. Its single responsibility is **model resolution**: given availability, privacy policy, context window, and the developer's preference, hand back the concrete model that should answer — or walk the chain until one can.
 
 That narrow scope is the whole point. Apple already gives you `LanguageModelSession` and (on iOS 27) Dynamic Profiles for _running_ AI.
-
----
 
 ## How resolution works
 
@@ -65,8 +61,6 @@ If you'd rather resolve **without** executing — for example to feed a model in
 ```swift
 let provider = try await AIOrchestrator.active.resolveProvider()
 ```
-
----
 
 ## The design decisions that matter
 
@@ -109,8 +103,6 @@ if let usage = await kit.contextUsage(history: history), usage.fraction > 0.8 {
 
 The core has **zero** UI dependencies. You can build any interface you like on top of its public state. But if you want drop-in components, they live in a separate `VoltaSDKUI` product — take them or leave them.
 
----
-
 ## The reusable UI components
 
 For teams that want a head start, `VoltaSDKUI` ships ready-made SwiftUI views. The centerpiece is **`ModelSelector`** — a user-facing picker that lets _your users_ choose which model to use.
@@ -124,8 +116,6 @@ The component carries one deliberate **safety invariant**: nothing is ever commi
 Cloud providers are **never** preselected, because a configuration preference must not masquerade as a user activation when a subscription — or, later, an OAuth login — sits behind it. Selection is a three-way conversation: `.activate` commits now, `.deny` refuses with a message, and `.deferred` hands control to _your_ flow (a paywall, a settings page) that commits later.
 
 The library also ships `AIPlaygroundView` (a full conversational view with provenance and a context-pressure indicator), `ProviderStatusList` (the live fallback chain for a settings or debug screen), and public building blocks like `ModelSelectorRow` and `PrivacyLevelBadge` so you can recompose your own layout.
-
----
 
 ## Try it: the demo apps
 
@@ -143,8 +133,6 @@ On iPhone and iPad the same UI adapts into tabs. Open `Examples/iOSDemo/iOSDemo.
 
 ![The iOS demo — the Developer tab and the User tab side by side, showing the chat and the model selector.](/blog/iosVolta.png)
 
----
-
 ## Available today
 
 The full **iOS / macOS 26** base is shipping and open-source right now:
@@ -157,8 +145,6 @@ The full **iOS / macOS 26** base is shipping and open-source right now:
 A note for adopters: building requires **Xcode 26.4 or newer** (the 26.4 token-counting API is referenced behind a runtime gate), while the package _runs_ on iOS/macOS **26.0+**. It's versioned under a pre-1.0 policy — `1.0.0` is intentionally **reserved** for the complete feature set, including the iOS 27 work.
 
 👉 https://github.com/deruloop/VoltaSDK — try it, run the demo, and open issues.
-
----
 
 ## The future: iOS 27
 
@@ -174,10 +160,34 @@ The emphasis is unmistakable: **privacy and powerful, free cloud compute.** PCC 
 
 And here's the promise that makes all of this safe to adopt **now**: it's **additive**. The public API doesn't change. iOS 27 capabilities arrive as whole new provider types that light up when the OS supports them and are silently absent when it doesn't. No rewrite on upgrade. One stable API across every phase.
 
----
-
 ## What's next
 
 Beyond the iOS 27 work, the near-term roadmap includes **response streaming** (with a clear rule for when a mid-stream failure surfaces vs. falls through), **per-need fallback chains** (`.lightweight` / `.reasoning` / `.largeContext`), and **fetching model lists from the vendor APIs** so a developer picks from a real catalog instead of typing a model string.
 
 I'll be sharing more as it lands. If a clean, privacy-aware resolution layer for Apple's AI stack is your kind of thing, **follow along** — and come build with it.
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
