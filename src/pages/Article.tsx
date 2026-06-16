@@ -4,7 +4,7 @@ import TabSwitcher from "@/components/TabSwitcher";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { ArrowLeft, Calendar, Tag } from "lucide-react";
-import { useEffect, useMemo, useRef, useState, ReactNode, CSSProperties, isValidElement } from "react";
+import { useEffect, useMemo, useRef, useState, ReactNode, CSSProperties, isValidElement, Children } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 
 const codeTheme: Record<string, CSSProperties> = {
@@ -232,18 +232,47 @@ const Article = () => {
                 if (text === "CLEAR_FLOAT") {
                   return <div className="clear-both" />;
                 }
+
+                const childNodes = Children.toArray(children);
+                if (childNodes.length === 1 && isValidElement(childNodes[0])) {
+                  const onlyChild = childNodes[0];
+                  const href = typeof onlyChild.props.href === "string" ? onlyChild.props.href : "";
+                  if (href.toLowerCase().endsWith(".mp4")) {
+                    return (
+                      <div className="my-6">
+                        <video
+                          src={href}
+                          controls
+                          playsInline
+                          className="w-full rounded-2xl border border-border/60 shadow-medium bg-card"
+                        />
+                      </div>
+                    );
+                  }
+                }
+
                 return <p {...props}>{children}</p>;
               },
               img: ({ alt, ...props }) => {
-                const isCurrentTrip = (alt || "").toLowerCase().includes("current trip");
+                const normalizedAlt = (alt || "").toLowerCase();
+                const isComponentDemo = normalizedAlt.includes("component demo");
+                const isCurrentTrip = normalizedAlt.includes("current trip");
+                const isMacOSDemo = normalizedAlt.includes("macos demo");
+                const isiOSDemo = normalizedAlt.includes("ios demo");
                 return (
                   <img
                     alt={alt}
                     {...props}
                     className={
-                      isCurrentTrip
+                      isComponentDemo
+                        ? "!w-auto max-w-[12rem] sm:max-w-[14rem] md:max-w-[16rem]"
+                        : isCurrentTrip
                         ? "!w-auto max-w-[8.5rem] sm:max-w-[10rem] md:max-w-[11rem] lg:max-w-[15rem] md:float-left md:mr-6 md:mb-4"
-                        : undefined
+                        : isMacOSDemo
+                          ? "!max-w-full w-full"
+                          : isiOSDemo
+                            ? "!w-auto max-w-[14rem] sm:max-w-[16rem] md:max-w-[18rem]"
+                            : undefined
                     }
                   />
                 );
