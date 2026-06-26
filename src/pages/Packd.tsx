@@ -89,6 +89,17 @@ export default function Packd() {
           </div>
           <div className="feature-item">
             <div className="feature-icon">
+              <div className="emoji">📱</div>
+            </div>
+            <div className="feature-text">
+              <h3 className="feature-title">On-device AI</h3>
+              <p className="feature-subtitle">
+                Support for on-device models (when available), including Apple Intelligence Foundation models on supported devices.
+              </p>
+            </div>
+          </div>
+          <div className="feature-item">
+            <div className="feature-icon">
               <div className="emoji">⏰</div>
             </div>
             <div className="feature-text">
@@ -248,17 +259,6 @@ export default function Packd() {
               <h3 className="feature-title">Bring your own AI key</h3>
               <p className="feature-subtitle">
                 Use Packd with your personal tokens from popular AI providers, keeping AI accessible without forcing a subscription.
-              </p>
-            </div>
-          </div>
-          <div className="feature-item">
-            <div className="feature-icon">
-              <div className="emoji">📱</div>
-            </div>
-            <div className="feature-text">
-              <h3 className="feature-title">On-device AI</h3>
-              <p className="feature-subtitle">
-                Support for on-device models (when available), including Apple Intelligence Foundation models on supported devices.
               </p>
             </div>
           </div>
