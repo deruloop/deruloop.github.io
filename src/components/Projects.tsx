@@ -30,7 +30,7 @@ const projects: Project[] = [
   },
   {
     title: "VoltaSDK",
-    description: "A Swift SDK that resolves the best AI model at runtime with on-device-first routing, privacy-aware fallback, and one stable API.",
+    description: "A Swift SDK that decides which AI model should answer each call, preferring on-device when possible and falling back with privacy-aware rules.",
     image: voltaSdkImage,
     tags: ["Swift", "AI", "SDK", "iOS"],
     website: "https://github.com/deruloop/VoltaSDK",
