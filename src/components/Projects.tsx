@@ -2,10 +2,22 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { ExternalLink, Github } from "lucide-react";
 import packd from "@/assets/packd.png";
-import appWeather from "@/assets/app-weather.png";
-import appTasks from "@/assets/app-tasks.png";
 
-const projects = [
+const voltaSdkImage =
+  "https://coreva-normal.trae.ai/api/ide/v1/text_to_image?prompt=minimal%20polished%20product%20illustration%20for%20an%20iOS%20AI%20SDK%20called%20VoltaSDK%2C%20battery-inspired%20stacked%20layers%2C%20subtle%20iPhone%20developer%20interface%2C%20orange%20and%20graphite%20palette%2C%20clean%20modern%20launch%20visual%2C%20premium%203D%20icon%20style%2C%20soft%20studio%20lighting%2C%20no%20text&image_size=square_hd";
+
+type Project = {
+  title: string;
+  description: string;
+  image: string;
+  tags: string[];
+  github?: string;
+  appStore?: string;
+  website?: string;
+  detailPage?: string;
+};
+
+const projects: Project[] = [
   {
     title: "Packd",
     description: "Trip organizer, packing list manager and more! With AI integration and VisionOS support.",
@@ -15,21 +27,15 @@ const projects = [
     appStore: "https://apps.apple.com/it/app/packd/id6593688485",
     detailPage: "/packd/",
   },
-  // {
-  //   title: "Nuance Audio",
-  //   description: "Beautiful weather app with detailed forecasts, interactive maps, and customizable widgets.",
-  //   image: packd,
-  //   tags: ["Swift", "WeatherKit", "Widgets"],
-  //   appStore: "https://apps.apple.com/app/id6477399465",
-  // },
-  // {
-  //   title: "TaskFlow",
-  //   description: "Intuitive task management app with smart organization, reminders, and collaboration features.",
-  //   image: packd,
-  //   tags: ["SwiftUI", "CloudKit", "Combine"],
-  //   github: "https://github.com",
-  //   appStore: "https://apps.apple.com",
-  // },
+  {
+    title: "VoltaSDK",
+    description: "A Swift SDK that resolves the best AI model at runtime with on-device-first routing, privacy-aware fallback, and one stable API.",
+    image: voltaSdkImage,
+    tags: ["Swift", "AI", "SDK", "iOS"],
+    github: "https://github.com/deruloop/VoltaSDK",
+    website: "/articles/voltasdk-one-stable-api",
+    detailPage: "/articles/voltasdk-one-stable-api",
+  },
 ];
 
 const Projects = () => {
@@ -39,7 +45,7 @@ const Projects = () => {
         <div className="text-center space-y-4 mb-16">
           <h2 className="text-4xl md:text-4xl font-bold">Personal Projects</h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            A selection of iOS applications I've built, available on App Store.
+            A selection of apps, tools, and developer products I&apos;ve built across Apple platforms.
           </p>
         </div>
 
@@ -77,26 +83,42 @@ const Projects = () => {
                     </div>
 
                     <div className="flex gap-3">
-                      <a
-                        href={project.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        <Github className="h-4 w-4" />
-                        Code
-                      </a>
-                      <a
-                        href={project.appStore}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        <ExternalLink className="h-4 w-4" />
-                        App Store
-                      </a>
+                      {project.github && (
+                        <a
+                          href={project.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <Github className="h-4 w-4" />
+                          Code
+                        </a>
+                      )}
+                      {project.appStore && (
+                        <a
+                          href={project.appStore}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <ExternalLink className="h-4 w-4" />
+                          App Store
+                        </a>
+                      )}
+                      {project.website && (
+                        <a
+                          href={project.website}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <ExternalLink className="h-4 w-4" />
+                          Article
+                        </a>
+                      )}
                     </div>
                   </CardContent>
                 </div>
