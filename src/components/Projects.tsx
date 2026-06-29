@@ -14,6 +14,7 @@ type Project = {
   github?: string;
   appStore?: string;
   website?: string;
+  websiteLabel?: string;
   detailPage?: string;
 };
 
@@ -32,9 +33,9 @@ const projects: Project[] = [
     description: "A Swift SDK that resolves the best AI model at runtime with on-device-first routing, privacy-aware fallback, and one stable API.",
     image: voltaSdkImage,
     tags: ["Swift", "AI", "SDK", "iOS"],
-    github: "https://github.com/deruloop/VoltaSDK",
-    website: "/articles/voltasdk-one-stable-api",
-    detailPage: "/articles/voltasdk-one-stable-api",
+    website: "https://github.com/deruloop/VoltaSDK",
+    websiteLabel: "GitHub Repo",
+    detailPage: "https://github.com/deruloop/VoltaSDK",
   },
 ];
 
@@ -116,7 +117,7 @@ const Projects = () => {
                           onClick={(e) => e.stopPropagation()}
                         >
                           <ExternalLink className="h-4 w-4" />
-                          Article
+                          {project.websiteLabel ?? "Website"}
                         </a>
                       )}
                     </div>
