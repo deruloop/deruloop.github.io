@@ -4,7 +4,7 @@ import { ExternalLink, Github } from "lucide-react";
 import packd from "@/assets/packd.png";
 
 const voltaSdkImage =
-  "https://coreva-normal.trae.ai/api/ide/v1/text_to_image?prompt=cartoonish%20battery%20mascot%20character%20icon%20for%20an%20AI%20SDK%2C%20single%20centered%20battery%20character%2C%20rounded%20shapes%2C%20friendly%20expressive%20face%2C%20playful%20premium%20illustration%2C%20orange%20brown%20taupe%20and%20warm%20gray%20palette%2C%20soft%20shading%2C%20clean%20background%2C%20app%20card%20artwork%2C%20no%20text%2C%20no%20extra%20objects&image_size=square_hd";
+  "https://coreva-normal.trae.ai/api/ide/v1/text_to_image?prompt=large%20single%20battery%20icon%20as%20the%20main%20protagonist%2C%20centered%20and%20dominant%2C%20flat%20modern%20illustration%2C%20no%20face%2C%20no%20character%2C%20no%20background%20scene%2C%20plain%20clean%20background%2C%20the%20inside%20of%20the%20battery%20is%20made%20of%20stacked%20different%20colored%20horizontal%20layers%2C%20each%20layer%20represents%20a%20battery%20tick%2C%20bright%20orange%2C%20amber%2C%20warm%20gold%2C%20soft%20brown%20and%20light%20gray%20palette%2C%20minimal%20shading%2C%20clean%20rounded%20shape%2C%20no%20extra%20objects%2C%20no%20text&image_size=square_hd";
 
 type Project = {
   title: string;
