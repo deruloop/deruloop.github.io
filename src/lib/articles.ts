@@ -5,10 +5,35 @@ export interface Article {
   excerpt: string;
   tags: string[];
   content: string;
+  status?: string;
+  collection?: string;
+  collectionSlug?: string;
+  collectionOrder?: number;
+  track?: string;
+  trackDisplayTitle?: string;
+  trackSlug?: string;
+  trackOrder?: number;
+  lessonOrder?: number;
 }
 
 type FrontmatterValue = string | string[];
 type Frontmatter = Record<string, FrontmatterValue | undefined>;
+
+function getString(meta: Frontmatter, key: string): string | undefined {
+  return typeof meta[key] === 'string' ? meta[key] : undefined;
+}
+
+function getStringArray(meta: Frontmatter, key: string): string[] {
+  return Array.isArray(meta[key]) ? meta[key] : [];
+}
+
+function getNumber(meta: Frontmatter, key: string): number | undefined {
+  const value = getString(meta, key);
+  if (!value) return undefined;
+
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : undefined;
+}
 
 function parseFrontmatter(raw: string): { meta: Frontmatter; content: string } {
   const match = raw.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
@@ -50,11 +75,20 @@ export function getAllArticles(): Article[] {
 
     articles.push({
       slug,
-      title: typeof meta.title === 'string' ? meta.title : slug,
-      date: typeof meta.date === 'string' ? meta.date : '',
-      excerpt: typeof meta.excerpt === 'string' ? meta.excerpt : '',
-      tags: Array.isArray(meta.tags) ? meta.tags : [],
+      title: getString(meta, 'title') ?? slug,
+      date: getString(meta, 'date') ?? '',
+      excerpt: getString(meta, 'excerpt') ?? '',
+      tags: getStringArray(meta, 'tags'),
       content,
+      status: getString(meta, 'status'),
+      collection: getString(meta, 'collection'),
+      collectionSlug: getString(meta, 'collectionSlug'),
+      collectionOrder: getNumber(meta, 'collectionOrder'),
+      track: getString(meta, 'track'),
+      trackDisplayTitle: getString(meta, 'trackDisplayTitle'),
+      trackSlug: getString(meta, 'trackSlug'),
+      trackOrder: getNumber(meta, 'trackOrder'),
+      lessonOrder: getNumber(meta, 'lessonOrder'),
     });
   }
 
@@ -62,5 +96,5 @@ export function getAllArticles(): Article[] {
 }
 
 export function getArticleBySlug(slug: string): Article | undefined {
-  return getAllArticles().find((a) => a.slug === slug);
+  return getAllArticles().find((a) => a.slug === slug && a.status !== 'coming-soon');
 }

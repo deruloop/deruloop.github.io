@@ -195,6 +195,21 @@ const Article = () => {
           )}
         </div>
 
+        {(article.collection || article.track) && (
+          <div className="flex flex-wrap items-center gap-2 mb-4">
+            {article.collection && (
+              <span className="rounded-full bg-muted px-3 py-1 text-xs font-medium text-foreground">
+                {article.collection}
+              </span>
+            )}
+            {article.track && (
+              <span className="rounded-full bg-muted px-3 py-1 text-xs font-medium text-foreground">
+                {article.track}
+              </span>
+            )}
+          </div>
+        )}
+
         <h1 className="text-4xl font-bold mb-8">{article.title}</h1>
 
         <div className="prose prose-neutral max-w-none prose-headings:text-foreground prose-headings:font-bold prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-4 prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-3 prose-p:text-foreground/80 prose-strong:text-foreground prose-a:text-accent prose-a:font-bold prose-a:no-underline hover:prose-a:underline prose-code:bg-primary prose-code:text-primary-foreground prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:font-mono prose-code:before:content-none prose-code:after:content-none prose-pre:bg-primary prose-pre:text-primary-foreground prose-pre:rounded-lg prose-pre:border prose-pre:border-border prose-pre:overflow-x-auto prose-img:rounded-2xl prose-img:border prose-img:border-border/60 prose-img:shadow-medium prose-img:my-6 prose-img:mx-auto prose-img:max-w-sm sm:prose-img:max-w-lg prose-img:w-full prose-img:bg-card prose-img:p-2 sm:prose-img:p-3">
