@@ -119,6 +119,26 @@ PCC sits at a privacy level *between* fully on-device and a third-party cloud: d
 
 Adding Private Cloud Compute is mostly a pleasure - a capable, free, private model that drops into existing Foundation Models code with a one-line change. The work that *isn't* in the one-liner is the rest of it: getting the entitlement assigned and into a signed build, guarding against the uncatchable crash when it's missing, and treating the daily quota as a runtime-variable condition with a fallback behind it. Handle those, and PCC settles in as an extra tier that steps aside gracefully when it isn't there. One last practical note: the SDK's `.swiftinterface` is the precise reference for the types and errors, but some behaviour - like `availability` not reflecting the entitlement - only shows up on a real device, so test on one before you ship.
 
+## A real production example
+
+If you want to see PCC wired into a real production-oriented SDK, take a look at [VoltaSDK](https://github.com/deruloop/VoltaSDK) on the `xcode27` branch. It is the codebase where I have been applying these Foundation Models sessions in practice, including the model-resolution and fallback concerns that become important once PCC is one tier among several.
+
 ## The session this implements
 
 ▶ [WWDC 2026, session 319](https://developer.apple.com/videos/play/wwdc2026/319/) - It's the best place to start for the API tour: `PrivateCloudComputeLanguageModel`, the `isAvailable` / `quotaUsage` checks, and the eligibility requirements. This article is meant to sit alongside it, adding the entitlement, signing, and quota details that came out of actually wiring it up.
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
