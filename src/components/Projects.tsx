@@ -24,7 +24,6 @@ const projects: Project[] = [
     description: "Trip organizer, packing list manager and more! With AI integration and VisionOS support.",
     image: packd,
     tags: ["SwiftUI", "CloudKit", "VisionOS"],
-    github: "https://github.com",
     appStore: "https://apps.apple.com/it/app/packd/id6593688485",
     detailPage: "/packd/",
   },
