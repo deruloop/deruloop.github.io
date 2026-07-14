@@ -9,6 +9,7 @@ import Article from "./pages/Article";
 import Packd from "./pages/Packd";
 import PackdPrivacy from "./pages/packd/Privacy";
 import PackdTerms from "./pages/packd/Terms";
+import Exoreader from "./pages/exoreader/Exoreader";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -26,6 +27,7 @@ const App = () => (
           <Route path="/packd" element={<Packd />} />
           <Route path="/packd/privacy" element={<PackdPrivacy />} />
           <Route path="/packd/terms" element={<PackdTerms />} />
+          <Route path="/exoreader" element={<Exoreader />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
