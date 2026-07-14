@@ -32,7 +32,7 @@ const projects: Project[] = [
     title: "Exoreader",
     description: "A calm, chronological reader for Bluesky. No algorithm. No noise. Just the posts, in order.",
     image: exoreaderIcon,
-    tags: ["Web", "React", "Vite", "Bluesky"],
+    tags: ["SwiftUI", "KMP", "iOS", "macOS"],
     detailPage: "/exoreader/",
   },
   {
