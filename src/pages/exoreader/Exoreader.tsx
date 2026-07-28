@@ -61,7 +61,15 @@ export default function Exoreader() {
               rel="noopener noreferrer"
               className="inline-flex items-center rounded-sm bg-zinc-950 px-6 py-3 text-base font-semibold text-white hover:opacity-90 transition-opacity dark:bg-white dark:text-zinc-950"
             >
-              Get Exoreader
+              iOS on TestFlight
+            </a>
+            <a
+              href="https://www.google.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center rounded-sm border border-zinc-950 px-6 py-3 text-base font-semibold text-zinc-950 hover:bg-zinc-950 hover:text-white transition-colors dark:border-white dark:text-white dark:hover:bg-white dark:hover:text-zinc-950"
+            >
+              Android on Google Play
             </a>
             <a
               href="#features"
@@ -104,14 +112,22 @@ export default function Exoreader() {
               Exoreader turns Bluesky into a calm, chronological reading surface. No algorithm.
               No noise. Just the posts, in order, whenever you want them.
             </p>
-            <div className="mt-10 flex items-center gap-4 md:mt-12">
+            <div className="mt-10 flex flex-wrap items-center gap-4 md:mt-12">
               <a
                 href="https://testflight.apple.com/join/fKfCWfwd"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center rounded-sm bg-zinc-950 px-6 py-3 text-base font-semibold text-white hover:opacity-90 transition-opacity dark:bg-white dark:text-zinc-950"
               >
-                Get Exoreader
+                iOS on TestFlight
+              </a>
+              <a
+                href="https://www.google.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center rounded-sm border border-zinc-950 px-6 py-3 text-base font-semibold text-zinc-950 hover:bg-zinc-950 hover:text-white transition-colors dark:border-white dark:text-white dark:hover:bg-white dark:hover:text-zinc-950"
+              >
+                Android on Google Play
               </a>
               <a
                 href="#features"
@@ -177,14 +193,22 @@ export default function Exoreader() {
           <h2 className="text-4xl md:text-5xl font-semibold tracking-tight">
             Read the sky, slowly.
           </h2>
-          <div className="mt-10">
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
             <a
               href="https://testflight.apple.com/join/fKfCWfwd"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center rounded-sm bg-zinc-950 px-6 py-3 text-base font-semibold text-white hover:opacity-90 transition-opacity dark:bg-white dark:text-zinc-950"
             >
-              Get Exoreader
+              iOS on TestFlight
+            </a>
+            <a
+              href="https://www.google.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center rounded-sm border border-zinc-950 px-6 py-3 text-base font-semibold text-zinc-950 hover:bg-zinc-950 hover:text-white transition-colors dark:border-white dark:text-white dark:hover:bg-white dark:hover:text-zinc-950"
+            >
+              Android on Google Play
             </a>
           </div>
         </div>
