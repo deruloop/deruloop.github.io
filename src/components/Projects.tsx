@@ -3,9 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { ExternalLink, Github } from "lucide-react";
 import packd from "@/assets/packd.png";
 import exoreaderIcon from "@/assets/exoreader-icon.png";
-
-const voltaSdkImage =
-  "https://coreva-normal.trae.ai/api/ide/v1/text_to_image?prompt=large%20single%20battery%20icon%20as%20the%20main%20protagonist%2C%20centered%20and%20dominant%2C%20flat%20modern%20illustration%2C%20no%20face%2C%20no%20character%2C%20no%20background%20scene%2C%20plain%20clean%20background%2C%20the%20inside%20of%20the%20battery%20is%20made%20of%20stacked%20different%20colored%20horizontal%20layers%2C%20each%20layer%20represents%20a%20battery%20tick%2C%20bright%20orange%2C%20amber%2C%20warm%20gold%2C%20soft%20brown%20and%20light%20gray%20palette%2C%20minimal%20shading%2C%20clean%20rounded%20shape%2C%20no%20extra%20objects%2C%20no%20text&image_size=square_hd";
+import voltaSdkImage from "@/assets/voltasdk-icon.svg";
 
 type Project = {
   title: string;

@@ -121,14 +121,14 @@ export default function Exoreader() {
               >
                 iOS on TestFlight
               </a>
-              <a
-                href="https://www.google.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center rounded-sm border border-zinc-950 px-6 py-3 text-base font-semibold text-zinc-950 hover:bg-zinc-950 hover:text-white transition-colors dark:border-white dark:text-white dark:hover:bg-white dark:hover:text-zinc-950"
+              <button
+                type="button"
+                disabled
+                title="Coming soon"
+                className="inline-flex items-center rounded-sm border border-zinc-950/30 px-6 py-3 text-base font-semibold text-zinc-950/40 cursor-not-allowed opacity-60 dark:border-white/30 dark:text-white/40"
               >
-                Android on Google Play
-              </a>
+                Android · Coming soon
+              </button>
               <a
                 href="#features"
                 className="text-sm text-zinc-500 hover:text-zinc-950 transition-colors dark:text-muted-foreground dark:hover:text-foreground"

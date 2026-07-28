@@ -1,0 +1,36 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="VoltaSDK icon">
+  <defs>
+    <linearGradient id="voltaBg" x1="0" y1="0" x2="0" y2="512" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFE7C2"/>
+      <stop offset="1" stop-color="#F6B65A"/>
+    </linearGradient>
+    <linearGradient id="voltaBody" x1="0" y1="0" x2="0" y2="512" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#2A3138"/>
+      <stop offset="1" stop-color="#1B2025"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Full-bleed background (corners clipped by the component) -->
+  <rect width="512" height="512" fill="url(#voltaBg)"/>
+
+  <!-- Battery cap -->
+  <rect x="216" y="96" width="80" height="34" rx="14" fill="url(#voltaBody)"/>
+
+  <!-- Battery body / casing -->
+  <rect x="160" y="122" width="192" height="300" rx="40" fill="url(#voltaBody)"/>
+
+  <!-- Inner well -->
+  <rect x="184" y="146" width="144" height="252" rx="24" fill="#0F1317"/>
+
+  <!-- Stacked charge layers (bottom -> top): warm orange to bright orange -->
+  <g>
+    <rect x="196" y="342" width="120" height="44" rx="12" fill="#C56A1E"/>
+    <rect x="196" y="290" width="120" height="44" rx="12" fill="#E77A16"/>
+    <rect x="196" y="238" width="120" height="44" rx="12" fill="#F58A1F"/>
+    <rect x="196" y="186" width="120" height="44" rx="12" fill="#FF9E2C"/>
+    <rect x="196" y="158" width="120" height="20" rx="10" fill="#FFB347"/>
+  </g>
+
+  <!-- Bolt highlight -->
+  <path d="M262 196 L222 300 H252 L244 372 L296 262 H262 Z" fill="#FFF3E0" fill-opacity="0.95"/>
+</svg>
