@@ -10,6 +10,7 @@ import Packd from "./pages/Packd";
 import PackdPrivacy from "./pages/packd/Privacy";
 import PackdTerms from "./pages/packd/Terms";
 import Exoreader from "./pages/exoreader/Exoreader";
+import RavioloLanding from "./pages/raviolo/RavioloLanding";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -28,6 +29,7 @@ const App = () => (
           <Route path="/packd/privacy" element={<PackdPrivacy />} />
           <Route path="/packd/terms" element={<PackdTerms />} />
           <Route path="/exoreader" element={<Exoreader />} />
+          <Route path="/raviolo" element={<RavioloLanding />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
