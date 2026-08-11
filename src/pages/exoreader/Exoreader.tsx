@@ -215,9 +215,34 @@ export default function Exoreader() {
       </section>
 
       <footer className="mx-auto max-w-5xl px-6 pb-10">
-        <div className="flex items-center justify-between text-[10px] font-mono uppercase tracking-[0.2em] text-zinc-500 dark:text-muted-foreground">
-          <span>© Exoreader</span>
-          <Link to="/" className="hover:text-zinc-950 transition-colors dark:hover:text-foreground">Back to portfolio</Link>
+        <div className="border-t border-zinc-200 pt-8 dark:border-border">
+          <div className="flex flex-col items-center gap-4 text-center sm:flex-row sm:justify-between sm:text-left">
+            <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-zinc-500 dark:text-muted-foreground">
+              © 2026 Exoreader. All rights reserved.
+            </span>
+            <nav className="flex items-center gap-4 text-xs font-medium">
+              <Link
+                to="/exoreader/privacy"
+                className="text-zinc-950 underline-offset-4 transition-colors hover:underline dark:text-foreground"
+              >
+                Privacy Policy
+              </Link>
+              <span className="text-zinc-300 dark:text-muted-foreground/40" aria-hidden>|</span>
+              <Link
+                to="/exoreader/terms"
+                className="text-zinc-950 underline-offset-4 transition-colors hover:underline dark:text-foreground"
+              >
+                Terms of Service
+              </Link>
+              <span className="text-zinc-300 dark:text-muted-foreground/40" aria-hidden>|</span>
+              <Link
+                to="/"
+                className="text-zinc-500 transition-colors hover:text-zinc-950 dark:text-muted-foreground dark:hover:text-foreground"
+              >
+                Portfolio
+              </Link>
+            </nav>
+          </div>
         </div>
       </footer>
     </main>
