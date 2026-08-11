@@ -63,14 +63,14 @@ export default function Exoreader() {
             >
               iOS on TestFlight
             </a>
-            <button
-              type="button"
-              disabled
-              title="Coming soon"
-              className="inline-flex items-center rounded-sm border border-zinc-950/30 px-6 py-3 text-base font-semibold text-zinc-950/40 cursor-not-allowed opacity-60 dark:border-white/30 dark:text-white/40"
+            <a
+              href="https://play.google.com/store/apps/details?id=dev.deruloop.exoreader"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center rounded-sm border border-zinc-950 px-6 py-3 text-base font-semibold text-zinc-950 hover:bg-zinc-950 hover:text-white transition-colors dark:border-white dark:text-white dark:hover:bg-white dark:hover:text-zinc-950"
             >
-              Android · Coming soon
-            </button>
+              Android on Google Play
+            </a>
             <a
               href="#features"
               className="text-sm text-zinc-500 hover:text-zinc-950 transition-colors dark:text-muted-foreground dark:hover:text-foreground"
@@ -121,14 +121,14 @@ export default function Exoreader() {
               >
                 iOS on TestFlight
               </a>
-              <button
-                type="button"
-                disabled
-                title="Coming soon"
-                className="inline-flex items-center rounded-sm border border-zinc-950/30 px-6 py-3 text-base font-semibold text-zinc-950/40 cursor-not-allowed opacity-60 dark:border-white/30 dark:text-white/40"
+              <a
+                href="https://play.google.com/store/apps/details?id=dev.deruloop.exoreader"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center rounded-sm border border-zinc-950 px-6 py-3 text-base font-semibold text-zinc-950 hover:bg-zinc-950 hover:text-white transition-colors dark:border-white dark:text-white dark:hover:bg-white dark:hover:text-zinc-950"
               >
-                Android · Coming soon
-              </button>
+                Android on Google Play
+              </a>
               <a
                 href="#features"
                 className="text-sm text-zinc-500 hover:text-zinc-950 transition-colors dark:text-muted-foreground dark:hover:text-foreground"
@@ -202,14 +202,14 @@ export default function Exoreader() {
             >
               iOS on TestFlight
             </a>
-            <button
-              type="button"
-              disabled
-              title="Coming soon"
-              className="inline-flex items-center rounded-sm border border-zinc-950/30 px-6 py-3 text-base font-semibold text-zinc-950/40 cursor-not-allowed opacity-60 dark:border-white/30 dark:text-white/40"
+            <a
+              href="https://play.google.com/store/apps/details?id=dev.deruloop.exoreader"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center rounded-sm border border-zinc-950 px-6 py-3 text-base font-semibold text-zinc-950 hover:bg-zinc-950 hover:text-white transition-colors dark:border-white dark:text-white dark:hover:bg-white dark:hover:text-zinc-950"
             >
-              Android · Coming soon
-            </button>
+              Android on Google Play
+            </a>
           </div>
         </div>
       </section>
