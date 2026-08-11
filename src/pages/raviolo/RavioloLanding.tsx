@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { Link } from "react-router-dom";
 import { ShoppingBasket, Sparkles, BookOpen, Apple } from "lucide-react";
 
 /**
@@ -275,9 +276,9 @@ export default function RavioloLanding() {
             <span>© {new Date().getFullYear()}</span>
           </div>
           <div className="flex items-center gap-6">
-            <a href="#" className="hover:text-[color:var(--rv-ink)]">Privacy</a>
-            <a href="#" className="hover:text-[color:var(--rv-ink)]">Terms</a>
-            <a href="mailto:hello@raviolo.app" className="hover:text-[color:var(--rv-ink)]">
+            <Link to="/raviolo/privacy" className="hover:text-[color:var(--rv-ink)]">Privacy</Link>
+            <Link to="/raviolo/terms" className="hover:text-[color:var(--rv-ink)]">Terms</Link>
+            <a href="mailto:cristiano@calicchia.dev" className="hover:text-[color:var(--rv-ink)]">
               Contact
             </a>
           </div>
