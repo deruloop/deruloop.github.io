@@ -180,7 +180,7 @@ lifecycle; this article is the field report of actually wiring it up.
 
 ## Next
 
-The subject of the next article is the payoff of the front door: handing the
+The next article — [**Resolution Meets Orchestration: Handing a Model to a Dynamic Profile**](/articles) *(coming soon)* — is the payoff of the front door: handing the
 resolved model to a native Dynamic Profile. Also queued: re-attaching the
 parked vendor package when a release matching the installed beta ships.
 

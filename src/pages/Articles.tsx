@@ -112,7 +112,7 @@ const Articles = () => {
   }, [articles]);
 
   const toggleTrack = (trackKey: string) => {
-    const isExpanded = expandedTracks[trackKey] ?? false;
+    const isExpanded = expandedTracks[trackKey] ?? true;
     setExpandedTracks((current) => ({
       ...current,
       [trackKey]: !isExpanded,
@@ -120,7 +120,7 @@ const Articles = () => {
   };
 
   const toggleCollection = (collectionKey: string) => {
-    const isExpanded = expandedCollections[collectionKey] ?? false;
+    const isExpanded = expandedCollections[collectionKey] ?? true;
     setExpandedCollections((current) => ({
       ...current,
       [collectionKey]: !isExpanded,
@@ -172,14 +172,14 @@ const Articles = () => {
                           </span>
                         </div>
                       </div>
-                      {(expandedCollections[collection.key] ?? false) ? (
+                      {(expandedCollections[collection.key] ?? true) ? (
                         <ChevronDown className="mt-1 h-4 w-4 shrink-0 text-muted-foreground" />
                       ) : (
                         <ChevronRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground" />
                       )}
                     </button>
 
-                    {(expandedCollections[collection.key] ?? false) && (
+                    {(expandedCollections[collection.key] ?? true) && (
                       <div className="border-t border-border px-6 py-5 space-y-3">
                         {collection.tracks.map((track) => {
                           if (track.articles.length === 1) {
@@ -212,7 +212,7 @@ const Articles = () => {
                             );
                           }
 
-                          const isExpanded = expandedTracks[track.key] ?? false;
+                          const isExpanded = expandedTracks[track.key] ?? true;
 
                           return (
                             <div
