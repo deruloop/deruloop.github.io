@@ -127,6 +127,10 @@ If you want to see PCC wired into a real production-oriented SDK, take a look at
 
 ▶ [WWDC 2026, session 319](https://developer.apple.com/videos/play/wwdc2026/319/) - It's the best place to start for the API tour: `PrivateCloudComputeLanguageModel`, the `isAvailable` / `quotaUsage` checks, and the eligibility requirements. This article is meant to sit alongside it, adding the entitlement, signing, and quota details that came out of actually wiring it up.
 
+## Next
+
+The next piece leaves Apple's own models behind and walks the same framework through models Apple never shipped — OpenAI, Claude, and Gemini — implementing a `LanguageModel` executor so a third-party cloud model slots into the resolution chain as just another tier.
+
 &nbsp;
 
 &nbsp;
