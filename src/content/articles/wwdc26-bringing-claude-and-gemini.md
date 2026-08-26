@@ -23,7 +23,7 @@ as the release approaches and re-verify everything at GA.*
 
 The series rule again: take one WWDC session, actually build what it teaches,
 and write down what surfaces. This one follows
-[**Bring an LLM provider to the Foundation Models framework**](https://developer.apple.com/videos/play/wwdc2026/339/)
+[Bring an LLM provider to the Foundation Models framework](https://developer.apple.com/videos/play/wwdc2026/339/)
 (WWDC 2026, session 339).
 
 ## What Apple announced
@@ -38,7 +38,7 @@ Apple's expectation, stated in the session, is that vendors will publish Swift
 packages that seal that conformation to it, and of course they did: Google ships Gemini for the
 framework through its Firebase SDK; Anthropic publishes
 `ClaudeForFoundationModels`. But you can also conform *yourself*, which is
-what this piece does, implementing what we can call an **executor**. Basically if you already have a REST client for a chat vendor (my VoltaSDK had
+what this piece does, implementing what we can call an **executor**. Basically if you already have a REST client for a chat vendor (my [VoltaSDK](https://github.com/deruloop/VoltaSDK) had
 three, from the developer-key path), the conformance is mostly *translation* —
 take the framework's transcript apart into instructions + history + prompt,
 hand that to the client you already trust, stream the answer back. No model
@@ -174,13 +174,13 @@ I tried to give the ability to developer using the VoltaSDK to allow the users t
 
 ## The session this implements
 
-▶ [**Bring an LLM provider to the Foundation Models framework**](https://developer.apple.com/videos/play/wwdc2026/339/)
+▶ [Bring an LLM provider to the Foundation Models framework](https://developer.apple.com/videos/play/wwdc2026/339/)
 — WWDC 2026, session 339. Start there for the protocol tour and the executor
 lifecycle; this article is the field report of actually wiring it up.
 
 ## Next
 
-The next article — [**Resolution Meets Orchestration: Handing a Model to a Dynamic Profile**](/articles) *(coming soon)* — is the payoff of the front door: handing the
+The next article — [Resolution Meets Orchestration: Handing a Model to a Dynamic Profile](/articles) *(coming soon)* — is the payoff of the front door: handing the
 resolved model to a native Dynamic Profile. Also queued: re-attaching the
 parked vendor package when a release matching the installed beta ships.
 

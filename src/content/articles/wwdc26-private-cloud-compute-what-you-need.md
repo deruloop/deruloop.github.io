@@ -129,7 +129,7 @@ If you want to see PCC wired into a real production-oriented SDK, take a look at
 
 ## Next
 
-Next up — [**Bringing OpenAI, Claude, and Gemini in Through the Front Door**](/articles/wwdc26-bringing-claude-and-gemini): it leaves Apple's own models behind and walks the same framework through models Apple never shipped — OpenAI, Claude, and Gemini — implementing a `LanguageModel` executor so a third-party cloud model slots into the resolution chain as just another tier.
+Next up — [Bringing OpenAI, Claude, and Gemini in Through the Front Door](/articles/wwdc26-bringing-claude-and-gemini): it leaves Apple's own models behind and walks the same framework through models Apple never shipped — OpenAI, Claude, and Gemini — implementing a `LanguageModel` executor so a third-party cloud model slots into the resolution chain as just another tier.
 
 &nbsp;
 
