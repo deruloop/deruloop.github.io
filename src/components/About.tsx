@@ -1,5 +1,4 @@
 import { Card, CardContent } from "@/components/ui/card";
-import aboutPhoto from "@/assets/about-photo.png.asset.json";
 
 const About = () => {
   return (
