@@ -56,12 +56,12 @@ export default function Exoreader() {
           </p>
           <div className="flex items-center gap-4">
             <a
-              href="https://testflight.apple.com/join/fKfCWfwd"
+              href="https://apps.apple.com/it/app/exoreader/id6787238142"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center rounded-sm bg-zinc-950 px-6 py-3 text-base font-semibold text-white hover:opacity-90 transition-opacity dark:bg-white dark:text-zinc-950"
             >
-              iOS on TestFlight
+              iOS on the App Store
             </a>
             <a
               href="https://play.google.com/store/apps/details?id=dev.deruloop.exoreader"
@@ -114,12 +114,12 @@ export default function Exoreader() {
             </p>
             <div className="mt-10 flex flex-wrap items-center gap-4 md:mt-12">
               <a
-                href="https://testflight.apple.com/join/fKfCWfwd"
+                href="https://apps.apple.com/it/app/exoreader/id6787238142"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center rounded-sm bg-zinc-950 px-6 py-3 text-base font-semibold text-white hover:opacity-90 transition-opacity dark:bg-white dark:text-zinc-950"
               >
-                iOS on TestFlight
+                iOS on the App Store
               </a>
               <a
                 href="https://play.google.com/store/apps/details?id=dev.deruloop.exoreader"
@@ -195,12 +195,12 @@ export default function Exoreader() {
           </h2>
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
             <a
-              href="https://testflight.apple.com/join/fKfCWfwd"
+              href="https://apps.apple.com/it/app/exoreader/id6787238142"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center rounded-sm bg-zinc-950 px-6 py-3 text-base font-semibold text-white hover:opacity-90 transition-opacity dark:bg-white dark:text-zinc-950"
             >
-              iOS on TestFlight
+              iOS on the App Store
             </a>
             <a
               href="https://play.google.com/store/apps/details?id=dev.deruloop.exoreader"
