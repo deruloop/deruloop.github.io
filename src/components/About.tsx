@@ -17,7 +17,7 @@ const About = () => {
               {/* Horizontal photo banner — landscape orientation used full width */}
               <div className="relative w-full aspect-[16/9] md:aspect-[16/7] overflow-hidden bg-muted">
                 <img
-                  src={aboutPhoto.url}
+                  src="/about-photo.png"
                   alt="Cristiano Calicchia"
                   className="w-full h-full object-cover object-center"
                   loading="lazy"
