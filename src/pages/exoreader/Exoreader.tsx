@@ -61,7 +61,7 @@ export default function Exoreader() {
               rel="noopener noreferrer"
               className="inline-flex items-center rounded-sm bg-zinc-950 px-6 py-3 text-base font-semibold text-white hover:opacity-90 transition-opacity dark:bg-white dark:text-zinc-950"
             >
-              iOS on the App Store
+              iOS & Mac on the App Store
             </a>
             <a
               href="https://play.google.com/store/apps/details?id=dev.deruloop.exoreader"
@@ -119,7 +119,7 @@ export default function Exoreader() {
                 rel="noopener noreferrer"
                 className="inline-flex items-center rounded-sm bg-zinc-950 px-6 py-3 text-base font-semibold text-white hover:opacity-90 transition-opacity dark:bg-white dark:text-zinc-950"
               >
-                iOS on the App Store
+                iOS & Mac on the App Store
               </a>
               <a
                 href="https://play.google.com/store/apps/details?id=dev.deruloop.exoreader"
@@ -200,7 +200,7 @@ export default function Exoreader() {
               rel="noopener noreferrer"
               className="inline-flex items-center rounded-sm bg-zinc-950 px-6 py-3 text-base font-semibold text-white hover:opacity-90 transition-opacity dark:bg-white dark:text-zinc-950"
             >
-              iOS on the App Store
+              iOS & Mac on the App Store
             </a>
             <a
               href="https://play.google.com/store/apps/details?id=dev.deruloop.exoreader"
