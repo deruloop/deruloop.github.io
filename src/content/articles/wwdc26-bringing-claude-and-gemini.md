@@ -195,7 +195,7 @@ executor lifecycle. This article is the field report from actually wiring it up.
 
 ## Next
 
-The next article, [Resolution Meets Orchestration: Handing a Model to a Dynamic Profile](/articles) *(coming soon)*, is where the front door pays off. It hands the
+The next article, [Resolution Meets Orchestration: Handing a Model to a Dynamic Profile](/articles/wwdc26-resolution-meets-orchestration), is where the front door pays off. It hands the
 resolved model to a native Dynamic Profile. Also on the list is re-attaching the
 parked vendor package once a release lands that matches the installed beta.
 
