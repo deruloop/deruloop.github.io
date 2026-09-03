@@ -2,6 +2,33 @@ import { Link } from "react-router-dom";
 import exoIcon from "@/assets/exoreader-icon.png";
 import heroVideo from "@/assets/exoreader-hero.mp4";
 
+const APP_STORE_URL = "https://apps.apple.com/it/app/exoreader/id6787238142";
+const PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=dev.deruloop.exoreader";
+
+function StoreButtons({ className = "" }: { className?: string }) {
+  const base =
+    "inline-flex min-h-[3.25rem] w-full items-center justify-center rounded-sm px-4 py-2 text-center text-sm font-semibold leading-tight transition";
+  const filled = `${base} bg-zinc-950 text-white hover:opacity-90 dark:bg-white dark:text-zinc-950`;
+  const outline = `${base} border border-zinc-950 text-zinc-950 hover:bg-zinc-950 hover:text-white dark:border-white dark:text-white dark:hover:bg-white dark:hover:text-zinc-950`;
+  const soon = `${base} border border-zinc-950/30 text-zinc-950/40 cursor-not-allowed opacity-60 dark:border-white/30 dark:text-white/40`;
+  return (
+    <div className={`grid grid-cols-1 gap-3 sm:grid-cols-2 ${className}`}>
+      <a href={APP_STORE_URL} target="_blank" rel="noopener noreferrer" className={filled}>
+        iOS · App Store
+      </a>
+      <a href={APP_STORE_URL} target="_blank" rel="noopener noreferrer" className={outline}>
+        Mac · App Store
+      </a>
+      <a href={PLAY_STORE_URL} target="_blank" rel="noopener noreferrer" className={outline}>
+        Android · Google Play
+      </a>
+      <button type="button" disabled title="Coming soon" className={soon}>
+        Galaxy Store · Coming soon
+      </button>
+    </div>
+  );
+}
+
 export default function Exoreader() {
   return (
     <main className="min-h-screen bg-white text-zinc-950 font-sans dark:bg-background dark:text-foreground">
@@ -54,23 +81,8 @@ export default function Exoreader() {
             Exoreader turns Bluesky into a calm, chronological reading surface. No algorithm.
             No noise. Just the posts, in order, whenever you want them.
           </p>
-          <div className="flex items-center gap-4">
-            <a
-              href="https://apps.apple.com/it/app/exoreader/id6787238142"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center rounded-sm bg-zinc-950 px-6 py-3 text-base font-semibold text-white hover:opacity-90 transition-opacity dark:bg-white dark:text-zinc-950"
-            >
-              iOS & Mac on the App Store
-            </a>
-            <a
-              href="https://play.google.com/store/apps/details?id=dev.deruloop.exoreader"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center rounded-sm border border-zinc-950 px-6 py-3 text-base font-semibold text-zinc-950 hover:bg-zinc-950 hover:text-white transition-colors dark:border-white dark:text-white dark:hover:bg-white dark:hover:text-zinc-950"
-            >
-              Android on Google Play
-            </a>
+          <div className="flex flex-col gap-4">
+            <StoreButtons className="max-w-sm" />
             <a
               href="#features"
               className="text-sm text-zinc-500 hover:text-zinc-950 transition-colors dark:text-muted-foreground dark:hover:text-foreground"
@@ -112,26 +124,11 @@ export default function Exoreader() {
               Exoreader turns Bluesky into a calm, chronological reading surface. No algorithm.
               No noise. Just the posts, in order, whenever you want them.
             </p>
-            <div className="mt-10 flex flex-wrap items-center gap-4 md:mt-12">
-              <a
-                href="https://apps.apple.com/it/app/exoreader/id6787238142"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center rounded-sm bg-zinc-950 px-6 py-3 text-base font-semibold text-white hover:opacity-90 transition-opacity dark:bg-white dark:text-zinc-950"
-              >
-                iOS & Mac on the App Store
-              </a>
-              <a
-                href="https://play.google.com/store/apps/details?id=dev.deruloop.exoreader"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center rounded-sm border border-zinc-950 px-6 py-3 text-base font-semibold text-zinc-950 hover:bg-zinc-950 hover:text-white transition-colors dark:border-white dark:text-white dark:hover:bg-white dark:hover:text-zinc-950"
-              >
-                Android on Google Play
-              </a>
+            <div className="mt-10 md:mt-12">
+              <StoreButtons className="max-w-md" />
               <a
                 href="#features"
-                className="text-sm text-zinc-500 hover:text-zinc-950 transition-colors dark:text-muted-foreground dark:hover:text-foreground"
+                className="mt-4 inline-block text-sm text-zinc-500 hover:text-zinc-950 transition-colors dark:text-muted-foreground dark:hover:text-foreground"
               >
                 Learn more →
               </a>
@@ -193,23 +190,8 @@ export default function Exoreader() {
           <h2 className="text-4xl md:text-5xl font-semibold tracking-tight">
             Read the sky, slowly.
           </h2>
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-            <a
-              href="https://apps.apple.com/it/app/exoreader/id6787238142"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center rounded-sm bg-zinc-950 px-6 py-3 text-base font-semibold text-white hover:opacity-90 transition-opacity dark:bg-white dark:text-zinc-950"
-            >
-              iOS & Mac on the App Store
-            </a>
-            <a
-              href="https://play.google.com/store/apps/details?id=dev.deruloop.exoreader"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center rounded-sm border border-zinc-950 px-6 py-3 text-base font-semibold text-zinc-950 hover:bg-zinc-950 hover:text-white transition-colors dark:border-white dark:text-white dark:hover:bg-white dark:hover:text-zinc-950"
-            >
-              Android on Google Play
-            </a>
+          <div className="mt-10">
+            <StoreButtons className="mx-auto max-w-md" />
           </div>
         </div>
       </section>
