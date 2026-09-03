@@ -10,13 +10,13 @@ function StoreButtons({ className = "" }: { className?: string }) {
     "inline-flex min-h-[3.25rem] w-full items-center justify-center rounded-sm px-4 py-2 text-center text-sm font-semibold leading-tight transition";
   const filled = `${base} bg-zinc-950 text-white hover:opacity-90 dark:bg-white dark:text-zinc-950`;
   const outline = `${base} border border-zinc-950 text-zinc-950 hover:bg-zinc-950 hover:text-white dark:border-white dark:text-white dark:hover:bg-white dark:hover:text-zinc-950`;
-  const soon = `${base} border border-zinc-950/30 text-zinc-950/40 cursor-not-allowed opacity-60 dark:border-white/30 dark:text-white/40`;
+  const soon = `${base} border border-zinc-950 text-zinc-950 cursor-not-allowed dark:border-white dark:text-white`;
   return (
     <div className={`grid grid-cols-1 gap-3 sm:grid-cols-2 ${className}`}>
       <a href={APP_STORE_URL} target="_blank" rel="noopener noreferrer" className={filled}>
         iOS · App Store
       </a>
-      <a href={APP_STORE_URL} target="_blank" rel="noopener noreferrer" className={outline}>
+      <a href={APP_STORE_URL} target="_blank" rel="noopener noreferrer" className={filled}>
         Mac · App Store
       </a>
       <a href={PLAY_STORE_URL} target="_blank" rel="noopener noreferrer" className={outline}>
