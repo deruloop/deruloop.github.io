@@ -140,7 +140,7 @@ Konuq 1.0 is on iPhone, iPad and on Apple silicon Macs. Notes stay on the device
 
 Konuq Pro adds the parts that need a server. Cloud sync is **end-to-end encrypted**, with the key generated on the device and never leaving it, which means the sync server holds ciphertext and cannot read a word of it. Restoring on a new device uses a recovery passphrase that only the account holder knows. Publishing is the deliberate exception to all of that, since a published hub is public by definition.
 
-A version for Android is on the roadmap. If you would like to know what else is, you can visit https://konuq.app/landing/coming-soon
+Konuq 1.0 releases on September 14th, 2026. A version for Android is on the roadmap. If you would like to know what else is, you can visit https://konuq.app/landing/coming-soon
 
 &nbsp;
 
