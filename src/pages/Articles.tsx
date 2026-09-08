@@ -2,7 +2,7 @@ import { Article, getAllArticles } from "@/lib/articles";
 import { useNavigate } from "react-router-dom";
 import TabSwitcher from "@/components/TabSwitcher";
 import { useMemo, useState } from "react";
-import { BookOpen, Calendar, ChevronDown, ChevronRight, FolderOpen, Tag } from "lucide-react";
+import { BookOpen, Calendar, ChevronDown, ChevronRight, FolderOpen, Sparkles, Tag } from "lucide-react";
 
 interface ArticleTrack {
   key: string;
@@ -42,8 +42,12 @@ const Articles = () => {
   const navigate = useNavigate();
   const [expandedCollections, setExpandedCollections] = useState<Record<string, boolean>>({});
   const [expandedTracks, setExpandedTracks] = useState<Record<string, boolean>>({});
+  const featuredArticles = useMemo(
+    () => articles.filter((article) => article.featured),
+    [articles]
+  );
   const standaloneArticles = useMemo(
-    () => articles.filter((article) => !article.collection),
+    () => articles.filter((article) => !article.collection && !article.featured),
     [articles]
   );
 
@@ -136,6 +140,41 @@ const Articles = () => {
         <p className="text-muted-foreground mb-10">
           Thoughts on iOS development, Swift, and mobile engineering, plus curated collections you can browse as mini-series.
         </p>
+
+        {featuredArticles.length > 0 && (
+          <section className="mb-12">
+            <div className="space-y-6">
+              {featuredArticles.map((article) => (
+                <article
+                  key={article.slug}
+                  onClick={() => navigate(`/articles/${article.slug}`)}
+                  className="group cursor-pointer p-6 rounded-2xl border-2 border-accent/30 bg-card hover:border-accent/60 hover:shadow-medium transition-all duration-300"
+                >
+                  <div className="flex items-center gap-2 mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-accent/80">
+                    <Sparkles className="h-3.5 w-3.5" />
+                    <span>Featured</span>
+                  </div>
+                  <h3 className="text-2xl font-semibold group-hover:text-accent transition-colors">
+                    {article.title}
+                  </h3>
+                  <p className="text-muted-foreground mt-1">{article.excerpt}</p>
+                  <div className="mt-3 flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
+                    <span className="flex items-center gap-1">
+                      <Calendar className="h-3.5 w-3.5" />
+                      {formatDate(article.date)}
+                    </span>
+                    {article.tags.length > 0 && (
+                      <span className="flex items-center gap-1">
+                        <Tag className="h-3.5 w-3.5" />
+                        {article.tags.join(", ")}
+                      </span>
+                    )}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+        )}
 
         {collections.length > 0 && (
           <section className="mb-12">
