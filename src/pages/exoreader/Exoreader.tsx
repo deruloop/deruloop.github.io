@@ -3,9 +3,15 @@ import exoIcon from "@/assets/exoreader-icon.png";
 import heroVideo from "@/assets/exoreader-hero.mp4";
 
 const APP_STORE_URL = "https://apps.apple.com/it/app/exoreader/id6787238142";
+// ExoReader is in Play Store testing. On the web, send people to the tester
+// opt-in page; on an Android device, open the Play Store listing directly.
+const PLAY_TESTING_URL = "https://play.google.com/apps/testing/dev.deruloop.exoreader";
 const PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=dev.deruloop.exoreader";
 
 function StoreButtons({ className = "" }: { className?: string }) {
+  const isAndroid =
+    typeof navigator !== "undefined" && /android/i.test(navigator.userAgent);
+  const playUrl = isAndroid ? PLAY_STORE_URL : PLAY_TESTING_URL;
   const base =
     "inline-flex min-h-[3.25rem] w-full items-center justify-center rounded-sm px-4 py-2 text-center text-sm font-semibold leading-tight transition";
   const filled = `${base} bg-zinc-950 text-white hover:opacity-90 dark:bg-white dark:text-zinc-950`;
@@ -18,7 +24,7 @@ function StoreButtons({ className = "" }: { className?: string }) {
       <a href={APP_STORE_URL} target="_blank" rel="noopener noreferrer" className={filled}>
         Mac · App Store
       </a>
-      <a href={PLAY_STORE_URL} target="_blank" rel="noopener noreferrer" className={`${outline} sm:col-span-2`}>
+      <a href={playUrl} target="_blank" rel="noopener noreferrer" className={`${outline} sm:col-span-2`}>
         Android · Google Play
       </a>
     </div>
