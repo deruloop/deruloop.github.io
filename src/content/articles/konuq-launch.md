@@ -98,15 +98,11 @@ Konuq was the first, but during this spring and summer of 2026 I started buildin
 
 **Packd** is a packing and travel app. Somewhere in the middle of building its trip journal I realized I was writing a small, worse note editor inside it, and that a second one would follow in the next app, and a third after that. Rather than reimplement notes everywhere, I made Packd hand its journals to Konuq.
 
-The mechanism is deliberately boring, which is why it works offline and survives being interrupted. Packd writes a job into a container both apps can reach, containing a manifest that describes the note as blocks plus the image files it needs, and then opens a `konuq://import` link. Konuq copies the media into its own store, builds the blocks, creates the note and writes a receipt, then opens a link back into Packd so it knows the job landed and can clean up. Jobs that arrive while Konuq is closed are queued and processed at the next launch, so nothing is dropped.
-
-Two details are worth pointing at. Tags travel as ordinary `#hashtag` blocks in the manifest, which means a journal arriving from Packd is filed by exactly the same shared parser as a note typed by hand, and it lands in the right collection on arrival. And a journal that has already been imported is updated in place rather than duplicated, so editing a trip in Packd and sending it again modifies the same Konuq note.
+The mechanism is deliberately boring, which is why it works offline and survives being interrupted. Packd hands Konuq a job describing the note as blocks plus its images, Konuq builds the note and writes back a receipt, and jobs that arrive while Konuq is closed wait for the next launch. Tags travel as ordinary `#hashtag` blocks, so a journal from Packd is filed by the same shared parser as a note typed by hand and lands in the right collection. Re-sending an edited trip updates the same note instead of duplicating it.
 
 The result is that a trip journal written in Packd becomes a real Konuq note, which can then be published to the web with the rest of its hub. Written in one app, kept in another, read by anyone, in about three taps.
 
-Packd's journal release is going to be the first of these. One of the apps I mentioned earlier is a recipe and cooking AI assistant manager that of course needs writing down recipes, so Konuq is going to be the link to share them on a personal website and send them to friends asking for your delicious muffins.
-
-Another one is a training and fitness AI manager that makes custom training plans for you, that you can share on your website with anyone who would like to know about your journey or use them.
+Packd's journal release is going to be the first of these. **Raviolo**, a recipe and cooking AI assistant, will use Konuq to share recipes on a personal website and send them to friends asking for your delicious muffins. A training and fitness AI manager builds custom plans that you can publish for anyone following your journey.
 
 And so on. This is what I like to call the **kon-verse** (I know there is a famous shoe brand that is very much the same, but they did not invent the word "conversing" so I am not going to care -.-).
 
