@@ -130,6 +130,8 @@ The tool is not really at fault, since capturing is easy and returning is work, 
 
 **"Held in Silence"** is quieter. It gathers notes that have gone unopened for months, oldest silence first, and does nothing else. Some of them turn out to be finished thoughts. Some are seeds worth planting properly. A few are genuinely done with, and releasing those feels good.
 
+Cure also reaches out on its own. Konuq sends the occasional notification, a gentle nudge to come back and tend the garden before it grows over, so keeping things in order does not depend on remembering to open the app.
+
 More of these are going to arrive in the next weeks. I am also working on an AI assistant that helps you spot which notes are similar and can be unified, which are unclear and can be clarified, and which are useless and can be deleted. Of course this is going to be completely optional and off by default, since it would be able to read your notes. It runs on device wherever it can, which is the most private option there is, and escalates to Apple's Private Cloud Compute when the request is bigger than the device can handle well. On device alone is not reliable enough once you have a lot of notes, so the pair of them is the most private solution that actually works. Which brings me to the next topic.
 
 ---
