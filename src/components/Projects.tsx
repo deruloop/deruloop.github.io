@@ -46,6 +46,14 @@ const projects: Project[] = [
     detailPage: "https://github.com/deruloop/VoltaSDK",
   },
   {
+    title: "Konuq",
+    description: "A note-taking app that lets you publish custom hubs of notes to the web. Organize your thinking, then share it as your own space.",
+    image: konuqIcon,
+    tags: ["SwiftUI", "iOS", "AI", "KMP", "Swift", "Android", "Kotlin"],
+    website: "https://konuq.app",
+    detailPage: "https://konuq.app",
+  },
+  {
     title: "Raviolo",
     description: "An AI-first meal companion. Smart shopping lists by aisle, a home for every recipe, and instant dish ideas when the fridge feels uninspired.",
     image: ravioloIcon,
@@ -53,32 +61,15 @@ const projects: Project[] = [
     detailPage: "/raviolo/",
     comingSoon: true,
   },
-  {
-    title: "Konuq",
-    description: "A note-taking app that lets you publish custom hubs of notes to the web. Organize your thinking, then share it as your own space.",
-    image: konuqIcon,
-    tags: ["SwiftUI", "iOS", "AI", "KMP", "Swift", "Android", "Kotlin"],
-    comingSoon: true,
-  },
 ];
 
-const Projects = () => {
-  return (
-    <section id="projects" className="pt-2 pb-24 bg-muted/30">
-      <div className="container mx-auto px-4">
-        <div className="text-center space-y-4 mb-16">
-          <h2 className="text-4xl md:text-4xl font-bold">Personal Projects</h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            A selection of apps, tools, and developer products I&apos;ve built across Apple platforms.
-          </p>
-        </div>
+const shippedProjects = projects.filter((p) => !p.comingSoon);
+const inDevelopmentProjects = projects.filter((p) => p.comingSoon);
 
-        <div className="flex flex-col gap-6 max-w-4xl mx-auto">
-          {projects.map((project, index) => {
-            const clickable = !project.comingSoon && !!project.detailPage;
-            return (
+const ProjectCard = ({ project }: { project: Project }) => {
+  const clickable = !project.comingSoon && !!project.detailPage;
+  return (
             <Card
-              key={index}
               className={
                 "group overflow-hidden transition-all duration-300 border-2 " +
                 (clickable ? "hover:shadow-large cursor-pointer" : "cursor-default")
@@ -170,8 +161,45 @@ const Projects = () => {
                 </div>
               </div>
             </Card>
-            );
-          })}
+  );
+};
+
+const GroupHeading = ({ label }: { label: string }) => (
+  <div className="flex items-center gap-4">
+    <span className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+      {label}
+    </span>
+    <div className="h-px flex-1 bg-border" />
+  </div>
+);
+
+const Projects = () => {
+  return (
+    <section id="projects" className="pt-2 pb-24 bg-muted/30">
+      <div className="container mx-auto px-4">
+        <div className="text-center space-y-4 mb-16">
+          <h2 className="text-4xl md:text-4xl font-bold">Personal Projects</h2>
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            A selection of apps, tools, and developer products I&apos;ve built across Apple platforms.
+          </p>
+        </div>
+
+        <div className="max-w-4xl mx-auto space-y-12">
+          <div className="space-y-6">
+            <GroupHeading label="Shipped" />
+            {shippedProjects.map((project) => (
+              <ProjectCard key={project.title} project={project} />
+            ))}
+          </div>
+
+          {inDevelopmentProjects.length > 0 && (
+            <div className="space-y-6">
+              <GroupHeading label="In development" />
+              {inDevelopmentProjects.map((project) => (
+                <ProjectCard key={project.title} project={project} />
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </section>
