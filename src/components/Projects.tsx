@@ -6,6 +6,7 @@ import exoreaderIcon from "@/assets/exoreader-icon.png";
 import voltaSdkImage from "@/assets/voltasdk-icon.svg";
 import ravioloIcon from "@/assets/raviolo-icon.png";
 import konuqIcon from "@/assets/konuq-icon.png";
+import raiuIcon from "@/assets/raiu-icon.png";
 
 type Project = {
   title: string;
@@ -59,6 +60,13 @@ const projects: Project[] = [
     image: ravioloIcon,
     tags: ["SwiftUI", "iOS", "AI", "KMP", "Swift", "Android", "Kotlin"],
     detailPage: "/raviolo/",
+    comingSoon: true,
+  },
+  {
+    title: "Raiu",
+    description: "An AI fitness tracker and personal trainer. Custom training plans, guided exercises, and progress worth sharing.",
+    image: raiuIcon,
+    tags: ["SwiftUI", "iOS", "AI", "KMP", "Swift", "Android", "Kotlin"],
     comingSoon: true,
   },
 ];
@@ -164,12 +172,19 @@ const ProjectCard = ({ project }: { project: Project }) => {
   );
 };
 
-const GroupHeading = ({ label }: { label: string }) => (
+const GroupHeading = ({ label, primary = false }: { label: string; primary?: boolean }) => (
   <div className="flex items-center gap-4">
-    <span className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+    <span
+      className={
+        primary
+          ? "flex items-center gap-2 text-base font-bold uppercase tracking-[0.2em] text-foreground"
+          : "text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground"
+      }
+    >
+      {primary && <span className="h-2 w-2 rounded-full bg-primary" aria-hidden />}
       {label}
     </span>
-    <div className="h-px flex-1 bg-border" />
+    <div className={"h-px flex-1 " + (primary ? "bg-primary/40" : "bg-border")} />
   </div>
 );
 
@@ -186,7 +201,7 @@ const Projects = () => {
 
         <div className="max-w-4xl mx-auto space-y-12">
           <div className="space-y-6">
-            <GroupHeading label="Shipped" />
+            <GroupHeading label="In production" primary />
             {shippedProjects.map((project) => (
               <ProjectCard key={project.title} project={project} />
             ))}
