@@ -53,8 +53,7 @@ const projects: Project[] = [
     tags: ["SwiftUI", "iOS", "macOS", "Android", "Kotlin"],
     detailPage: "/exoreader/",
     links: [
-      { label: "iOS App Store", href: "https://apps.apple.com/it/app/exoreader/id6787238142" },
-      { label: "Mac App Store", href: "https://apps.apple.com/it/app/exoreader/id6787238142" },
+      { label: "App Store", href: "https://apps.apple.com/it/app/exoreader/id6787238142" },
       { label: "Google Play", href: exoreaderPlayUrl },
     ],
   },
