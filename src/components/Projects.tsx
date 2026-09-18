@@ -17,9 +17,17 @@ type Project = {
   appStore?: string;
   website?: string;
   websiteLabel?: string;
+  links?: { label: string; href: string }[];
   detailPage?: string;
   comingSoon?: boolean;
 };
+
+// Exoreader is in Play Store testing. On the web, send people to the tester
+// opt-in page; on an Android device, open the Play Store listing directly.
+const exoreaderPlayUrl =
+  typeof navigator !== "undefined" && /android/i.test(navigator.userAgent)
+    ? "https://play.google.com/store/apps/details?id=dev.deruloop.exoreader"
+    : "https://play.google.com/apps/testing/dev.deruloop.exoreader";
 
 const projects: Project[] = [
   {
@@ -44,6 +52,11 @@ const projects: Project[] = [
     image: exoreaderIcon,
     tags: ["SwiftUI", "iOS", "macOS", "Android", "Kotlin"],
     detailPage: "/exoreader/",
+    links: [
+      { label: "iOS App Store", href: "https://apps.apple.com/it/app/exoreader/id6787238142" },
+      { label: "Mac App Store", href: "https://apps.apple.com/it/app/exoreader/id6787238142" },
+      { label: "Google Play", href: exoreaderPlayUrl },
+    ],
   },
   {
     title: "VoltaSDK",
@@ -121,7 +134,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
                       ))}
                     </div>
 
-                    <div className="flex gap-3">
+                    <div className="flex flex-wrap gap-x-4 gap-y-2">
                       {project.comingSoon && (
                         <span className="flex items-center gap-2 text-sm text-muted-foreground/60 cursor-not-allowed select-none">
                           <Clock className="h-4 w-4" />
@@ -164,6 +177,19 @@ const ProjectCard = ({ project }: { project: Project }) => {
                           {project.websiteLabel ?? "Website"}
                         </a>
                       )}
+                      {project.links?.map((link) => (
+                        <a
+                          key={link.label}
+                          href={link.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <ExternalLink className="h-4 w-4" />
+                          {link.label}
+                        </a>
+                      ))}
                     </div>
                   </CardContent>
                 </div>
