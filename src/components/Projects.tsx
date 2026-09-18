@@ -27,7 +27,7 @@ const projects: Project[] = [
     description: "A note-taking app that lets you publish custom hubs of notes to the web. Organize your thinking, then share it as your own space.",
     image: konuqIcon,
     tags: ["SwiftUI", "iOS", "AI", "KMP", "Swift", "Android", "Kotlin"],
-    website: "https://konuq.app",
+    appStore: "https://apps.apple.com/it/app/konuq/id6766824990",
     detailPage: "https://konuq.app",
   },
   {
