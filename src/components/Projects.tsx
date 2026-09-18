@@ -23,6 +23,14 @@ type Project = {
 
 const projects: Project[] = [
   {
+    title: "Konuq",
+    description: "A note-taking app that lets you publish custom hubs of notes to the web. Organize your thinking, then share it as your own space.",
+    image: konuqIcon,
+    tags: ["SwiftUI", "iOS", "AI", "KMP", "Swift", "Android", "Kotlin"],
+    website: "https://konuq.app",
+    detailPage: "https://konuq.app",
+  },
+  {
     title: "Packd",
     description: "Trip organizer, packing list manager and more! With AI integration and VisionOS support.",
     image: packd,
@@ -45,14 +53,6 @@ const projects: Project[] = [
     website: "https://github.com/deruloop/VoltaSDK",
     websiteLabel: "GitHub Repo",
     detailPage: "https://github.com/deruloop/VoltaSDK",
-  },
-  {
-    title: "Konuq",
-    description: "A note-taking app that lets you publish custom hubs of notes to the web. Organize your thinking, then share it as your own space.",
-    image: konuqIcon,
-    tags: ["SwiftUI", "iOS", "AI", "KMP", "Swift", "Android", "Kotlin"],
-    website: "https://konuq.app",
-    detailPage: "https://konuq.app",
   },
   {
     title: "Raviolo",
