@@ -173,4 +173,26 @@ All colors MUST be HSL.
       background-position: 50% 50%;
     }
   }
+
+  @keyframes live-pulse {
+    0%, 100% {
+      background-color: #000;
+      box-shadow: 0 0 0 0 hsl(var(--accent) / 0);
+    }
+    50% {
+      background-color: hsl(var(--accent));
+      box-shadow: 0 0 6px 1px hsl(var(--accent) / 0.7);
+    }
+  }
+
+  .live-pulse {
+    animation: live-pulse 1.4s ease-in-out infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .live-pulse {
+      animation: none;
+      background-color: hsl(var(--accent));
+    }
+  }
 }

@@ -181,7 +181,7 @@ const GroupHeading = ({ label, primary = false }: { label: string; primary?: boo
           : "text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground"
       }
     >
-      {primary && <span className="h-2 w-2 rounded-full bg-primary" aria-hidden />}
+      {primary && <span className="live-pulse h-2 w-2 rounded-full" aria-hidden />}
       {label}
     </span>
     <div className={"h-px flex-1 " + (primary ? "bg-primary/40" : "bg-border")} />
