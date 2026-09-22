@@ -1,6 +1,15 @@
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { ShoppingBasket, Sparkles, BookOpen, Apple } from "lucide-react";
+import spinacio from "@/assets/raviolo-spinacio.webp";
+import mistoManzo from "@/assets/raviolo-misto-manzo.webp";
+
+// Placeholder art for now — both point at the same reference image. Swap each
+// file in src/assets for the real character once it's ready.
+const assistants = [
+  { name: "Spinacio", image: spinacio },
+  { name: "Misto Manzo", image: mistoManzo },
+];
 
 /**
  * Raviolo — standalone landing page.
@@ -147,6 +156,47 @@ export default function RavioloLanding() {
             body="Paste a link, write your own, or keep what the AI cooked up. All your recipes live in one calm library."
             accent="gold"
           />
+        </div>
+      </section>
+
+      {/* AI ASSISTANTS */}
+      <section id="assistants" className="mx-auto max-w-6xl px-6 pb-24">
+        <div className="max-w-2xl">
+          <p className="text-xs uppercase tracking-[0.18em] font-semibold text-[color:var(--rv-tomato)]">
+            Meet the crew
+          </p>
+          <h2 className="rv-display mt-3 font-extrabold text-4xl sm:text-5xl tracking-tight">
+            AI assistants
+          </h2>
+          <p className="mt-6 text-lg text-[color:var(--rv-ink)]/70">
+            Meet Spinacio, Misto Manzo and many other personal AI assistants to create
+            recipes as you want them, keep track of your shopping list and eat better.
+          </p>
+        </div>
+
+        <div className="mt-12 grid grid-cols-2 gap-6 sm:gap-8 max-w-2xl">
+          {assistants.map((a) => (
+            <div
+              key={a.name}
+              className="rounded-3xl border border-[color:var(--rv-border)] bg-white p-6 text-center transition-shadow hover:shadow-[0_20px_50px_-20px_rgba(0,0,0,0.15)]"
+            >
+              <div className="relative mx-auto w-full max-w-[220px] aspect-square">
+                <div
+                  className="absolute inset-0 rounded-full"
+                  style={{
+                    background:
+                      "radial-gradient(closest-side, color-mix(in oklab, var(--rv-gold) 45%, transparent), transparent 70%)",
+                  }}
+                />
+                <img
+                  src={a.image}
+                  alt={a.name}
+                  className="relative h-full w-full object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.12)]"
+                />
+              </div>
+              <h3 className="rv-display mt-4 text-xl font-bold">{a.name}</h3>
+            </div>
+          ))}
         </div>
       </section>
 
