@@ -4,8 +4,6 @@ import { ShoppingBasket, Sparkles, BookOpen, Apple } from "lucide-react";
 import spinacio from "@/assets/raviolo-spinacio.webp";
 import mistoManzo from "@/assets/raviolo-misto-manzo.webp";
 
-// Placeholder art for now — both point at the same reference image. Swap each
-// file in src/assets for the real character once it's ready.
 const assistants = [
   { name: "Spinacio", image: spinacio },
   { name: "Misto Manzo", image: mistoManzo },
