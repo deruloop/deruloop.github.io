@@ -213,7 +213,7 @@ export default function RavioloLanding() {
           </p>
         </div>
 
-        <div className="mt-12 flex flex-col lg:flex-row lg:items-center justify-center gap-10 lg:gap-14">
+        <div className="mt-12 flex flex-col lg:flex-row lg:items-stretch justify-center gap-10 lg:gap-14">
           <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
             {assistants.map((a) => (
               <div key={a.name} className="w-40 sm:w-48">
@@ -222,18 +222,17 @@ export default function RavioloLanding() {
             ))}
           </div>
 
-          <div className="lg:border-l lg:border-[color:var(--rv-border)] lg:pl-14">
+          <div className="flex flex-col lg:border-l lg:border-[color:var(--rv-border)] lg:pl-14">
             <p className="rv-display text-sm font-bold uppercase tracking-[0.18em] text-[color:var(--rv-ink)]/45 text-center lg:text-left">
               And more…
             </p>
-            <div className="mt-5 flex flex-wrap items-start justify-center gap-3 sm:gap-4">
+            <div className="mt-5 flex flex-1 items-stretch justify-center gap-3 sm:gap-4">
               {sideCharacters.map((c) => (
-                <div key={c.name} className="w-24 sm:w-28">
+                <div key={c.name} className="w-28 sm:w-32">
                   <SideCharacterCard
                     name={c.name}
                     role={c.role}
                     color={c.color}
-                    tagline={c.tagline}
                     blurb={c.blurb}
                   />
                 </div>
@@ -440,13 +439,11 @@ function SideCharacterCard({
   name,
   role,
   color,
-  tagline,
   blurb,
 }: {
   name: string;
   role: string;
   color: string;
-  tagline: string;
   blurb: string;
 }) {
   const [open, setOpen] = useState(false);
@@ -455,28 +452,26 @@ function SideCharacterCard({
       type="button"
       onClick={() => setOpen((v) => !v)}
       aria-expanded={open}
-      className={"rv-flip aspect-[3/4] w-full rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--rv-tomato)]" + (open ? " is-flipped" : "")}
+      className={"rv-flip aspect-[3/4] lg:aspect-auto lg:h-full w-full rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--rv-tomato)]" + (open ? " is-flipped" : "")}
     >
       <div className="rv-flip-inner">
-        {/* Front */}
-        <div className="rv-flip-face flex flex-col items-center justify-center rounded-2xl border border-[color:var(--rv-border)] bg-white p-3 text-center">
-          <span
-            className="rv-display flex h-11 w-11 items-center justify-center rounded-full text-lg font-extrabold text-white"
-            style={{ background: color }}
-          >
+        {/* Front — solid character color with a fixed-size letter */}
+        <div
+          className="rv-flip-face flex flex-col items-center justify-center rounded-2xl p-3 text-center text-white"
+          style={{ background: color }}
+        >
+          <span className="rv-display text-4xl font-extrabold leading-none">
             {name.charAt(0)}
           </span>
           <h3 className="rv-display mt-3 text-sm font-bold leading-tight">{name}</h3>
-          <p className="text-[11px] font-medium text-[color:var(--rv-ink)]/50">{role}</p>
-          <p className="mt-2 text-[11px] leading-snug text-[color:var(--rv-ink)]/70">{tagline}</p>
+          <p className="text-[11px] font-medium text-white/70">{role}</p>
         </div>
-        {/* Back */}
-        <div
-          className="rv-flip-back rv-flip-face flex flex-col rounded-2xl p-2.5 text-left text-white overflow-hidden"
-          style={{ background: color }}
-        >
-          <h3 className="rv-display text-[10px] font-bold leading-tight">{name}</h3>
-          <p className="mt-1 flex-1 min-h-0 text-[7px] leading-[1.2] text-white/90">
+        {/* Back — the blurb */}
+        <div className="rv-flip-back rv-flip-face flex flex-col rounded-2xl border border-[color:var(--rv-border)] bg-white p-2.5 text-left overflow-hidden">
+          <h3 className="rv-display text-[10px] font-bold leading-tight" style={{ color }}>
+            {name}
+          </h3>
+          <p className="mt-1 flex-1 min-h-0 text-[7px] leading-[1.2] text-[color:var(--rv-ink)]/75">
             {blurb}
           </p>
         </div>
