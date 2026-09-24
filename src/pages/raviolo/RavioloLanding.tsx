@@ -211,22 +211,22 @@ export default function RavioloLanding() {
           </p>
         </div>
 
-        <div className="mt-12 grid grid-cols-2 gap-6 sm:gap-8 max-w-md">
+        <div className="mt-12 flex flex-wrap items-center justify-center gap-4 sm:gap-6">
           {assistants.map((a) => (
-            <AssistantCard key={a.name} name={a.name} image={a.image} blurb={a.blurb} />
+            <div key={a.name} className="w-40 sm:w-48">
+              <AssistantCard name={a.name} image={a.image} blurb={a.blurb} />
+            </div>
           ))}
-        </div>
-
-        <div className="mt-14 grid grid-cols-3 gap-3 sm:gap-4 max-w-md">
           {sideCharacters.map((c) => (
-            <SideCharacterCard
-              key={c.name}
-              name={c.name}
-              role={c.role}
-              color={c.color}
-              tagline={c.tagline}
-              blurb={c.blurb}
-            />
+            <div key={c.name} className="w-28 sm:w-32">
+              <SideCharacterCard
+                name={c.name}
+                role={c.role}
+                color={c.color}
+                tagline={c.tagline}
+                blurb={c.blurb}
+              />
+            </div>
           ))}
         </div>
       </section>
@@ -409,7 +409,10 @@ function AssistantCard({
           </span>
         </div>
         {/* Back */}
-        <div className="rv-flip-back rv-flip-face flex flex-col items-center justify-center rounded-3xl border border-[color:var(--rv-border)] bg-[color:var(--rv-tomato)] p-6 text-center text-white">
+        <div
+          className="rv-flip-back rv-flip-face flex flex-col items-center justify-center rounded-3xl border border-[color:var(--rv-border)] p-6 text-center text-white"
+          style={{ backgroundColor: "#3F7A4B" }}
+        >
           <h3 className="rv-display text-lg font-bold">{name}</h3>
           <p className="mt-3 text-sm leading-relaxed text-white/90">{blurb}</p>
           <span className="mt-4 inline-block text-xs font-semibold text-white/70">Tap to flip back</span>
@@ -455,11 +458,11 @@ function SideCharacterCard({
         </div>
         {/* Back */}
         <div
-          className="rv-flip-back rv-flip-face flex flex-col rounded-2xl p-3 text-left text-white overflow-hidden"
+          className="rv-flip-back rv-flip-face flex flex-col rounded-2xl p-2.5 text-left text-white overflow-hidden"
           style={{ background: color }}
         >
-          <h3 className="rv-display text-sm font-bold">{name}</h3>
-          <p className="mt-1 flex-1 min-h-0 overflow-y-auto text-[11px] leading-snug text-white/90">
+          <h3 className="rv-display text-[11px] font-bold leading-tight">{name}</h3>
+          <p className="mt-1 flex-1 min-h-0 text-[8px] leading-[1.3] text-white/90">
             {blurb}
           </p>
         </div>
