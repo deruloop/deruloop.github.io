@@ -332,11 +332,11 @@ export default function RavioloLanding() {
             },
             {
               q: "Does the AI remember my conversations?",
-              a: "Yes, locally. Conversations are stored on your device, so they survive closing or killing the app and stay private to you.",
+              a: "Yes! Conversations live right on your device, so close the app, kill it, come back next week, and they are still there waiting for you, private as ever.",
             },
             {
               q: "Is it free?",
-              a: "Yes. The AI runs on your device and on Apple's Private Cloud Compute, so there is nothing to pay for.",
+              a: "Yes, completely! The AI runs on your device and on Apple's Private Cloud Compute, so cooking up ideas costs you nothing.",
             },
           ].map((f) => (
             <details
