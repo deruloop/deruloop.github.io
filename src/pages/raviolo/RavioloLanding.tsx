@@ -1,13 +1,27 @@
 import type { ReactNode } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ShoppingBasket, Sparkles, BookOpen, Apple } from "lucide-react";
 import spinacio from "@/assets/raviolo-spinacio.webp";
 import mistoManzo from "@/assets/raviolo-misto-manzo.webp";
 
 const assistants = [
-  { name: "Spinacio", image: spinacio },
-  { name: "Misto Manzo", image: mistoManzo },
+  {
+    name: "Spinacio",
+    image: spinacio,
+    blurb:
+      "Keeps the shopping list sorted by aisle and steers every basket toward fresher, better ingredients.",
+  },
+  {
+    name: "Misto Manzo",
+    image: mistoManzo,
+    blurb:
+      "Turns whatever is in the kitchen into a real recipe, with steps and portions ready for the pan.",
+  },
 ];
+
+// Placeholder slots for assistants still in the works.
+const comingSoonAssistants = 2;
 
 /**
  * Raviolo — standalone landing page.
@@ -172,28 +186,12 @@ export default function RavioloLanding() {
           </p>
         </div>
 
-        <div className="mt-12 grid grid-cols-2 gap-6 sm:gap-8 max-w-2xl">
+        <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 max-w-4xl items-start">
           {assistants.map((a) => (
-            <div
-              key={a.name}
-              className="rounded-3xl border border-[color:var(--rv-border)] bg-white p-6 text-center transition-shadow hover:shadow-[0_20px_50px_-20px_rgba(0,0,0,0.15)]"
-            >
-              <div className="relative mx-auto w-full max-w-[220px] aspect-square">
-                <div
-                  className="absolute inset-0 rounded-full"
-                  style={{
-                    background:
-                      "radial-gradient(closest-side, color-mix(in oklab, var(--rv-gold) 45%, transparent), transparent 70%)",
-                  }}
-                />
-                <img
-                  src={a.image}
-                  alt={a.name}
-                  className="relative h-full w-full object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.12)]"
-                />
-              </div>
-              <h3 className="rv-display mt-4 text-xl font-bold">{a.name}</h3>
-            </div>
+            <AssistantCard key={a.name} name={a.name} image={a.image} blurb={a.blurb} />
+          ))}
+          {Array.from({ length: comingSoonAssistants }).map((_, i) => (
+            <ComingSoonCard key={`soon-${i}`} />
           ))}
         </div>
       </section>
@@ -332,6 +330,71 @@ export default function RavioloLanding() {
           </div>
         </div>
       </footer>
+    </div>
+  );
+}
+
+function AssistantCard({
+  name,
+  image,
+  blurb,
+}: {
+  name: string;
+  image: string;
+  blurb: string;
+}) {
+  const [open, setOpen] = useState(false);
+  return (
+    <button
+      type="button"
+      onClick={() => setOpen((v) => !v)}
+      aria-expanded={open}
+      className="text-left rounded-3xl border border-[color:var(--rv-border)] bg-white p-6 text-center transition-shadow hover:shadow-[0_20px_50px_-20px_rgba(0,0,0,0.15)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--rv-tomato)]"
+    >
+      <div className="relative mx-auto w-full max-w-[220px] aspect-square">
+        <div
+          className="absolute inset-0 rounded-full"
+          style={{
+            background:
+              "radial-gradient(closest-side, color-mix(in oklab, var(--rv-gold) 45%, transparent), transparent 70%)",
+          }}
+        />
+        <img
+          src={image}
+          alt={name}
+          className="relative h-full w-full object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.12)]"
+        />
+      </div>
+      <h3 className="rv-display mt-4 text-xl font-bold text-center">{name}</h3>
+      {open ? (
+        <p className="mt-2 text-sm text-[color:var(--rv-ink)]/70 leading-relaxed">{blurb}</p>
+      ) : (
+        <span className="mt-2 inline-block text-xs font-semibold text-[color:var(--rv-tomato)]">
+          Tap to meet
+        </span>
+      )}
+    </button>
+  );
+}
+
+function ComingSoonCard() {
+  return (
+    <div className="rounded-3xl border border-dashed border-[color:var(--rv-border)] bg-[color:var(--rv-muted)]/40 p-6 text-center">
+      <div className="relative mx-auto w-full max-w-[220px] aspect-square flex items-center justify-center">
+        <div
+          className="absolute inset-0 rounded-full"
+          style={{
+            background:
+              "radial-gradient(closest-side, color-mix(in oklab, var(--rv-gold) 22%, transparent), transparent 70%)",
+          }}
+        />
+        <span className="relative rv-display text-6xl font-extrabold text-[color:var(--rv-ink)]/15">
+          ?
+        </span>
+      </div>
+      <h3 className="rv-display mt-4 text-xl font-bold text-[color:var(--rv-ink)]/40">
+        Coming soon
+      </h3>
     </div>
   );
 }
