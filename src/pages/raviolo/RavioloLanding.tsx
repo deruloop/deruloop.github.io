@@ -349,38 +349,45 @@ function AssistantCard({
       type="button"
       onClick={() => setOpen((v) => !v)}
       aria-expanded={open}
-      className="text-left rounded-3xl border border-[color:var(--rv-border)] bg-white p-6 text-center transition-shadow hover:shadow-[0_20px_50px_-20px_rgba(0,0,0,0.15)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--rv-tomato)]"
+      className={"rv-flip aspect-[4/5] w-full rounded-3xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--rv-tomato)]" + (open ? " is-flipped" : "")}
     >
-      <div className="relative mx-auto w-full max-w-[220px] aspect-square">
-        <div
-          className="absolute inset-0 rounded-full"
-          style={{
-            background:
-              "radial-gradient(closest-side, color-mix(in oklab, var(--rv-gold) 45%, transparent), transparent 70%)",
-          }}
-        />
-        <img
-          src={image}
-          alt={name}
-          className="relative h-full w-full object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.12)]"
-        />
+      <div className="rv-flip-inner">
+        {/* Front */}
+        <div className="rv-flip-face flex flex-col rounded-3xl border border-[color:var(--rv-border)] bg-white p-5 text-center">
+          <div className="relative flex-1 min-h-0">
+            <div
+              className="absolute inset-0 rounded-full"
+              style={{
+                background:
+                  "radial-gradient(closest-side, color-mix(in oklab, var(--rv-gold) 45%, transparent), transparent 70%)",
+              }}
+            />
+            <img
+              src={image}
+              alt={name}
+              className="relative h-full w-full object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.12)]"
+            />
+          </div>
+          <h3 className="rv-display mt-3 text-lg font-bold">{name}</h3>
+          <span className="mt-1 inline-block text-xs font-semibold text-[color:var(--rv-tomato)]">
+            Tap to meet
+          </span>
+        </div>
+        {/* Back */}
+        <div className="rv-flip-back rv-flip-face flex flex-col items-center justify-center rounded-3xl border border-[color:var(--rv-border)] bg-[color:var(--rv-tomato)] p-6 text-center text-white">
+          <h3 className="rv-display text-lg font-bold">{name}</h3>
+          <p className="mt-3 text-sm leading-relaxed text-white/90">{blurb}</p>
+          <span className="mt-4 inline-block text-xs font-semibold text-white/70">Tap to flip back</span>
+        </div>
       </div>
-      <h3 className="rv-display mt-4 text-xl font-bold text-center">{name}</h3>
-      {open ? (
-        <p className="mt-2 text-sm text-[color:var(--rv-ink)]/70 leading-relaxed">{blurb}</p>
-      ) : (
-        <span className="mt-2 inline-block text-xs font-semibold text-[color:var(--rv-tomato)]">
-          Tap to meet
-        </span>
-      )}
     </button>
   );
 }
 
 function ComingSoonCard() {
   return (
-    <div className="rounded-3xl border border-dashed border-[color:var(--rv-border)] bg-[color:var(--rv-muted)]/40 p-6 text-center">
-      <div className="relative mx-auto w-full max-w-[220px] aspect-square flex items-center justify-center">
+    <div className="aspect-[4/5] w-full rounded-3xl border border-dashed border-[color:var(--rv-border)] bg-[color:var(--rv-muted)]/40 p-5 text-center flex flex-col">
+      <div className="relative flex-1 min-h-0 flex items-center justify-center">
         <div
           className="absolute inset-0 rounded-full"
           style={{
@@ -392,7 +399,7 @@ function ComingSoonCard() {
           ?
         </span>
       </div>
-      <h3 className="rv-display mt-4 text-xl font-bold text-[color:var(--rv-ink)]/40">
+      <h3 className="rv-display mt-3 text-lg font-bold text-[color:var(--rv-ink)]/40">
         Coming soon
       </h3>
     </div>
@@ -457,6 +464,33 @@ function RavioloStyles() {
       .raviolo-scope .rv-display {
         font-family: 'Outfit', ui-sans-serif, system-ui, sans-serif;
         letter-spacing: -0.02em;
+      }
+      .raviolo-scope .rv-flip {
+        perspective: 1200px;
+      }
+      .raviolo-scope .rv-flip-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        transition: transform 0.55s cubic-bezier(0.4, 0.2, 0.2, 1);
+        transform-style: preserve-3d;
+      }
+      .raviolo-scope .rv-flip.is-flipped .rv-flip-inner {
+        transform: rotateY(180deg);
+      }
+      .raviolo-scope .rv-flip-face {
+        position: absolute;
+        inset: 0;
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+      }
+      .raviolo-scope .rv-flip-back {
+        transform: rotateY(180deg);
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .raviolo-scope .rv-flip-inner {
+          transition: none;
+        }
       }
     `}</style>
   );
