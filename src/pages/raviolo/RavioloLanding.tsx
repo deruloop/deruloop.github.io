@@ -28,25 +28,22 @@ const sideCharacters = [
     name: "Olio",
     role: "the balancer",
     color: "#8A8A2E",
-    tagline: "Looks at what is on the plate and says what it still wants.",
     blurb:
-      "Add things as they go on the plate and he keeps a picture of it: what is there, what would round it off, named as foods rather than as nutrients. A bowl of pasta gets a suggestion of something green and something with protein, in one sentence, with no numbers and no lecture. He is the one to ask whether a meal is finished.",
+      "Looks at what is on the plate and says what would round it off, named as foods rather than as nutrients.",
   },
   {
     name: "Ricotta",
     role: "the notebook",
     color: "#C97B96",
-    tagline: "Say it once, and it holds.",
     blurb:
-      "Mention a peanut allergy, a lactose problem or a hatred of coriander, and she writes it down without being asked. Every recipe after that comes back without it, and no one brings it up again. Ask her what is in the notebook and she reads it back.",
+      "Hears about an allergy or a hated ingredient once, writes it down, and every recipe after comes back without it.",
   },
   {
     name: "Amaretto",
     role: "the details",
     color: "#B07A2A",
-    tagline: "Temperatures, times, and why the sauce split.",
     blurb:
-      "He answers the questions with a right answer: how long pesto keeps, what to toast oats at and for how long, how much caffeine is in a cup, why mayonnaise breaks and how to bring it back. He arrives on his own when a question is his, gives the number, and leaves a dry remark on the way out.",
+      "Answers with the right number, from oven temperatures to how long pesto keeps, and why the sauce split.",
   },
 ];
 
@@ -458,7 +455,7 @@ function SideCharacterCard({
         {/* Front — colored top with the letter, white bottom with the cue */}
         <div className="rv-flip-face flex flex-col overflow-hidden rounded-2xl border border-[color:var(--rv-border)] bg-white text-center">
           <div
-            className="flex flex-1 flex-col items-center justify-center p-2 text-white"
+            className="flex flex-[3] flex-col items-center justify-center p-2 text-white"
             style={{ background: color }}
           >
             <span className="rv-display text-4xl font-extrabold leading-none">
@@ -466,7 +463,7 @@ function SideCharacterCard({
             </span>
             <h3 className="rv-display mt-2 text-sm font-bold leading-tight">{name}</h3>
           </div>
-          <div className="p-2">
+          <div className="flex flex-[2] flex-col items-center justify-center p-2">
             <p className="text-[11px] font-medium" style={{ color }}>
               {role}
             </p>
@@ -476,11 +473,11 @@ function SideCharacterCard({
           </div>
         </div>
         {/* Back — white with the description */}
-        <div className="rv-flip-back rv-flip-face flex flex-col rounded-2xl border border-[color:var(--rv-border)] bg-white p-2.5 text-left overflow-hidden">
-          <h3 className="rv-display text-[10px] font-bold leading-tight" style={{ color }}>
+        <div className="rv-flip-back rv-flip-face flex flex-col justify-center rounded-2xl border border-[color:var(--rv-border)] bg-white p-3 text-left overflow-hidden">
+          <h3 className="rv-display text-sm font-bold leading-tight" style={{ color }}>
             {name}
           </h3>
-          <p className="mt-1 flex-1 min-h-0 text-[7px] leading-[1.2] text-[color:var(--rv-ink)]/75">
+          <p className="mt-2 text-xs leading-snug text-[color:var(--rv-ink)]/75">
             {blurb}
           </p>
         </div>
