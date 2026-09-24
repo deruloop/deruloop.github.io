@@ -20,8 +20,33 @@ const assistants = [
   },
 ];
 
-// Placeholder slots for assistants still in the works.
-const comingSoonAssistants = 2;
+// Side characters — smaller cards, art still to come. Colors are theirs.
+const sideCharacters = [
+  {
+    name: "Olio",
+    role: "the plate",
+    color: "#8A8A2E",
+    tagline: "Looks at what is on the plate and says what it still wants.",
+    blurb:
+      "Add things as they go on the plate and he keeps a picture of it: what is there, what would round it off, named as foods rather than as nutrients. A bowl of pasta gets a suggestion of something green and something with protein, in one sentence, with no numbers and no lecture. He is the one to ask whether a meal is finished.",
+  },
+  {
+    name: "Ricotta",
+    role: "the notebook",
+    color: "#C97B96",
+    tagline: "Say it once, and it holds.",
+    blurb:
+      "Mention a peanut allergy, a lactose problem or a hatred of coriander, and she writes it down without being asked. Every recipe after that comes back without it, and no one brings it up again. Ask her what is in the notebook and she reads it back.",
+  },
+  {
+    name: "Amaretto",
+    role: "the details",
+    color: "#B07A2A",
+    tagline: "Temperatures, times, and why the sauce split.",
+    blurb:
+      "He answers the questions with a right answer: how long pesto keeps, what to toast oats at and for how long, how much caffeine is in a cup, why mayonnaise breaks and how to bring it back. He arrives on his own when a question is his, gives the number, and leaves a dry remark on the way out.",
+  },
+];
 
 /**
  * Raviolo — standalone landing page.
@@ -186,12 +211,22 @@ export default function RavioloLanding() {
           </p>
         </div>
 
-        <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 max-w-4xl items-start">
+        <div className="mt-12 grid grid-cols-2 gap-6 sm:gap-8 max-w-md">
           {assistants.map((a) => (
             <AssistantCard key={a.name} name={a.name} image={a.image} blurb={a.blurb} />
           ))}
-          {Array.from({ length: comingSoonAssistants }).map((_, i) => (
-            <ComingSoonCard key={`soon-${i}`} />
+        </div>
+
+        <div className="mt-14 grid grid-cols-3 gap-3 sm:gap-4 max-w-md">
+          {sideCharacters.map((c) => (
+            <SideCharacterCard
+              key={c.name}
+              name={c.name}
+              role={c.role}
+              color={c.color}
+              tagline={c.tagline}
+              blurb={c.blurb}
+            />
           ))}
         </div>
       </section>
@@ -384,25 +419,52 @@ function AssistantCard({
   );
 }
 
-function ComingSoonCard() {
+function SideCharacterCard({
+  name,
+  role,
+  color,
+  tagline,
+  blurb,
+}: {
+  name: string;
+  role: string;
+  color: string;
+  tagline: string;
+  blurb: string;
+}) {
+  const [open, setOpen] = useState(false);
   return (
-    <div className="aspect-[4/5] w-full rounded-3xl border border-dashed border-[color:var(--rv-border)] bg-[color:var(--rv-muted)]/40 p-5 text-center flex flex-col">
-      <div className="relative flex-1 min-h-0 flex items-center justify-center">
+    <button
+      type="button"
+      onClick={() => setOpen((v) => !v)}
+      aria-expanded={open}
+      className={"rv-flip aspect-[3/4] w-full rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--rv-tomato)]" + (open ? " is-flipped" : "")}
+    >
+      <div className="rv-flip-inner">
+        {/* Front */}
+        <div className="rv-flip-face flex flex-col items-center justify-center rounded-2xl border border-[color:var(--rv-border)] bg-white p-3 text-center">
+          <span
+            className="rv-display flex h-11 w-11 items-center justify-center rounded-full text-lg font-extrabold text-white"
+            style={{ background: color }}
+          >
+            {name.charAt(0)}
+          </span>
+          <h3 className="rv-display mt-3 text-sm font-bold leading-tight">{name}</h3>
+          <p className="text-[11px] font-medium text-[color:var(--rv-ink)]/50">{role}</p>
+          <p className="mt-2 text-[11px] leading-snug text-[color:var(--rv-ink)]/70">{tagline}</p>
+        </div>
+        {/* Back */}
         <div
-          className="absolute inset-0 rounded-full"
-          style={{
-            background:
-              "radial-gradient(closest-side, color-mix(in oklab, var(--rv-gold) 22%, transparent), transparent 70%)",
-          }}
-        />
-        <span className="relative rv-display text-6xl font-extrabold text-[color:var(--rv-ink)]/15">
-          ?
-        </span>
+          className="rv-flip-back rv-flip-face flex flex-col rounded-2xl p-3 text-left text-white overflow-hidden"
+          style={{ background: color }}
+        >
+          <h3 className="rv-display text-sm font-bold">{name}</h3>
+          <p className="mt-1 flex-1 min-h-0 overflow-y-auto text-[11px] leading-snug text-white/90">
+            {blurb}
+          </p>
+        </div>
       </div>
-      <h3 className="rv-display mt-3 text-lg font-bold text-[color:var(--rv-ink)]/40">
-        Coming soon
-      </h3>
-    </div>
+    </button>
   );
 }
 
