@@ -9,12 +9,14 @@ const assistants = [
   {
     name: "Spinacio",
     image: spinacio,
+    back: "#3F7A4B",
     blurb:
       "Keeps the shopping list sorted by aisle and steers every basket toward fresher, better ingredients.",
   },
   {
     name: "Misto Manzo",
     image: mistoManzo,
+    back: "var(--rv-tomato)",
     blurb:
       "Turns whatever is in the kitchen into a real recipe, with steps and portions ready for the pan.",
   },
@@ -211,23 +213,33 @@ export default function RavioloLanding() {
           </p>
         </div>
 
-        <div className="mt-12 flex flex-wrap items-center justify-center gap-4 sm:gap-6">
-          {assistants.map((a) => (
-            <div key={a.name} className="w-40 sm:w-48">
-              <AssistantCard name={a.name} image={a.image} blurb={a.blurb} />
+        <div className="mt-12 flex flex-col lg:flex-row lg:items-center justify-center gap-10 lg:gap-14">
+          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
+            {assistants.map((a) => (
+              <div key={a.name} className="w-40 sm:w-48">
+                <AssistantCard name={a.name} image={a.image} blurb={a.blurb} back={a.back} />
+              </div>
+            ))}
+          </div>
+
+          <div className="lg:border-l lg:border-[color:var(--rv-border)] lg:pl-14">
+            <p className="rv-display text-sm font-bold uppercase tracking-[0.18em] text-[color:var(--rv-ink)]/45 text-center lg:text-left">
+              And more…
+            </p>
+            <div className="mt-5 flex flex-wrap items-start justify-center gap-3 sm:gap-4">
+              {sideCharacters.map((c) => (
+                <div key={c.name} className="w-24 sm:w-28">
+                  <SideCharacterCard
+                    name={c.name}
+                    role={c.role}
+                    color={c.color}
+                    tagline={c.tagline}
+                    blurb={c.blurb}
+                  />
+                </div>
+              ))}
             </div>
-          ))}
-          {sideCharacters.map((c) => (
-            <div key={c.name} className="w-28 sm:w-32">
-              <SideCharacterCard
-                name={c.name}
-                role={c.role}
-                color={c.color}
-                tagline={c.tagline}
-                blurb={c.blurb}
-              />
-            </div>
-          ))}
+          </div>
         </div>
       </section>
 
@@ -373,10 +385,12 @@ function AssistantCard({
   name,
   image,
   blurb,
+  back = "var(--rv-tomato)",
 }: {
   name: string;
   image: string;
   blurb: string;
+  back?: string;
 }) {
   const [open, setOpen] = useState(false);
   return (
@@ -411,7 +425,7 @@ function AssistantCard({
         {/* Back */}
         <div
           className="rv-flip-back rv-flip-face flex flex-col items-center justify-center rounded-3xl border border-[color:var(--rv-border)] p-6 text-center text-white"
-          style={{ backgroundColor: "#3F7A4B" }}
+          style={{ background: back }}
         >
           <h3 className="rv-display text-lg font-bold">{name}</h3>
           <p className="mt-3 text-sm leading-relaxed text-white/90">{blurb}</p>
@@ -461,8 +475,8 @@ function SideCharacterCard({
           className="rv-flip-back rv-flip-face flex flex-col rounded-2xl p-2.5 text-left text-white overflow-hidden"
           style={{ background: color }}
         >
-          <h3 className="rv-display text-[11px] font-bold leading-tight">{name}</h3>
-          <p className="mt-1 flex-1 min-h-0 text-[8px] leading-[1.3] text-white/90">
+          <h3 className="rv-display text-[10px] font-bold leading-tight">{name}</h3>
+          <p className="mt-1 flex-1 min-h-0 text-[7px] leading-[1.2] text-white/90">
             {blurb}
           </p>
         </div>
