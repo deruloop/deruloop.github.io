@@ -26,7 +26,7 @@ const assistants = [
 const sideCharacters = [
   {
     name: "Olio",
-    role: "the plate",
+    role: "the balancer",
     color: "#8A8A2E",
     tagline: "Looks at what is on the plate and says what it still wants.",
     blurb:
@@ -455,18 +455,27 @@ function SideCharacterCard({
       className={"rv-flip aspect-[3/4] lg:aspect-auto lg:h-full w-full rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--rv-tomato)]" + (open ? " is-flipped" : "")}
     >
       <div className="rv-flip-inner">
-        {/* Front — solid character color with a fixed-size letter */}
-        <div
-          className="rv-flip-face flex flex-col items-center justify-center rounded-2xl p-3 text-center text-white"
-          style={{ background: color }}
-        >
-          <span className="rv-display text-4xl font-extrabold leading-none">
-            {name.charAt(0)}
-          </span>
-          <h3 className="rv-display mt-3 text-sm font-bold leading-tight">{name}</h3>
-          <p className="text-[11px] font-medium text-white/70">{role}</p>
+        {/* Front — colored top with the letter, white bottom with the cue */}
+        <div className="rv-flip-face flex flex-col overflow-hidden rounded-2xl border border-[color:var(--rv-border)] bg-white text-center">
+          <div
+            className="flex flex-1 flex-col items-center justify-center p-2 text-white"
+            style={{ background: color }}
+          >
+            <span className="rv-display text-4xl font-extrabold leading-none">
+              {name.charAt(0)}
+            </span>
+            <h3 className="rv-display mt-2 text-sm font-bold leading-tight">{name}</h3>
+          </div>
+          <div className="p-2">
+            <p className="text-[11px] font-medium" style={{ color }}>
+              {role}
+            </p>
+            <span className="mt-0.5 inline-block text-[10px] font-semibold text-[color:var(--rv-tomato)]">
+              Tap to reveal
+            </span>
+          </div>
         </div>
-        {/* Back — the blurb */}
+        {/* Back — white with the description */}
         <div className="rv-flip-back rv-flip-face flex flex-col rounded-2xl border border-[color:var(--rv-border)] bg-white p-2.5 text-left overflow-hidden">
           <h3 className="rv-display text-[10px] font-bold leading-tight" style={{ color }}>
             {name}
