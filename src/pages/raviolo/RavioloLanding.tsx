@@ -332,11 +332,11 @@ export default function RavioloLanding() {
             },
             {
               q: "Does the AI remember my conversations?",
-              a: "The Inspire chat resets when you close the app — so save any recipe you want to keep before you go.",
+              a: "Yes, locally. Conversations are stored on your device, so they survive closing or killing the app and stay private to you.",
             },
             {
               q: "Is it free?",
-              a: "Yes, during beta. A small subscription is planned for advanced AI features when we launch.",
+              a: "Yes. The AI runs on your device and on Apple's Private Cloud Compute, so there is nothing to pay for.",
             },
           ].map((f) => (
             <details
