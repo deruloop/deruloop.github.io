@@ -22,6 +22,9 @@ const assistants = [
   },
 ];
 
+// Raviolo ships on the App Store for iPhone and Mac from the same listing.
+const APP_STORE_URL = "https://apps.apple.com/it/app/raviolo/id6816085710";
+
 // Side characters — smaller cards, art still to come. Colors are theirs.
 const sideCharacters = [
   {
@@ -129,11 +132,13 @@ export default function RavioloLanding() {
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <a
-                href="#download"
+                href={APP_STORE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-full bg-[color:var(--rv-tomato)] text-white px-6 py-3 text-sm font-semibold shadow-[0_10px_30px_-10px_oklch(0.56_0.2_32_/_0.6)] hover:opacity-90"
               >
                 <Apple className="h-4 w-4" strokeWidth={2.5} />
-                Download for iOS
+                Download for iOS &amp; macOS
               </a>
             </div>
             <p className="mt-4 text-xs text-[color:var(--rv-ink)]/50">
@@ -299,15 +304,17 @@ export default function RavioloLanding() {
               Cook happier.<br />Start with a raviolo.
             </h2>
             <p className="mt-4 text-white/85 max-w-md">
-              Available for iPhone. The Android build is simmering.
+              Available for iPhone and Mac. The Android build is simmering.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <a
-                href="#"
+                href={APP_STORE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-full bg-white text-[color:var(--rv-ink)] px-6 py-3 text-sm font-semibold hover:opacity-90"
               >
                 <Apple className="h-4 w-4" strokeWidth={2.5} />
-                Download for iOS
+                Download for iOS &amp; macOS
               </a>
             </div>
           </div>
