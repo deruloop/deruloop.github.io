@@ -71,6 +71,7 @@ const projects: Project[] = [
     description: "An AI-first meal companion. Smart shopping lists by aisle, a home for every recipe, and instant dish ideas when the fridge feels uninspired.",
     image: ravioloIcon,
     tags: ["SwiftUI", "iOS", "AI", "KMP", "Swift", "Android", "Kotlin"],
+    appStore: "https://apps.apple.com/it/app/raviolo/id6816085710",
     detailPage: "/raviolo/",
   },
   {
