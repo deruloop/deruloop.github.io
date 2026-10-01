@@ -72,7 +72,6 @@ const projects: Project[] = [
     image: ravioloIcon,
     tags: ["SwiftUI", "iOS", "AI", "KMP", "Swift", "Android", "Kotlin"],
     detailPage: "/raviolo/",
-    comingSoon: true,
   },
   {
     title: "Raiu",
