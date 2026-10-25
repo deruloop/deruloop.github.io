@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Github, Linkedin, Mail } from "lucide-react";
+import AutoplayVideo from "@/components/AutoplayVideo";
 
 const Hero = () => {
   return (
@@ -19,12 +20,8 @@ const Hero = () => {
         <div className="max-w-4xl mx-auto space-y-4 animate-in fade-in duration-700">
           {/* Animated Logo */}
           <div className="flex justify-center">
-            <video
+            <AutoplayVideo
               src="/logo-animation.mp4"
-              autoPlay
-              loop
-              muted
-              playsInline
               className="w-48 h-48 md:w-64 md:h-64 object-contain rounded-full"
             />
           </div>

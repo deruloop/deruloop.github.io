@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import exoIcon from "@/assets/exoreader-icon.png";
 import heroVideo from "@/assets/exoreader-hero.mp4";
+import AutoplayVideo from "@/components/AutoplayVideo";
 
 const APP_STORE_URL = "https://apps.apple.com/it/app/exoreader/id6787238142";
 // ExoReader is in Play Store testing. On the web, send people to the tester
@@ -63,12 +64,8 @@ export default function Exoreader() {
           </p>
           <div className="flex items-center gap-4">
             <div className="w-full max-w-[120px] sm:max-w-[160px]">
-              <video
+              <AutoplayVideo
                 src={heroVideo}
-                autoPlay
-                loop
-                muted
-                playsInline
                 className="w-full rounded-2xl shadow-[var(--shadow-large)]"
                 aria-label="Exoreader logo animation"
               />
@@ -98,12 +95,8 @@ export default function Exoreader() {
         <div className="hidden md:grid md:grid-cols-12 md:items-center md:gap-10 lg:gap-16">
           <div className="col-span-6 md:order-2 lg:col-span-7 flex items-center justify-end">
             <div className="w-full max-w-[360px] md:p-6 lg:max-w-[440px]">
-              <video
+              <AutoplayVideo
                 src={heroVideo}
-                autoPlay
-                loop
-                muted
-                playsInline
                 className="w-full rounded-2xl shadow-[var(--shadow-large)]"
                 aria-label="Exoreader logo animation"
               />
