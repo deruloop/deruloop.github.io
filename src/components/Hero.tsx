@@ -2,6 +2,17 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Github, Linkedin, Mail } from "lucide-react";
 import AutoplayVideo from "@/components/AutoplayVideo";
 
+// The logo video is transparent. Safari (and every browser on iOS) only
+// renders alpha from HEVC; everything else from VP9 WebM. Chrome on macOS can
+// play the HEVC file but drops its alpha, so the pick is by engine rather
+// than by canPlayType. The opaque mp4 stays as a last-resort fallback.
+const ua = typeof navigator !== "undefined" ? navigator.userAgent : "";
+const isIOS =
+  /iPhone|iPad|iPod/.test(ua) ||
+  (/Macintosh/.test(ua) && typeof navigator !== "undefined" && navigator.maxTouchPoints > 1);
+const isSafari = /AppleWebKit/.test(ua) && !/Chrome|Chromium|Edg|OPR|Android/.test(ua);
+const useHevcLogo = isIOS || isSafari;
+
 const Hero = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-hero">
@@ -20,10 +31,14 @@ const Hero = () => {
         <div className="max-w-4xl mx-auto space-y-4 animate-in fade-in duration-700">
           {/* Animated Logo */}
           <div className="flex justify-center">
-            <AutoplayVideo
-              src="/logo-animation.mp4"
-              className="w-48 h-48 md:w-64 md:h-64 object-contain rounded-full"
-            />
+            <AutoplayVideo className="w-48 h-48 md:w-64 md:h-64 object-contain">
+              {useHevcLogo ? (
+                <source src="/logo-animation-hevc.mov" type='video/mp4; codecs="hvc1"' />
+              ) : (
+                <source src="/logo-animation.webm" type="video/webm" />
+              )}
+              <source src="/logo-animation.mp4" type="video/mp4" />
+            </AutoplayVideo>
           </div>
 
           <div className="space-y-4 -mt-2 md:-mt-3">
