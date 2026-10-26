@@ -96,6 +96,11 @@ function extractHeadings(markdown: string): Heading[] {
 
 const SITE_URL = "https://deruloop.dev";
 
+// Articles end with blank `&nbsp;` lines so the last heading can scroll up to
+// the chapter jumper. The page splits them off to put the download box between
+// the text and that space, and the downloaded file leaves them out.
+const TRAILING_SPACE = /(?:\s*&nbsp;)+\s*$/;
+
 // The article as one self-contained Markdown file: a header that says where it
 // comes from, and image paths made absolute so they resolve outside the site.
 function downloadMarkdown(article: ArticleData) {
@@ -110,7 +115,7 @@ function downloadMarkdown(article: ArticleData) {
     `Cristiano Calicchia, ${date}. Published at ${SITE_URL}/articles/${article.slug}`,
     "",
   ].join("\n");
-  const body = article.content.replace(/\]\(\/(?!\/)/g, `](${SITE_URL}/`);
+  const body = article.content.replace(TRAILING_SPACE, "").replace(/\]\(\/(?!\/)/g, `](${SITE_URL}/`);
   const url = URL.createObjectURL(new Blob([`${header}\n${body}\n`], { type: "text/markdown" }));
   const link = document.createElement("a");
   link.href = url;
@@ -379,6 +384,9 @@ const Article = () => {
     }
   };
 
+  const trailingSpace = article.content.match(TRAILING_SPACE)?.[0];
+  const body = trailingSpace ? article.content.slice(0, -trailingSpace.length) : article.content;
+
   return (
     <div className="min-h-screen bg-background">
       {/* Static (non-floating) tab switcher */}
@@ -430,7 +438,7 @@ const Article = () => {
         <h1 className="text-4xl font-bold mb-8">{article.title}</h1>
 
         <div className="prose prose-neutral max-w-none prose-headings:text-foreground prose-headings:font-bold prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-4 prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-3 prose-p:text-foreground/80 prose-strong:text-foreground prose-a:text-accent prose-a:font-bold prose-a:no-underline hover:prose-a:underline prose-code:bg-primary prose-code:text-primary-foreground prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:font-mono prose-code:before:content-none prose-code:after:content-none prose-pre:bg-primary prose-pre:text-primary-foreground prose-pre:rounded-lg prose-pre:border prose-pre:border-border prose-pre:overflow-x-auto prose-img:rounded-2xl prose-img:border prose-img:border-border/60 prose-img:shadow-medium prose-img:my-6 prose-img:mx-auto prose-img:max-w-sm sm:prose-img:max-w-lg prose-img:w-auto prose-img:max-h-[40rem] prose-img:bg-card prose-img:p-2 sm:prose-img:p-3">
-          <ArticleBody content={article.content} enhanced={article.figures ?? false} />
+          <ArticleBody content={body} enhanced={article.figures ?? false} />
         </div>
 
         <div className="mt-16 flex flex-col items-start gap-4 rounded-2xl border border-border/60 bg-card p-6 shadow-medium sm:flex-row sm:items-center sm:justify-between">
@@ -445,6 +453,12 @@ const Article = () => {
             Download .md
           </button>
         </div>
+
+        {trailingSpace && (
+          <div className="prose max-w-none">
+            <ArticleBody content={trailingSpace} enhanced={false} />
+          </div>
+        )}
       </div>
 
       {/* Bottom paragraph nav */}
