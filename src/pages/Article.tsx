@@ -81,11 +81,13 @@ function getTextContent(node: ReactNode): string {
   return "";
 }
 
+// Only chapters (##) become pills in the bottom jumper; subsections (###) stay
+// in the text, linkable by id, without crowding the bar.
 function extractHeadings(markdown: string): Heading[] {
   const lines = markdown.split("\n");
   const headings: Heading[] = [];
   for (const line of lines) {
-    const match = line.match(/^(#{2,3})\s+(.+)$/);
+    const match = line.match(/^(##)\s+(.+)$/);
     if (match) {
       const text = match[2].trim();
       headings.push({ id: slugify(text), text, level: match[1].length });
