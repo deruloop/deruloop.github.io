@@ -232,21 +232,14 @@ VoltaSDK, and it receives five things:
 This is the app itself at work. Nothing here is about evaluation yet.
 
 ```swift
-// VoltaTextGenerator.swift, the app's boundary with VoltaSDK
-func generateStructured(instructions: String, prompt: String, history: [ChatMessage],
-                        schemaJson: String, tier: AiTier, taskId: String?) async throws -> String {
-    let schema = try JSONDecoder().decode(OutputSchema.self, from: Data(schemaJson.utf8))
-    let turns: [ChatTurn] = history.map { $0.isFromUser ? .user($0.text) : .assistant($0.text) }
-    let response = try await orchestrator.respondStructured(
-        to: prompt,
-        instructions: instructions,              // the app's prompt, one constant
-        history: turns,
-        schema: schema,                          // the shape the parser accepts
-        need: need,
-        task: taskId.map { TaskRequirement($0, minimumPassRate: Self.minimumPassRate) }   // "raviolo.task-a.en"
-    )
-    return response.value.serialized()
-}
+// VoltaTextGenerator.swift, the app's boundary with VoltaSDK (trimmed)
+let response = try await orchestrator.respondStructured(
+    to: prompt,                    // the person's message
+    instructions: instructions,    // the app's prompt, one constant
+    history: turns,                // the conversation so far
+    schema: schema,                // the shape the parser accepts
+    task: TaskRequirement(taskId, minimumPassRate: 0.6)   // "raviolo.task-a.en"
+)
 ```
 
 A **task** is one job of the assistant written down as a file, so it can
@@ -285,14 +278,44 @@ a schema. Then the inputs and the rules, which the next step is about.
 
 A rule is one line in the task file: the name of a kind of check (fifteen
 are built in) and its parameters. `VoltaSDKEvals`, the evaluation library
-in the package, already knows how to apply each kind. Two of the six on the meal record check that the note is in the
-person's language and that it names at least one of the additions the
-record suggests:
+in the package, already knows how to apply each kind. One of the six on
+the meal record checks that the note is in the person's language:
 
 ```json
-{ "kind": "language", "params": { "path": "note" } },
-{ "kind": "mentions",
-  "params": { "path": "note", "of": "completions[].text", "name": "note-names-additions" } }
+{ "kind": "language", "params": { "path": "note" } }
+```
+
+Each kind is a small function. This is the whole of `language`. It finds
+the field, skips it when it is too short to judge, asks Apple's language
+recognizer which language it is, and passes or fails with a reason.
+
+```swift
+// VoltaSDKEvals/Graders.swift
+public static func language(_ metric: Metric, spec: GraderSpec, task: EvalTask, value: JSONValue?, text: String) -> Metric {
+    guard let expected = spec.string("language") ?? task.language else {
+        return metric.ignore(rationale: "no language expectation")
+    }
+    let sample: String
+    if let path = spec.string("path") {
+        guard let value, let field = JSONPath.value(at: path, in: value) else {
+            return metric.failing(rationale: "\(path) missing")
+        }
+        sample = CarryTemplate.plain(field)
+    } else {
+        sample = text
+    }
+    guard sample.split(separator: " ").count >= (spec.int("minWords") ?? 4) else {
+        return metric.ignore(rationale: "too short to detect")
+    }
+    let recognizer = NLLanguageRecognizer()
+    recognizer.processString(sample)
+    guard let dominant = recognizer.dominantLanguage?.rawValue else {
+        return metric.ignore(rationale: "language undetermined")
+    }
+    return dominant.hasPrefix(expected)
+        ? metric.passing()
+        : metric.failing(rationale: "detected \(dominant), expected \(expected): \(sample.prefix(60))")
+}
 ```
 
 A sample passes only if every rule passes, and the reasons for any
@@ -308,61 +331,19 @@ them. Next to each one is what a correct answer must contain:
 
 ```json
 // one input and its expectation
-{
-  "id": "a-en-01",
-  "turns": [
-    "Crackers and cheese"
-  ],
-  "expect": {
-    "fields": {
-      "compounds.protein": [
-        "present",
-        "light"
-      ],
-      "compounds.healthy_fats": [
-        "present",
-        "light"
-      ]
-    }
-  }
-}
+{"id": "a-en-01", "turns": ["Crackers and cheese"],
+ "expect": {"fields": {
+   "compounds.protein": ["present", "light"],
+   "compounds.healthy_fats": ["present", "light"]}}}
 
 // the rules, applied to every answer
 [
-  {
-    "kind": "json-only"
-  },
-  {
-    "kind": "schema"
-  },
-  {
-    "kind": "required",
-    "params": {
-      "paths": [
-        "title",
-        "items:1",
-        "completions:1:3",
-        "note"
-      ]
-    }
-  },
-  {
-    "kind": "expect-fields"
-  },
-  {
-    "kind": "language",
-    "params": {
-      "path": "note"
-    }
-  },
-  {
-    "kind": "mentions",
-    "params": {
-      "path": "note",
-      "of": "completions[].text",
-      "name": "note-names-additions"
-    }
-  }
+  {"kind": "json-only"},
+  {"kind": "schema"},
+  {"kind": "required", "params": {"paths": ["title", "items:1", "completions:1:3", "note"]}},
+  {"kind": "expect-fields"},
+  {"kind": "language", "params": {"path": "note"}},
+  {"kind": "mentions", "params": {"path": "note", "of": "completions[].text", "name": "note-names-additions"}}
 ]
 ```
 
