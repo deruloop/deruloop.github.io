@@ -489,9 +489,9 @@ cheap enough to do after every change to a prompt.
 
 | Meal record, Italian dataset, on-device | Pass | Schema | First reason |
 |---|---|---|---|
-| raw prompt, 14 Sep | 0/20 | 0% | json-only: unparseable JSON: invalidJSON("The data couldn’t be read because it isn’t in the correct format.") \| schema: no parsed JSON \| exp… |
-| through the schema, 14 Sep | **12/20** | **100%** | language:note: detected en, expected it |
-| language named in the prompt, 16 Sep | **17/20** | 100% | expect-fields: compounds.healthy_fats=missing not in [present, light] |
+| raw prompt, 14 Sep | 0/20 | 0% | json-only: unparseable JSON |
+| through the schema, 14 Sep | 12/20 | 100% | language:note: detected en, expected it |
+| language named in the prompt, 16 Sep | 17/20 | 100% | expect-fields: compounds.healthy_fats=missing not in [present, light] |
 
 *Three rows of the same task, read in order. This is the Italian dataset, because the second row's failure is about language. The schema removed the shape failure and uncovered the language failure; naming the language removed that one and left the honest disagreements about whether crackers bring enough fat.*
 
@@ -561,25 +561,6 @@ func orderedProviders(for need: ModelNeed?, task: TaskRequirement?, mode: Mode) 
 know whether any model can do the job, instead of finding out from a
 failed request.
 
-### One dataset per language
-
-The app answers in whatever language the person writes, Italian and
-English for now, so every task exists twice, once per language, with its
-own inputs and its own row in the map. That doubling looked like extra
-work on the first day and turned out to be the most useful decision of the
-week. The small model often answered Italian input in English. One mixed
-dataset would have hidden that; **comparing the Italian row with the
-English one showed it**.
-
-### How big the datasets are
-
-Every feature got a task of the same shape: twenty inputs when a feature
-has that many real phrasings, fewer when it does not (there are only so
-many recipe pages and store descriptions to type). The count sits in
-parentheses next to every number in this piece. By the end the map held
-206 measured rows over 95 tasks, and what follows is what that loop taught
-me about the models, the framework, and my own prompts.
-
 ### What the setup takes
 
 VoltaSDK is open source at
@@ -627,9 +608,20 @@ Everything shipped as **VoltaSDK 1.2.0** on 22 October, with nothing from
 
 ## What the map showed
 
-Every number is passes out of inputs, with the app's own prompts.
-"On-device" is the Mac's Apple Intelligence model standing in for the
-phone's, the same model family.
+Every feature got a task of the same shape: twenty inputs when a feature
+has that many real phrasings, fewer when it does not (there are only so
+many recipe pages and store descriptions to type). By the end the map
+held 206 measured rows over 95 tasks. Every number below is passes out of
+inputs, with the app's own prompts, and "on-device" is the Mac's Apple
+Intelligence model standing in for the phone's, the same model family.
+
+The app answers in whatever language the person writes, Italian and
+English for now, so every task exists twice, with its own inputs and its
+own row in the map. That doubling looked like extra work on the first day
+and turned out to be the most useful decision of the week, because the
+small model often answered Italian input in English. One mixed dataset
+would have hidden that, and **comparing the Italian row with the English
+one showed it**.
 
 "First" is the first run, on 14 September for the first four rows and on
 the day the feature was written for the last five. "Final" is the same
@@ -657,8 +649,8 @@ person's language in the prompt took it to 8 of 8. The shopping row never
 moved. Inside the full assistant prompt, the phone's model never picked
 the shopping shape for indirect phrasings like "we could use some pasta",
 which PCC caught 16 times in 20, yet asked only "is this a shopping
-request?" it scored 25 of 28. The big prompt lost its shopping clause. Two later rows never moved on the
-phone whatever the wording, a dish asked for by name and a rule with an
+request?" it scored 25 of 28. The big prompt lost its shopping clause.
+Two later rows never moved on the phone whatever the wording, a dish asked for by name and a rule with an
 exception ("no gluten" with "gluten-free pasta is fine"). Both need
 knowledge rather than shape, so the map sends both to PCC first. **A
 schema fixes the shape of an answer and nothing about the reading, and
@@ -674,7 +666,7 @@ history with every call. And the phone's model reads long pages fine once
 the output is structured, 7 of 7 up to 12,000 characters; what looked like
 a weakness with long inputs was the same shape failure as the meal record.
 
-## What a small model does with a prompt
+### What a small model does with a prompt
 
 The larger models read a prompt as written. The phone's model copies
 whatever is concrete in it and breaks when asked to choose. Each line in
