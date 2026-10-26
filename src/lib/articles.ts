@@ -15,7 +15,7 @@ export interface Article {
   trackOrder?: number;
   lessonOrder?: number;
   featured?: boolean;
-  download?: boolean;
+  figures?: boolean;
 }
 
 type FrontmatterValue = string | string[];
@@ -92,7 +92,7 @@ export function getAllArticles(): Article[] {
       trackOrder: getNumber(meta, 'trackOrder'),
       lessonOrder: getNumber(meta, 'lessonOrder'),
       featured: getString(meta, 'featured') === 'true',
-      download: getString(meta, 'download') === 'true',
+      figures: getString(meta, 'figures') === 'true',
     });
   }
 

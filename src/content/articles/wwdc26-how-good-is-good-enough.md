@@ -2,7 +2,7 @@
 title: How Good Is Good Enough? Evaluating a Model You Can't Unit-Test
 date: 2026-10-25
 excerpt: Measuring what each model in VoltaSDK's fallback chain can actually do, with Apple's Evaluations framework and Raviolo, my meal app, as the case study. The prompt becomes a task, the task a test, the test a row in a map the app reads at runtime.
-download: true
+figures: true
 tags: [AI, WWDC26, Evaluation]
 collection: WWDC 26
 collectionSlug: wwdc-26
@@ -16,7 +16,7 @@ lessonOrder: 1
 *The fourth piece in the series. Parts 1 to 3 built the fallback chain,
 the ordered list of models VoltaSDK tries for each call until one answers.
 This one measures what each of those models can actually do, with Apple's
-Evaluations framework and my own app as the case study. Most of the work
+Evaluations framework and my own app, Raviolo, as the case study. Most of the work
 ran on the iOS/macOS 27 beta (Xcode 27, build 27A5237l) and finished on
 the final Xcode 27.0 (27A266a). Where a number comes from the beta, the
 text says so.*
@@ -54,31 +54,6 @@ Each fix was a prompt edit followed by a few taps on the phone, and **I had
 no way of knowing whether the edit had helped or merely moved the
 failure**.
 
-### Five words
-
-Five words come back throughout this piece. Each one is explained below
-with the same example, the meal record.
-
-- A **task** is one job the assistant does, written down as a file so it
-  can be tested. For the meal record, the file holds the prompt the app
-  sends, the shape of the JSON the app expects back, twenty messages a
-  person might type ("crackers and cheese", "chicken and rice"), and the rules
-  a good answer must follow.
-- A **tier** is one of the models that could answer: Apple Intelligence on
-  the phone, Apple's Private Cloud Compute servers, or a cloud model such
-  as OpenAI's.
-- A **mode** is how the prompt is sent. *Raw* sends it as plain text and
-  takes whatever comes back. *Structured* sends it with a schema, so the
-  model has to answer in the JSON shape the app expects.
-- A **row** is one result: one task, run on one tier, in one mode. "The
-  meal record, on the phone, structured, 12 of 20" is a row.
-- The **map** is the table that collects all the rows, every task against
-  every tier.
-
-Running a twenty-message task takes about a minute on the phone's model
-and a few minutes on Private Cloud Compute, which is cheap enough to do
-after every change to a prompt.
-
 ## What Apple announced
 
 A framework for testing software whose output is not the same twice,
@@ -111,8 +86,17 @@ chain exactly as the app uses it.**
 
 ## The case study
 
-Raviolo is a meal app. The person tells it what they are eating, what they
-need to buy, and what they would like to cook, and an assistant answers.
+[Raviolo](https://deruloop.dev/raviolo) is my meal app. The person tells
+it what they are eating, what they need to buy, and what they would like to
+cook, and an assistant answers. It is
+[on the App Store](https://apps.apple.com/it/app/raviolo/id6816085710) for
+iPhone and Mac, free while in beta and without an account, and an Android
+version is in the works. The app is written in Kotlin Multiplatform, so the
+prompts live in shared Kotlin code and the Apple side reaches the models
+through VoltaSDK.
+
+Every number in this piece was measured on Raviolo's real prompts, the
+ones the app sends.
 
 ### The assistant on the first day
 
@@ -217,7 +201,9 @@ func generateStructured(instructions: String, prompt: String, history: [ChatMess
 }
 ```
 
-**The task file contains the same things, written down.** It opens with
+A **task** is one job of the assistant written down as a file, so it can
+be tested. **The task file for the meal record contains the same things
+as this call.** It opens with
 the same instructions, word for word, not tidied, not shortened, because
 the point is to measure what actually ships. Then the same JSON shape, as
 a schema. Then the inputs and the rules, which the next step is about.
@@ -337,8 +323,8 @@ them. Next to each one is what a correct answer must contain:
 ### 3. The task runs as a test
 
 This is the whole test for the meal record in Raviolo's test target. It
-loads the task for one language, runs it against one model in one mode,
-saves the result as a row in the map, and checks the pass rate against a
+loads the task for one language, runs it against one model in two modes,
+saves the results, and checks the pass rate against a
 minimum. These tests run only from a separate Xcode scheme that sets
 `RAVIOLO_EVALS=1`, so running the app's normal tests never calls a model.
 
@@ -358,8 +344,14 @@ struct OnDeviceEvals {
 }
 ```
 
-`measure` is a small helper in the same target. It runs the task, writes
-the result as a row in the map, and returns the pass rate. VoltaSDK's
+The two `measure` calls differ only in the **mode**, which is how the
+prompt is sent. *Raw* sends it as plain text and takes whatever comes
+back. *Structured* sends it with the schema, so the model has to answer in
+the JSON shape the app expects.
+
+`measure` is a small helper in the same target. It runs the task, saves
+the result in the map described in the next step, and returns the pass
+rate. VoltaSDK's
 guide has its code.
 
 Inside `TaskEvaluation`, Apple's framework does the looping. For each
@@ -391,8 +383,9 @@ Test Case 'RavioloEvals.mealRecord(language: "en", tier: on-device, mode: raw)' 
 
 ### 4. The row goes into the map
 
-The map is one JSON file in the app's repository,
-`RavioloEvals/Results/capability-map.json`, and it is a plain list of rows.
+The **map** is one JSON file in the app's repository,
+`RavioloEvals/Results/capability-map.json`, and it is a plain list of
+**rows**, one per result.
 **Each row is named by three things: the task, the model, and how the
 prompt was sent** (as written, or through the schema). The meal record in
 English on the phone's model through the schema is one row; the same task
@@ -447,11 +440,15 @@ points at one of four fixes:
 - a prompt edit;
 - a schema on the call;
 - a rule in the app;
-- a different tier for that job.
+- a different **tier** for that job, meaning a different model: Apple
+  Intelligence on the phone, Private Cloud Compute, or a cloud model such
+  as OpenAI's.
 
 Whichever it is, the same test runs again and the new row sits next to the
 old one. **Every before-and-after number in this piece is two such rows,
-read side by side.**
+read side by side.** Running a twenty-input task takes about a minute on
+the phone's model and a few minutes on Private Cloud Compute, which is
+cheap enough to do after every change to a prompt.
 
 | Meal record, Italian dataset, on-device | Pass | Schema | First reason |
 |---|---|---|---|
@@ -779,5 +776,7 @@ session 335, for the judge and how to distrust it correctly.
 
 - **The judge** and **the cloud rows**, both waiting on keys.
 - **The full real-iPhone row.**
-- **The app's own piece**: what the five characters are and what the
-  person sees, told without the tables.
+- **Raviolo's own piece**: what the five characters are and what the
+  person sees, told without the tables. Until then the app itself is the
+  best place to meet them, on
+  [the App Store](https://apps.apple.com/it/app/raviolo/id6816085710).

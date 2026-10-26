@@ -119,7 +119,7 @@ function downloadMarkdown(article: ArticleData) {
   URL.revokeObjectURL(url);
 }
 
-// Tables in articles that opt in with `download: true`: a scroll wrapper for
+// Tables in articles that opt in with `figures: true`: a scroll wrapper for
 // narrow screens and the site's own borders and header.
 const tableComponents: Components = {
   table: ({ children }) => (
@@ -430,24 +430,21 @@ const Article = () => {
         <h1 className="text-4xl font-bold mb-8">{article.title}</h1>
 
         <div className="prose prose-neutral max-w-none prose-headings:text-foreground prose-headings:font-bold prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-4 prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-3 prose-p:text-foreground/80 prose-strong:text-foreground prose-a:text-accent prose-a:font-bold prose-a:no-underline hover:prose-a:underline prose-code:bg-primary prose-code:text-primary-foreground prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:font-mono prose-code:before:content-none prose-code:after:content-none prose-pre:bg-primary prose-pre:text-primary-foreground prose-pre:rounded-lg prose-pre:border prose-pre:border-border prose-pre:overflow-x-auto prose-img:rounded-2xl prose-img:border prose-img:border-border/60 prose-img:shadow-medium prose-img:my-6 prose-img:mx-auto prose-img:max-w-sm sm:prose-img:max-w-lg prose-img:w-auto prose-img:max-h-[40rem] prose-img:bg-card prose-img:p-2 sm:prose-img:p-3">
-          <ArticleBody content={article.content} enhanced={article.download ?? false} />
+          <ArticleBody content={article.content} enhanced={article.figures ?? false} />
         </div>
 
-        {article.download && (
-          <div className="mt-16 flex flex-col items-start gap-4 rounded-2xl border border-border/60 bg-card p-6 shadow-medium sm:flex-row sm:items-center sm:justify-between">
-            <p className="text-sm text-foreground/80">
-              The whole article as one Markdown file, diagrams and tables included, ready to hand to an AI
-              assistant.
-            </p>
-            <button
-              onClick={() => downloadMarkdown(article)}
-              className="flex flex-shrink-0 items-center gap-2 rounded-full bg-accent px-4 py-2 text-sm font-semibold text-accent-foreground transition-opacity hover:opacity-90"
-            >
-              <Download className="h-4 w-4" />
-              Download .md
-            </button>
-          </div>
-        )}
+        <div className="mt-16 flex flex-col items-start gap-4 rounded-2xl border border-border/60 bg-card p-6 shadow-medium sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-sm text-foreground/80">
+            The whole article as one Markdown file, ready to hand to an AI assistant.
+          </p>
+          <button
+            onClick={() => downloadMarkdown(article)}
+            className="flex flex-shrink-0 items-center gap-2 rounded-full bg-accent px-4 py-2 text-sm font-semibold text-accent-foreground transition-opacity hover:opacity-90"
+          >
+            <Download className="h-4 w-4" />
+            Download .md
+          </button>
+        </div>
       </div>
 
       {/* Bottom paragraph nav */}
