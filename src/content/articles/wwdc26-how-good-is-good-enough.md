@@ -610,22 +610,17 @@ Everything shipped as **VoltaSDK 1.2.0** on 22 October, with nothing from
 
 Every feature got a task of the same shape: twenty inputs when a feature
 has that many real phrasings, fewer when it does not (there are only so
-many recipe pages and store descriptions to type). By the end the map
-held 206 measured rows over 95 tasks. Every number below is passes out of
-inputs, with the app's own prompts, and "on-device" is the Mac's Apple
-Intelligence model standing in for the phone's, the same model family.
+many recipe pages and store descriptions to type). Every task also exists
+twice, once in Italian and once in English, because the app answers in
+whatever language the person writes. By the end the map held 206 measured
+rows over 95 tasks. Every number below is passes out of inputs, with the
+app's own prompts, and "on-device" is the Mac's Apple Intelligence model
+standing in for the phone's, the same model family.
 
-The app answers in whatever language the person writes, Italian and
-English for now, so every task exists twice, with its own inputs and its
-own row in the map. That doubling looked like extra work on the first day
-and turned out to be the most useful decision of the week, because the
-small model often answered Italian input in English. One mixed dataset
-would have hidden that, and **comparing the Italian row with the English
-one showed it**.
-
-"First" is the first run, on 14 September for the first four rows and on
-the day the feature was written for the last five. "Final" is the same
-dataset run against the last version of the prompts, a week later.
+The table follows nine features through the week. "First" is the first
+run, on 14 September for the first four rows and on the day the feature
+was written for the last five. "Final" is the same dataset run against
+the last version of the prompts.
 
 | Feature | On-device, first | On-device, final | PCC, first | PCC, final |
 |---|---|---|---|---|
@@ -641,21 +636,37 @@ dataset run against the last version of the prompts, a week later.
 
 *What a week of prompt work changed. A dash means there is no earlier run to compare with.*
 
-**The schema fixed the shape everywhere on the first day**, 0% to 100%
-valid JSON on every task, and the rest of the week was about content. The
-phone's model does keep the list across turns: the retention row stayed
-at 0 of 8 only because the note came back in English, and naming the
-person's language in the prompt took it to 8 of 8. The shopping row never
-moved. Inside the full assistant prompt, the phone's model never picked
-the shopping shape for indirect phrasings like "we could use some pasta",
-which PCC caught 16 times in 20, yet asked only "is this a shopping
-request?" it scored 25 of 28. The big prompt lost its shopping clause.
-Two later rows never moved on the phone whatever the wording, a dish asked for by name and a rule with an
-exception ("no gluten" with "gluten-free pasta is fine"). Both need
-knowledge rather than shape, so the map sends both to PCC first. **A
-schema fixes the shape of an answer and nothing about the reading, and
-the small model follows one rule well but breaks when two rules pull
-against each other or when the answer needs knowledge.**
+On the first day the schema fixed the shape of every answer, from 0% to
+100% valid JSON on every task. What remained were failures of content,
+and the first one showed up only because every task had two languages.
+The phone's model often answered Italian input in English. The Italian
+row and the English row side by side made that obvious, where one mixed
+dataset would have hidden it. The retention row is the clearest case. The
+phone's model kept every item across turns, and the row stayed at 0 of 8
+only because the note came back in English. Naming the person's language
+in the prompt took it to 8 of 8.
+
+The shopping row needed a different fix. Inside the full assistant
+prompt, the phone's model never picked the shopping shape for indirect
+phrasings like "we could use some pasta", which PCC caught 16 times in
+20. Asked only "is this a shopping request?", it scored 25 of 28. **A
+schema fixes the shape of an answer and nothing about the reading**, so
+the big prompt lost its shopping clause. The shopping list that came
+later was designed from measurements taken before any code existed.
+Asked whether two entries are the same product, the phone's model was
+right 26 times in 30. Asked which line of the whole list a new entry
+belongs to, it was right 4 times in 15, and PCC 11 times. So the app
+hands the whole list to PCC when it can, and otherwise asks the phone's
+model about one pair at a time.
+
+The features written later in the week split the same way. A cooking
+question went from 13 to 17 of 20 as the prompt changed. Two rows never
+moved on the phone whatever the wording, a dish asked for by name and a
+rule with an exception ("no gluten" with "gluten-free pasta is fine").
+Both need knowledge rather than shape, so the map sends both to PCC
+first. Across the whole map, **the small model follows one rule well and
+breaks when two rules pull against each other or when the answer needs
+knowledge.**
 
 The same engine also settled two questions left open by
 [Part 3](/articles/wwdc26-resolution-meets-orchestration) of the series,
@@ -666,78 +677,28 @@ history with every call. And the phone's model reads long pages fine once
 the output is structured, 7 of 7 up to 12,000 characters; what looked like
 a weakness with long inputs was the same shape failure as the meal record.
 
-### What a small model does with a prompt
-
-The larger models read a prompt as written. The phone's model copies
-whatever is concrete in it and breaks when asked to choose. Each line in
-the table below cost a measurement run.
-
-With example values in the instructions:
-
-```text
-"ingredients":[{"quantity":"200 g","name":"..."}],
-"servings":4, "totalTimeMinutes":30
-```
-
-The phone's answer for the homepage of ANSA, an Italian news site:
-
-```json
-{"found": true, "title": "",
- "servings": 4, "totalTimeMinutes": 30,
- "ingredients": [{"quantity": "200 g", "name": ""}],
- "steps": [""]}
-```
-
-With the shape only:
-
-```text
-"ingredients":[{"quantity":"...","name":"..."}],
-"servings":..., "totalTimeMinutes":...
-"found" is true only when the page holds one
-recipe with its ingredients and its method.
-```
-
-The same page, the same model:
-
-```json
-{"found": false, "title": "",
- "ingredients": [], "steps": []}
-```
-
-*An example is a spec literal. Given a news site's homepage, the phone's model returned the prompt's example values as a recipe: four servings, thirty minutes, 200 g of nothing. With the values replaced by placeholders and a found field to say no, the same page gets no recipe. The meal record's note had failed the same way on 17 September.*
-
-| What the prompt said | What the phone's model did | The fix |
-|---|---|---|
-| “do not mention Ricotta” | “Ricotta, you’re making me flustered” | describe the reply without the name, or handle the rule in code |
-| an example of the note | returned the example word for word, whatever the meal (2 of 20) | describe the field, no example (16 of 20) |
-| three cases in one prompt: tease a habit, note the season, else one line | teased on every add (23 of 23 down to 16 of 23) | the app picks the case; one short prompt each |
-| “also point out which items are in season” | dropped the other items from the list (3 of 10) | a table of seasons in code; the model only writes |
-| “talks about food the way a friend at the gym talks about a good set” | talked about the gym in every reply | describe the voice to the model, never as a comparison it can quote |
-
-*Five things the phone's model did with a prompt, and what fixed each. The pattern in the middle column is the same every time: whatever is concrete in the prompt (a name, an example, a comparison) comes back in the answer, and any choice left to the model goes wrong.*
-
-The recipe page is where the map stops. The phone's model read real
-recipe pages right 50 times in 61, above the floor of 0.6, so by the map
-it stays in the chain. But even after the prompt fix shown above, on
-pages with no recipe it still invented one a third of the time, where PCC
-answered "no recipe found" every time. **An invented recipe is worse than
-none, and the map cannot know that, because it only counts passes.** So
-reading pages is a job for the servers only, by a rule of the app's own.
-With the servers off, the app says so instead of asking the phone.
-
-The shopping list was designed from measurements too, four datasets run
-before any code existed. One of them decided how a new entry merges with
-what is already on the list. Asked whether two entries are the same
-product, the phone's model was right 26 times in 30. Asked which line of
-the whole list a new entry belongs to, it was right 4 times in 15, and
-PCC 11 times. So the app hands the whole list to PCC when it can, and
-otherwise asks the phone's model about one pair at a time. Every wrong
-merge the phone made in Italian had the same shape, "burro" with "burro
-di arachidi" (butter and peanut butter), so a rule in the app blocks that
-shape before any model is asked.
-
 ## What to watch for
 
+- **Whatever is concrete in a prompt comes back in the answer.** The
+  first recipe-page prompt showed its JSON shape with example values (4
+  servings, 30 minutes, 200 g of an ingredient). Given the homepage of
+  ANSA, an Italian news site, the phone's model returned exactly those
+  values as a recipe, four servings, thirty minutes and 200 g of nothing.
+  With placeholders in place of the values and a `found` field that lets
+  the model say no, the same page got no recipe. An example of the meal
+  note came back word for word in the same way, and a voice described as
+  "a friend at the gym" brought the gym into every reply.
+- **A pass rate above the floor can still hide a costly failure.** After
+  that fix, the phone's model read real recipe pages right 50 times in
+  61, above the floor of 0.6. On pages with no recipe it still invented
+  one a third of the time, where PCC answered "no recipe found" every
+  time. The map only counts passes, so a rule of the app keeps page
+  reading on the servers, and with the servers off the app says so
+  instead of asking the phone.
+- **Wrong answers often share one shape, and a rule can catch it.** Every
+  wrong merge the phone's model made on the Italian shopping list paired
+  "burro" with "burro di arachidi" (butter and peanut butter). A rule in
+  the app blocks that pair before any model is asked.
 - **Private Cloud Compute refuses every call after a few hundred in 24
   hours.** The engine counts those as "model unavailable", not as wrong
   answers, and such a row is never saved over a good one.
