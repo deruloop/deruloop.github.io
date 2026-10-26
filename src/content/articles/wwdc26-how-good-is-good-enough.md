@@ -631,55 +631,39 @@ Every number is passes out of inputs, with the app's own prompts.
 "On-device" is the Mac's Apple Intelligence model standing in for the
 phone's, the same model family.
 
-### The first day
+"First" is the first run, on 14 September for the first four rows and on
+the day the feature was written for the last five. "Final" is the same
+dataset run against the last version of the prompts, a week later.
 
-| Task (inputs) | On-device, raw | On-device, structured | PCC, raw | PCC, structured |
+| Feature | On-device, first | On-device, final | PCC, first | PCC, final |
 |---|---|---|---|---|
-| Meal record (20) | 0/20 | 12/20 | 14/20 | 18/20 |
-| Retention across turns (8) | 0/8 | 0/8 | 5/8 | 7/8 |
-| Shopping intent (20) | 0/20 | 0/20 | 16/20 | 16/20 |
-| Recipe page (7) | 6/7 | 7/7 | 6/7 | 6/7 |
+| Meal record (Italian, 20) | 0/20 raw, 12/20 structured | 16/20 | 14/20 raw, 18/20 structured | 19/20 |
+| Retention across turns (8) | 0/8 raw, 0/8 structured | 8/8 | 5/8 raw, 7/8 structured | 8/8 |
+| Implicit shopping intent in the big prompt (20) | 0/20 | dropped, rules instead | 16/20 | 16/20 |
+| Recipe extraction, 7 Wikibooks pages (Italian) | 6/7 raw, 7/7 structured | 7/7 | 6/7 | 7/7 |
+| Recipe extraction, 61 real pages in five languages | — | 50/61 | — | 61/61 |
+| A recipe for a dish asked for by name (10) | 6/10 | 6/10 | — | 10/10 |
+| A recipe under a gluten note, exception held (8) | 0/8 | 0/8, rule in the app | — | 8/8 |
+| A cooking question answered (English, 20) | 13/20 | 17/20 | — | 19/20 |
+| A fact about food answered correctly (12, then 27) | 6/12 | 20/24 | — | 26/27 |
 
-*The first day's map, Italian inputs, 14 September. In the retention row every item was kept on the second turn; it reads 0 of 8 structured because the note came back in English.*
+*What a week of prompt work changed. A dash means there is no earlier run to compare with.*
 
-- **The schema fixed the shape everywhere**, 0% to 100% valid JSON on
-  every task.
-- **The phone's model does keep the list across turns.** It could not
-  write it in the shape the raw prompt asked for. The row stayed at 0 of 8
-  only because the note came back in English, and naming the person's
-  language in the prompt took it to 8 of 8.
-- **The shopping row stayed at zero in every mode.** Inside the full
-  assistant prompt, the phone's model never picked the shopping shape for
-  indirect phrasings like "we could use some pasta", which PCC caught 16
-  times in 20. Asked one question only, "is this a shopping request?", the
-  phone's model scored 25 of 28. **A schema fixes the shape of an answer
-  and nothing about the reading.**
-
-### After a week of prompt work
-
-The same datasets, run against each new version of the prompts. The last
-four rows are features that arrived during the week, each measured from
-the day it was written.
-
-| Feature | on-device, first | on-device, final | PCC, final |
-|---|---|---|---|
-| Meal record (Italian, 20) | 0/20 raw, 12/20 structured | 16/20 | 19/20 |
-| Retention across turns (8) | 0/8 raw | 8/8 | 8/8 |
-| Implicit shopping intent in the big prompt (20) | 0/20 | dropped, rules instead | 16/20 |
-| Recipe extraction, 7 Wikibooks pages (Italian) | 6/7 raw | 7/7 | 7/7 |
-| Recipe extraction, 61 real pages in five languages | (not measured) | 50/61 | 61/61 |
-| A recipe for a dish asked for by name (10) | 6/10 | 6/10 | 10/10 |
-| A recipe under a gluten note, exception held (8) | 0/8 | 0/8, rule in the app | 8/8 |
-| A cooking question answered (English, 20) | 13/20 | 17/20 | 19/20 |
-| A fact about food answered correctly (12, then 27) | 6/12 | 20/24 | 26/27 |
-
-Two rows never moved on the phone whatever the wording: a dish asked for
-by name, and a rule with an exception in the same prompt ("no gluten"
-with "gluten-free pasta is fine"). Both need knowledge rather than shape,
-so the map sends both to PCC first.
-Across the whole map, **the small model follows one rule well and breaks
-when two rules pull against each other or when the answer needs
-knowledge.**
+**The schema fixed the shape everywhere on the first day**, 0% to 100%
+valid JSON on every task, and the rest of the week was about content. The
+phone's model does keep the list across turns: the retention row stayed
+at 0 of 8 only because the note came back in English, and naming the
+person's language in the prompt took it to 8 of 8. The shopping row never
+moved. Inside the full assistant prompt, the phone's model never picked
+the shopping shape for indirect phrasings like "we could use some pasta",
+which PCC caught 16 times in 20, yet asked only "is this a shopping
+request?" it scored 25 of 28. The big prompt lost its shopping clause. Two later rows never moved on the
+phone whatever the wording, a dish asked for by name and a rule with an
+exception ("no gluten" with "gluten-free pasta is fine"). Both need
+knowledge rather than shape, so the map sends both to PCC first. **A
+schema fixes the shape of an answer and nothing about the reading, and
+the small model follows one rule well but breaks when two rules pull
+against each other or when the answer needs knowledge.**
 
 The same engine also settled two questions left open by
 [Part 3](/articles/wwdc26-resolution-meets-orchestration) of the series,
