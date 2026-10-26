@@ -91,9 +91,8 @@ it what they are eating, what they need to buy, and what they would like to
 cook, and an assistant answers. It is
 [on the App Store](https://apps.apple.com/it/app/raviolo/id6816085710) for
 iPhone and Mac, free while in beta and without an account, and an Android
-version is in the works. The app is written in Kotlin Multiplatform, so the
-prompts live in shared Kotlin code and the Apple side reaches the models
-through VoltaSDK.
+version is in the works. It is a SwiftUI app with a shared core in Kotlin
+Multiplatform.
 
 Every number in this piece was measured on Raviolo's real prompts, the
 ones the app sends.
