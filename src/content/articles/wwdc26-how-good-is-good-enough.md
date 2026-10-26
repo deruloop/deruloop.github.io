@@ -13,8 +13,15 @@ trackOrder: 2
 lessonOrder: 1
 ---
 
-*The fourth piece in the series. Parts 1 to 3 built the fallback chain,
-the ordered list of models VoltaSDK tries for each call until one answers.
+*The fourth piece in my WWDC 26 series. The first three are about the
+Foundation Models framework.
+[Part 1](/articles/wwdc26-private-cloud-compute-what-you-need) covers
+Private Cloud Compute,
+[Part 2](/articles/wwdc26-bringing-claude-and-gemini) brings OpenAI,
+Claude and Gemini in through the front door, and
+[Part 3](/articles/wwdc26-resolution-meets-orchestration) hands a model to
+a Dynamic Profile. Together they built the fallback chain, the
+ordered list of models VoltaSDK tries for each call until one answers.
 This one measures what each of those models can actually do, with Apple's
 Evaluations framework and my own app, Raviolo, as the case study. Most of the work
 ran on the iOS/macOS 27 beta (Xcode 27, build 27A5237l) and finished on
@@ -762,7 +769,9 @@ wrong merge the phone made in Italian had the same shape, "burro" with
 "burro di arachidi" (butter and peanut butter), so a rule in the app
 blocks that shape before any model is asked.
 
-The same engine also settled two questions Part 3 had left open. Quality
+The same engine also settled two questions left open by
+[Part 3](/articles/wwdc26-resolution-meets-orchestration) of the series,
+the Foundation Models piece on Dynamic Profiles. Quality
 holds when the chain switches model in the middle of a conversation, 24
 of 24 items kept from the phone to the servers, because the app sends the
 history with every call. And the phone's model reads long pages fine once
@@ -793,3 +802,19 @@ session 298, for the framework's shape;
 session 299, for trajectories and synthetic samples;
 [**Improve your prompts by hill-climbing**](https://developer.apple.com/videos/play/wwdc2026/335/),
 session 335, for the judge and how to distrust it correctly.
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;

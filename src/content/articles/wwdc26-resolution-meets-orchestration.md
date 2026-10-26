@@ -246,7 +246,7 @@ that system its models.
 
 ## Next
 
-The next article, [How Good Is Good Enough? Evaluating a Model You Can't Unit-Test](/articles) *(coming soon)*, turns this piece's unmeasured
+The next article, [How Good Is Good Enough? Evaluating a Model You Can't Unit-Test](/articles/wwdc26-how-good-is-good-enough), turns this piece's unmeasured
 beliefs into numbers with Apple's new Evaluations framework, starting with
 whether quality holds when the chain switches providers and whether
 on-device really is the wrong model for long context. Also on the list are
