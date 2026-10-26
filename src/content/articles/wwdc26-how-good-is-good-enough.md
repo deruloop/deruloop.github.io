@@ -635,12 +635,12 @@ phone's, the same model family.
 
 | Task (inputs) | On-device, raw | On-device, structured | PCC, raw | PCC, structured |
 |---|---|---|---|---|
-| A · meal record (20) | 0/20 | 12/20 | 14/20 | 18/20 |
-| A′ · retention (8) | 0/8 | 0/8 † | 5/8 | 7/8 |
-| B · shopping intent (20) | 0/20 | 0/20 | 16/20 | 16/20 |
-| C · recipe page (7) | 6/7 | 7/7 | 6/7 | 6/7 |
+| Meal record (20) | 0/20 | 12/20 | 14/20 | 18/20 |
+| Retention across turns (8) | 0/8 | 0/8 | 5/8 | 7/8 |
+| Shopping intent (20) | 0/20 | 0/20 | 16/20 | 16/20 |
+| Recipe page (7) | 6/7 | 7/7 | 6/7 | 6/7 |
 
-*The first day's map, Italian inputs, 14 September. † Every item was kept on the second turn; the row reads 0/8 because the note came back in English.*
+*The first day's map, Italian inputs, 14 September. In the retention row every item was kept on the second turn; it reads 0 of 8 structured because the note came back in English.*
 
 - **The schema fixed the shape everywhere**, 0% to 100% valid JSON on
   every task.
@@ -680,6 +680,15 @@ so the map sends both to PCC first.
 Across the whole map, **the small model follows one rule well and breaks
 when two rules pull against each other or when the answer needs
 knowledge.**
+
+The same engine also settled two questions left open by
+[Part 3](/articles/wwdc26-resolution-meets-orchestration) of the series,
+the Foundation Models piece on Dynamic Profiles. Quality
+holds when the chain switches model in the middle of a conversation, 24
+of 24 items kept from the phone to the servers, because the app sends the
+history with every call. And the phone's model reads long pages fine once
+the output is structured, 7 of 7 up to 12,000 characters; what looked like
+a weakness with long inputs was the same shape failure as the meal record.
 
 ## What a small model does with a prompt
 
@@ -731,52 +740,25 @@ The same page, the same model:
 
 *Five things the phone's model did with a prompt, and what fixed each. The pattern in the middle column is the same every time: whatever is concrete in the prompt (a name, an example, a comparison) comes back in the answer, and any choice left to the model goes wrong.*
 
-## From a row to a decision
+The recipe page is where the map stops. The phone's model read real
+recipe pages right 50 times in 61, above the floor of 0.6, so by the map
+it stays in the chain. But even after the prompt fix shown above, on
+pages with no recipe it still invented one a third of the time, where PCC
+answered "no recipe found" every time. **An invented recipe is worse than
+none, and the map cannot know that, because it only counts passes.** So
+reading pages is a job for the servers only, by a rule of the app's own.
+With the servers off, the app says so instead of asking the phone.
 
-A row answers one question: how often does this model get this job
-right? Four things can follow from it, and every decision in the app was
-one of the four.
-
-```mermaid
-flowchart LR
-  ROW("One row<br/>this task, this model,<br/>sent this way")
-  ROW --> A("Below the floor<br/>on every model") --> A2("Fix the prompt,<br/>add the schema, or move<br/>the job into code")
-  ROW --> B("Above the floor<br/>on every model") --> B2("Ships on every model<br/>e.g. which section<br/>of the store")
-  ROW --> C("Above the floor<br/>on the servers only") --> C2("Runs on the servers;<br/>phones without them<br/>get a screen of their own")
-  ROW --> D("Above the floor, but<br/>a wrong answer is costly<br/>or no rule can see it") --> D2("A rule of the app<br/>decides, e.g. recipe<br/>pages: servers only")
-  classDef accent stroke:#D2931A,stroke-width:2px
-  class ROW,D2 accent
-```
-
-*The four things a row can lead to. The first is step 5 of the loop, the task run again after a fix. The second and third are what the map decides on its own at runtime. The fourth is the one it cannot: when a wrong answer costs more than a missed one, or when a sentence passes every rule and still reads badly, the app keeps a rule of its own next to the map.*
-
-One example, the recipe page. The phone's model read real recipe pages
-right 50 times in 61, above the floor of 0.6, so by the map it stays in
-the chain. But even after the prompt fix shown above, on pages with no
-recipe it still invented one a third of the time, where PCC answered "no
-recipe found" every time. **An invented
-recipe is worse than none, and the map cannot know that: it only counts
-passes.** So reading pages is a job for the servers only, by a rule of
-the app's own. With the servers off, the app says so instead of asking
-the phone. The shopping list was built the same way, from four datasets
-measured before any code existed. One of them decided how a new entry
-merges with what is already on the list. Asked whether two entries are
-the same product, the phone's model was right 26 times in 30. Asked which
-line of the whole list a new entry belongs to, it was right 4 times in
-15, and PCC 11 times. So the app hands the whole list to PCC when it can,
-and otherwise asks the phone's model about one pair at a time. Every
-wrong merge the phone made in Italian had the same shape, "burro" with
-"burro di arachidi" (butter and peanut butter), so a rule in the app
-blocks that shape before any model is asked.
-
-The same engine also settled two questions left open by
-[Part 3](/articles/wwdc26-resolution-meets-orchestration) of the series,
-the Foundation Models piece on Dynamic Profiles. Quality
-holds when the chain switches model in the middle of a conversation, 24
-of 24 items kept from the phone to the servers, because the app sends the
-history with every call. And the phone's model reads long pages fine once
-the output is structured, 7 of 7 up to 12,000 characters; what looked like
-a weakness with long inputs was the same shape failure as the meal record.
+The shopping list was designed from measurements too, four datasets run
+before any code existed. One of them decided how a new entry merges with
+what is already on the list. Asked whether two entries are the same
+product, the phone's model was right 26 times in 30. Asked which line of
+the whole list a new entry belongs to, it was right 4 times in 15, and
+PCC 11 times. So the app hands the whole list to PCC when it can, and
+otherwise asks the phone's model about one pair at a time. Every wrong
+merge the phone made in Italian had the same shape, "burro" with "burro
+di arachidi" (butter and peanut butter), so a rule in the app blocks that
+shape before any model is asked.
 
 ## What to watch for
 
