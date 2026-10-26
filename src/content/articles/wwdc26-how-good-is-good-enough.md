@@ -71,6 +71,50 @@ output is not the same twice. It sits beside XCTest and Swift Testing.
 Each result passes, fails, gets a score, or is ignored, always with a
 reason attached. The results are tables that can be saved as JSON.
 
+Written directly against the framework, a small evaluation has one piece
+of code per part. This one asks the phone's model whether a message is a
+shopping request:
+
+```swift
+import Evaluations
+import FoundationModels
+
+struct ShoppingIntent: Evaluation {
+    // Dataset: the questions, each with the answer it should get
+    var dataset: ArrayLoader<ModelSample<String>> {
+        ArrayLoader(samples: [
+            ModelSample(prompt: "I'm out of bread", expected: "shopping"),
+            ModelSample(prompt: "we could use some pasta", expected: "shopping"),
+            ModelSample(prompt: "crackers and cheese", expected: "meal"),
+        ])
+    }
+
+    // Subject: the code that answers each question
+    func subject(from sample: ModelSample<String>) async throws -> ModelSubject<String> {
+        let session = LanguageModelSession(instructions: "Reply with one word: shopping or meal.")
+        let answer = try await session.respond(to: sample.prompt).content
+        return ModelSubject(value: answer)
+    }
+
+    // Evaluators: the rules that score an answer
+    var evaluators: Evaluators {
+        Evaluator { sample, subject in
+            subject.value.lowercased().contains(sample.expected ?? "")
+                ? Metric("correct").passing()
+                : Metric("correct").failing(rationale: "answered \(subject.value)")
+        }
+    }
+
+    // Metrics: what gets averaged at the end
+    func aggregateMetrics(using aggregator: inout MetricsAggregator) {
+        aggregator.computeMean(of: Metric("correct"))
+    }
+}
+```
+
+`try await ShoppingIntent().run()` asks every question, applies the rule,
+and returns the table, with the mean of `correct` as the pass rate.
+
 ### What the other two sessions add
 
 - **Session 299** adds tests for multi-step tool use, and lets a model
@@ -566,7 +610,8 @@ lists every field of a task file and every built-in check.
 ### An evaluation library for the test target
 
 Apple's framework expects the developer to write all four parts of an
-evaluation in Swift, for one specific model. `VoltaSDKEvals` fills them in
+evaluation in Swift, as in the shopping example above, for one specific
+model. `VoltaSDKEvals` fills them in
 from a task file: the inputs and the rules come from the file, and the
 model under test is any VoltaSDK provider chosen in code. With the built-in
 checks an app never writes scoring code, and five of the fifteen were
@@ -726,8 +771,15 @@ recipe is worse than none, and the map cannot know that: it only counts
 passes.** So reading pages is a job for the servers only, by a rule of
 the app's own. With the servers off, the app says so instead of asking
 the phone. The shopping list was built the same way, from four datasets
-measured before any code existed; each question went where its row sent
-it.
+measured before any code existed. One of them decided how a new entry
+merges with what is already on the list. Asked whether two entries are
+the same product, the phone's model was right 26 times in 30. Asked which
+line of the whole list a new entry belongs to, it was right 4 times in
+15, and PCC 11 times. So the app hands the whole list to PCC when it can,
+and otherwise asks the phone's model about one pair at a time. Every
+wrong merge the phone made in Italian had the same shape, "burro" with
+"burro di arachidi" (butter and peanut butter), so a rule in the app
+blocks that shape before any model is asked.
 
 The same engine also settled two questions Part 3 had left open. Quality
 holds when the chain switches model in the middle of a conversation, 24
