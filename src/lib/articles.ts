@@ -15,6 +15,7 @@ export interface Article {
   trackOrder?: number;
   lessonOrder?: number;
   featured?: boolean;
+  download?: boolean;
 }
 
 type FrontmatterValue = string | string[];
@@ -91,6 +92,7 @@ export function getAllArticles(): Article[] {
       trackOrder: getNumber(meta, 'trackOrder'),
       lessonOrder: getNumber(meta, 'lessonOrder'),
       featured: getString(meta, 'featured') === 'true',
+      download: getString(meta, 'download') === 'true',
     });
   }
 
@@ -98,5 +100,6 @@ export function getAllArticles(): Article[] {
 }
 
 export function getArticleBySlug(slug: string): Article | undefined {
-  return getAllArticles().find((a) => a.slug === slug && a.status !== 'coming-soon');
+  // Drafts open on the local dev server, so they can be read before they go live.
+  return getAllArticles().find((a) => a.slug === slug && (a.status !== 'coming-soon' || import.meta.env.DEV));
 }

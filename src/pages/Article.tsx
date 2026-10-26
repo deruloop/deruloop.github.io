@@ -3,9 +3,13 @@ import { getArticleBySlug } from "@/lib/articles";
 import TabSwitcher from "@/components/TabSwitcher";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { ArrowLeft, Calendar, Tag } from "lucide-react";
-import { useEffect, useMemo, useRef, useState, ReactNode, CSSProperties, isValidElement, Children } from "react";
+import { ArrowLeft, Calendar, Download, Tag } from "lucide-react";
+import { memo, useEffect, useMemo, useRef, useState, ReactNode, CSSProperties, isValidElement, Children } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import type { Components } from "react-markdown";
+import MermaidDiagram from "@/components/MermaidDiagram";
+import remarkFigureCaptions from "@/lib/remarkFigureCaptions";
+import { Article as ArticleData } from "@/lib/articles";
 
 const codeTheme: Record<string, CSSProperties> = {
   'pre[class*="language-"]': {
@@ -89,6 +93,219 @@ function extractHeadings(markdown: string): Heading[] {
   }
   return headings;
 }
+
+const SITE_URL = "https://deruloop.dev";
+
+// The article as one self-contained Markdown file: a header that says where it
+// comes from, and image paths made absolute so they resolve outside the site.
+function downloadMarkdown(article: ArticleData) {
+  const date = new Date(article.date).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+  const header = [
+    `# ${article.title}`,
+    "",
+    `Cristiano Calicchia, ${date}. Published at ${SITE_URL}/articles/${article.slug}`,
+    "",
+  ].join("\n");
+  const body = article.content.replace(/\]\(\/(?!\/)/g, `](${SITE_URL}/`);
+  const url = URL.createObjectURL(new Blob([`${header}\n${body}\n`], { type: "text/markdown" }));
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = `${article.slug}.md`;
+  link.click();
+  URL.revokeObjectURL(url);
+}
+
+// Tables in articles that opt in with `download: true`: a scroll wrapper for
+// narrow screens and the site's own borders and header.
+const tableComponents: Components = {
+  table: ({ children }) => (
+    <div className="not-prose my-6 overflow-x-auto rounded-xl border border-border bg-card">
+      <table className="w-full border-collapse text-left text-sm">{children}</table>
+    </div>
+  ),
+  th: ({ children }) => (
+    <th className="whitespace-nowrap border-b border-border bg-muted/60 px-3 py-2 font-semibold text-foreground">
+      {children}
+    </th>
+  ),
+  td: ({ children }) => (
+    <td className="border-b border-border/60 px-3 py-2 align-top text-foreground/80">{children}</td>
+  ),
+};
+
+// Defined once at module level: rebuilding these on every render would give
+// react-markdown new component types, remounting every code block and diagram
+// each time the active heading changes while scrolling.
+const markdownComponents: Components = {
+  h1: ({ children, ...props }) => (
+    <h1
+      {...props}
+      className="text-center text-5xl sm:text-6xl font-bold italic text-accent my-12 tracking-tight"
+    >
+      {children}
+    </h1>
+  ),
+  h2: ({ children, ...props }) => {
+    const id = slugify(getTextContent(children));
+    return <h2 id={id} className="scroll-mt-20 text-3xl font-bold mt-12 mb-4" {...props}>{children}</h2>;
+  },
+  h3: ({ children, ...props }) => {
+    const id = slugify(getTextContent(children));
+    return <h3 id={id} className="scroll-mt-20 text-2xl font-bold mt-8 mb-3" {...props}>{children}</h3>;
+  },
+  a: ({ children, ...props }) => (
+    <a
+      {...props}
+      target={props.href?.startsWith("http") ? "_blank" : undefined}
+      rel={props.href?.startsWith("http") ? "noopener noreferrer" : undefined}
+      className="text-accent font-bold no-underline hover:underline"
+    >
+      {children}
+    </a>
+  ),
+  p: ({ children, ...props }) => {
+    if (props.className === "figure-caption") {
+      return (
+        <p className="-mt-2 mb-8 text-center text-sm leading-relaxed text-muted-foreground [&_em]:not-italic">
+          {children}
+        </p>
+      );
+    }
+    const text = getTextContent(children).trim();
+    if (text === "CLEAR_FLOAT") {
+      return <div className="clear-both" />;
+    }
+
+    const childNodes = Children.toArray(children);
+    if (childNodes.length === 1 && isValidElement(childNodes[0])) {
+      const onlyChild = childNodes[0];
+      const href = typeof onlyChild.props.href === "string" ? onlyChild.props.href : "";
+      if (href.toLowerCase().endsWith(".mp4")) {
+        return (
+          <div className="my-6">
+            {/* The poster is the same path with .jpg; a tall phone recording is capped
+                like the article's images instead of filling the column. */}
+            <video
+              src={href}
+              poster={href.replace(/\.mp4$/i, ".jpg")}
+              controls
+              playsInline
+              preload="metadata"
+              className="mx-auto block h-auto max-h-[40rem] w-auto max-w-full rounded-2xl border border-border/60 shadow-medium bg-card"
+            />
+          </div>
+        );
+      }
+    }
+
+    return <p {...props}>{children}</p>;
+  },
+  img: ({ alt, ...props }) => {
+    const normalizedAlt = (alt || "").toLowerCase();
+    const isComponentDemo = normalizedAlt.includes("component demo");
+    const isCurrentTrip = normalizedAlt.includes("current trip");
+    const isMacOSDemo = normalizedAlt.includes("macos demo");
+    const isiOSDemo = normalizedAlt.includes("ios demo");
+    return (
+      <img
+        alt={alt}
+        {...props}
+        className={
+          isComponentDemo
+            ? "!w-auto max-w-[12rem] sm:max-w-[14rem] md:max-w-[16rem]"
+            : isCurrentTrip
+            ? "!w-auto max-w-[8.5rem] sm:max-w-[10rem] md:max-w-[11rem] lg:max-w-[15rem] md:float-left md:mr-6 md:mb-4"
+            : isMacOSDemo
+              ? "!max-w-full w-full"
+              : isiOSDemo
+                ? "!w-auto max-w-[14rem] sm:max-w-[16rem] md:max-w-[18rem]"
+                : undefined
+        }
+      />
+    );
+  },
+  pre: ({ children }) => <>{children}</>,
+  code: ({ className, children, ...props }) => {
+    const match = /language-(\w+)/.exec(className || "");
+    const isInline = !className;
+    if (isInline) {
+      return (
+        <code className="bg-primary text-primary-foreground px-1.5 py-0.5 rounded text-sm font-mono" {...props}>
+          {children}
+        </code>
+      );
+    }
+    const language = match?.[1] || "swift";
+    if (language === "mermaid") {
+      return <MermaidDiagram code={String(children).replace(/\n$/, "")} />;
+    }
+    if (language === "battery") {
+      const items = String(children)
+        .split(/\r?\n/)
+        .map((s) => s.trim())
+        .filter(Boolean);
+      const columns = Math.max(items.length, 1);
+
+      return (
+        <div className="my-6 flex justify-center">
+          <div className="relative w-full max-w-2xl">
+            <div className="absolute -right-3 top-1/2 -translate-y-1/2 w-3 h-10 bg-border rounded-r-md" />
+            <div
+              className="grid gap-1.5 p-2.5 border border-border rounded-xl bg-card shadow-medium"
+              style={{ gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))` }}
+            >
+              {items.map((label, idx) => (
+                <div
+                  key={`${idx}-${label}`}
+                  className="flex items-center justify-center text-center px-2 py-3 rounded-lg border border-border bg-muted/40"
+                >
+                  <span className="text-[11px] sm:text-xs font-semibold text-foreground leading-snug">
+                    {label}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      );
+    }
+    return (
+      <SyntaxHighlighter
+        language={language}
+        style={codeTheme}
+        PreTag="pre"
+        customStyle={{
+          background: "hsl(var(--primary))",
+          color: "hsl(var(--primary-foreground))",
+          padding: "1rem",
+          borderRadius: "0.5rem",
+          border: "1px solid hsl(var(--border))",
+          overflowX: "auto",
+          margin: "1.25rem 0",
+        }}
+        codeTagProps={{ className: "text-sm font-mono" }}
+      >
+        {String(children).replace(/\n$/, "")}
+      </SyntaxHighlighter>
+    );
+  },
+};
+
+const enhancedComponents: Components = { ...markdownComponents, ...tableComponents };
+
+// The article body only re-renders when the article itself changes.
+const ArticleBody = memo(({ content, enhanced }: { content: string; enhanced: boolean }) => (
+  <ReactMarkdown
+    remarkPlugins={enhanced ? [remarkGfm, remarkFigureCaptions] : [remarkGfm]}
+    components={enhanced ? enhancedComponents : markdownComponents}
+  >
+    {content}
+  </ReactMarkdown>
+));
 
 const Article = () => {
   const { slug } = useParams();
@@ -213,152 +430,24 @@ const Article = () => {
         <h1 className="text-4xl font-bold mb-8">{article.title}</h1>
 
         <div className="prose prose-neutral max-w-none prose-headings:text-foreground prose-headings:font-bold prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-4 prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-3 prose-p:text-foreground/80 prose-strong:text-foreground prose-a:text-accent prose-a:font-bold prose-a:no-underline hover:prose-a:underline prose-code:bg-primary prose-code:text-primary-foreground prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:font-mono prose-code:before:content-none prose-code:after:content-none prose-pre:bg-primary prose-pre:text-primary-foreground prose-pre:rounded-lg prose-pre:border prose-pre:border-border prose-pre:overflow-x-auto prose-img:rounded-2xl prose-img:border prose-img:border-border/60 prose-img:shadow-medium prose-img:my-6 prose-img:mx-auto prose-img:max-w-sm sm:prose-img:max-w-lg prose-img:w-auto prose-img:max-h-[40rem] prose-img:bg-card prose-img:p-2 sm:prose-img:p-3">
-          <ReactMarkdown
-            remarkPlugins={[remarkGfm]}
-            components={{
-              h1: ({ children, ...props }) => (
-                <h1
-                  {...props}
-                  className="text-center text-5xl sm:text-6xl font-bold italic text-accent my-12 tracking-tight"
-                >
-                  {children}
-                </h1>
-              ),
-              h2: ({ children, ...props }) => {
-                const id = slugify(getTextContent(children));
-                return <h2 id={id} className="scroll-mt-20 text-3xl font-bold mt-12 mb-4" {...props}>{children}</h2>;
-              },
-              h3: ({ children, ...props }) => {
-                const id = slugify(getTextContent(children));
-                return <h3 id={id} className="scroll-mt-20 text-2xl font-bold mt-8 mb-3" {...props}>{children}</h3>;
-              },
-              a: ({ children, ...props }) => (
-                <a
-                  {...props}
-                  target={props.href?.startsWith("http") ? "_blank" : undefined}
-                  rel={props.href?.startsWith("http") ? "noopener noreferrer" : undefined}
-                  className="text-accent font-bold no-underline hover:underline"
-                >
-                  {children}
-                </a>
-              ),
-              p: ({ children, ...props }) => {
-                const text = getTextContent(children).trim();
-                if (text === "CLEAR_FLOAT") {
-                  return <div className="clear-both" />;
-                }
-
-                const childNodes = Children.toArray(children);
-                if (childNodes.length === 1 && isValidElement(childNodes[0])) {
-                  const onlyChild = childNodes[0];
-                  const href = typeof onlyChild.props.href === "string" ? onlyChild.props.href : "";
-                  if (href.toLowerCase().endsWith(".mp4")) {
-                    return (
-                      <div className="my-6">
-                        <video
-                          src={href}
-                          controls
-                          playsInline
-                          className="w-full rounded-2xl border border-border/60 shadow-medium bg-card"
-                        />
-                      </div>
-                    );
-                  }
-                }
-
-                return <p {...props}>{children}</p>;
-              },
-              img: ({ alt, ...props }) => {
-                const normalizedAlt = (alt || "").toLowerCase();
-                const isComponentDemo = normalizedAlt.includes("component demo");
-                const isCurrentTrip = normalizedAlt.includes("current trip");
-                const isMacOSDemo = normalizedAlt.includes("macos demo");
-                const isiOSDemo = normalizedAlt.includes("ios demo");
-                return (
-                  <img
-                    alt={alt}
-                    {...props}
-                    className={
-                      isComponentDemo
-                        ? "!w-auto max-w-[12rem] sm:max-w-[14rem] md:max-w-[16rem]"
-                        : isCurrentTrip
-                        ? "!w-auto max-w-[8.5rem] sm:max-w-[10rem] md:max-w-[11rem] lg:max-w-[15rem] md:float-left md:mr-6 md:mb-4"
-                        : isMacOSDemo
-                          ? "!max-w-full w-full"
-                          : isiOSDemo
-                            ? "!w-auto max-w-[14rem] sm:max-w-[16rem] md:max-w-[18rem]"
-                            : undefined
-                    }
-                  />
-                );
-              },
-              pre: ({ children }) => <>{children}</>,
-              code: ({ className, children, ...props }) => {
-                const match = /language-(\w+)/.exec(className || "");
-                const isInline = !className;
-                if (isInline) {
-                  return (
-                    <code className="bg-primary text-primary-foreground px-1.5 py-0.5 rounded text-sm font-mono" {...props}>
-                      {children}
-                    </code>
-                  );
-                }
-                const language = match?.[1] || "swift";
-                if (language === "battery") {
-                  const items = String(children)
-                    .split(/\r?\n/)
-                    .map((s) => s.trim())
-                    .filter(Boolean);
-                  const columns = Math.max(items.length, 1);
-
-                  return (
-                    <div className="my-6 flex justify-center">
-                      <div className="relative w-full max-w-2xl">
-                        <div className="absolute -right-3 top-1/2 -translate-y-1/2 w-3 h-10 bg-border rounded-r-md" />
-                        <div
-                          className="grid gap-1.5 p-2.5 border border-border rounded-xl bg-card shadow-medium"
-                          style={{ gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))` }}
-                        >
-                          {items.map((label, idx) => (
-                            <div
-                              key={`${idx}-${label}`}
-                              className="flex items-center justify-center text-center px-2 py-3 rounded-lg border border-border bg-muted/40"
-                            >
-                              <span className="text-[11px] sm:text-xs font-semibold text-foreground leading-snug">
-                                {label}
-                              </span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  );
-                }
-                return (
-                  <SyntaxHighlighter
-                    language={language}
-                    style={codeTheme}
-                    PreTag="pre"
-                    customStyle={{
-                      background: "hsl(var(--primary))",
-                      color: "hsl(var(--primary-foreground))",
-                      padding: "1rem",
-                      borderRadius: "0.5rem",
-                      border: "1px solid hsl(var(--border))",
-                      overflowX: "auto",
-                      margin: "1.25rem 0",
-                    }}
-                    codeTagProps={{ className: "text-sm font-mono" }}
-                  >
-                    {String(children).replace(/\n$/, "")}
-                  </SyntaxHighlighter>
-                );
-              },
-            }}
-          >
-            {article.content}
-          </ReactMarkdown>
+          <ArticleBody content={article.content} enhanced={article.download ?? false} />
         </div>
+
+        {article.download && (
+          <div className="mt-16 flex flex-col items-start gap-4 rounded-2xl border border-border/60 bg-card p-6 shadow-medium sm:flex-row sm:items-center sm:justify-between">
+            <p className="text-sm text-foreground/80">
+              The whole article as one Markdown file, diagrams and tables included, ready to hand to an AI
+              assistant.
+            </p>
+            <button
+              onClick={() => downloadMarkdown(article)}
+              className="flex flex-shrink-0 items-center gap-2 rounded-full bg-accent px-4 py-2 text-sm font-semibold text-accent-foreground transition-opacity hover:opacity-90"
+            >
+              <Download className="h-4 w-4" />
+              Download .md
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Bottom paragraph nav */}
