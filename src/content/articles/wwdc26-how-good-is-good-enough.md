@@ -56,8 +56,8 @@ failure**.
 
 ## What Apple announced
 
-A framework for testing software whose output is not the same twice,
-sitting beside XCTest and Swift Testing.
+Apple announced **Evaluations**, a framework for testing software whose
+output is not the same twice. It sits beside XCTest and Swift Testing.
 
 ### The four parts of an evaluation
 
@@ -112,6 +112,10 @@ jobs.
 3. **Notice a shopping request.** "I'm out of bread" had to come back in a
    different shape, a list of items to add.
 4. **Read a recipe out of a web page**, with a separate prompt.
+
+From the first day the same prompts were also measured on Apple's larger
+model, which runs on Apple's servers through Private Cloud Compute (PCC).
+An app can call it from iOS 27 with an entitlement from Apple.
 
 ### What it grew into
 
@@ -171,10 +175,11 @@ flowchart TD
 
 In Raviolo, every request to a model passes through one Swift function,
 `generateStructured`. It is the only place where the app talks to
-VoltaSDK, and it receives four things:
+VoltaSDK, and it receives five things:
 
-- the instructions, which are the prompt itself (the text lives as a
+- the instructions, the system prompt for this job (the text lives as a
   constant in the app's shared Kotlin code, with every other prompt);
+- the person's message;
 - the JSON shape the app expects back;
 - the conversation so far;
 - the name of the task this request belongs to, with the language in it
@@ -235,8 +240,8 @@ a schema. Then the inputs and the rules, which the next step is about.
 ### 2. The rules are written as data
 
 A rule is one line in the task file: the name of a kind of check (fifteen
-are built in) and its parameters. The SDK already knows how to apply each
-kind. Two of the six on the meal record check that the note is in the
+are built in) and its parameters. `VoltaSDKEvals`, the evaluation library
+in the package, already knows how to apply each kind. Two of the six on the meal record check that the note is in the
 person's language and that it names at least one of the additions the
 record suggests:
 
@@ -246,7 +251,7 @@ record suggests:
   "params": { "path": "note", "of": "completions[].text", "name": "note-names-additions" } }
 ```
 
-Each kind is a small function in the SDK. A sample passes only if every rule passes, and the reasons for any
+A sample passes only if every rule passes, and the reasons for any
 failure are joined into the message the test prints. When the model could
 not be asked at all (it was switched off, it was busy, or the input was too
 long for it), the rules skip that input and the engine counts it apart as
@@ -349,12 +354,11 @@ back. *Structured* sends it with the schema, so the model has to answer in
 the JSON shape the app expects.
 
 `measure` is a small helper in the same target. It runs the task, saves
-the result in the map described in the next step, and returns the pass
-rate. VoltaSDK's
+the result as a row (the next step), and returns the pass rate. VoltaSDK's
 guide has its code.
 
-Inside `TaskEvaluation`, Apple's framework does the looping. For each
-input:
+`measure` hands the task to `VoltaSDKEvals`, which builds an evaluation
+in Apple's framework, and the framework does the looping. For each input:
 
 1. VoltaSDK sends the prompt to the chosen model, through the same
    `respond` or `respondStructured` the app itself calls;
@@ -382,13 +386,15 @@ Test Case 'RavioloEvals.mealRecord(language: "en", tier: on-device, mode: raw)' 
 
 ### 4. The row goes into the map
 
-The **map** is one JSON file in the app's repository,
-`RavioloEvals/Results/capability-map.json`, and it is a plain list of
-**rows**, one per result.
-**Each row is named by three things: the task, the model, and how the
-prompt was sent** (as written, or through the schema). The meal record in
-English on the phone's model through the schema is one row; the same task
-on Private Cloud Compute is another.
+Each run of `measure` produces a **row**, the result of one task on one
+model in one mode. "The meal record in English, on the phone's model,
+structured, 17 of 20" is a row; the same task on PCC is another row.
+**A row is named by those three things: the task, the model, and the
+mode.** VoltaSDK calls each model a provider, which is why the field below
+says `provider`.
+
+The **map** is the file that collects the rows, one JSON file in the app's
+repository, `RavioloEvals/Results/capability-map.json`.
 
 The helper writes a row with `upsert`, which looks for a row with the same
 three names. If there is one, the new run replaces it; if there is none,
@@ -418,9 +424,10 @@ Besides the pass rate, a row keeps how often each rule passed, a few of the
 failure reasons, the latency, the prompt version it measured, and how often
 the model could be reached at all.
 
-The Mac writes the file directly. Private Cloud Compute and the phone
-cannot reach the repository, so their tests print each row in the log and
-a script in VoltaSDK, `evals-merge.py`, merges those lines into the file.
+Tests run on the Mac write the file directly. The PCC tests and the
+phone tests run inside a signed app, which cannot write to the repository,
+so they print each row in the log and a script in VoltaSDK,
+`evals-merge.py`, merges those lines into the file.
 
 | Model | How the prompt was sent | Passed | Prompt version | Measured |
 |---|---|---|---|---|
@@ -440,8 +447,7 @@ points at one of four fixes:
 - a schema on the call;
 - a rule in the app;
 - a different **tier** for that job, meaning a different model: Apple
-  Intelligence on the phone, Private Cloud Compute, or a cloud model such
-  as OpenAI's.
+  Intelligence on the phone, PCC, or a cloud model such as OpenAI's.
 
 Whichever it is, the same test runs again and the new row sits next to the
 old one. **Every before-and-after number in this piece is two such rows,
@@ -562,11 +568,9 @@ lists every field of a task file and every built-in check.
 Apple's framework expects the developer to write all four parts of an
 evaluation in Swift, for one specific model. `VoltaSDKEvals` fills them in
 from a task file: the inputs and the rules come from the file, and the
-model under test is any VoltaSDK provider chosen in code. The rules come
-from fifteen built-in checks, so an app never writes scoring code. Five of
-the fifteen were added because Raviolo needed them. One lets a rule apply
-only to the inputs where it makes sense: a recipe page with no amounts
-cannot give amounts, and PCC was being marked wrong for leaving them out.
+model under test is any VoltaSDK provider chosen in code. With the built-in
+checks an app never writes scoring code, and five of the fifteen were
+added because Raviolo needed them.
 
 ### Structured output
 
@@ -586,15 +590,15 @@ demo apps each carry a test bundle built on the same library. A model
 judge can use any cloud model to score answers, and it reports how often
 it agrees with a person's ratings before its scores are trusted.
 Everything shipped as **VoltaSDK 1.2.0** on 22 October, with nothing from
-1.1 changed. It is also the first 1.x release that builds for an iPhone:
-the first run of the evaluations on a real phone found that the PCC check
-used an API that exists only on macOS.
+1.1 changed.
 
 ## What the map showed
 
 Every number is passes out of inputs, with the app's own prompts.
 "On-device" is the Mac's Apple Intelligence model standing in for the
 phone's, the same model family.
+
+### The first day
 
 | Task (inputs) | On-device, raw | On-device, structured | PCC, raw | PCC, structured |
 |---|---|---|---|---|
@@ -605,18 +609,6 @@ phone's, the same model family.
 
 *The first day's map, Italian inputs, 14 September. † Every item was kept on the second turn; the row reads 0/8 because the note came back in English.*
 
-### The first day
-
-The phone's model, Italian inputs, the prompt sent as written against the
-same prompt sent through the schema:
-
-| Feature | raw | structured |
-|---|---|---|
-| Meal record (20) | 0/20 | 12/20 |
-| Retention over two turns (8) | 0/8 | 0/8, every item kept, the note in English |
-| Shopping intent inside the big prompt (20) | 0/20 | 0/20 |
-| Recipe extraction, 7 Wikibooks pages | 6/7 | 7/7 |
-
 - **The schema fixed the shape everywhere**, 0% to 100% valid JSON on
   every task.
 - **The phone's model does keep the list across turns.** It could not
@@ -624,13 +616,11 @@ same prompt sent through the schema:
   only because the note came back in English, and naming the person's
   language in the prompt took it to 8 of 8.
 - **The shopping row stayed at zero in every mode.** Inside the full
-  assistant prompt, the model never picked the shopping shape. Asked one
-  question only, "is this a shopping request?", it scored 25 of 28. **A
-  schema fixes the shape of an answer and nothing about the reading.**
-
-On Private Cloud Compute the same day, the record scored 14 of 20 raw and
-18 of 20 structured, and the indirect shopping phrasings ("we could use
-some pasta") 16 of 20 in every mode.
+  assistant prompt, the phone's model never picked the shopping shape for
+  indirect phrasings like "we could use some pasta", which PCC caught 16
+  times in 20. Asked one question only, "is this a shopping request?", the
+  phone's model scored 25 of 28. **A schema fixes the shape of an answer
+  and nothing about the reading.**
 
 ### After a week of prompt work
 
@@ -641,7 +631,7 @@ the day it was written.
 | Feature | on-device, first | on-device, final | PCC, final |
 |---|---|---|---|
 | Meal record (Italian, 20) | 0/20 raw, 12/20 structured | 16/20 | 19/20 |
-| Retention across turns (8) | unmeasurable raw | 8/8 | 8/8 |
+| Retention across turns (8) | 0/8 raw | 8/8 | 8/8 |
 | Implicit shopping intent in the big prompt (20) | 0/20 | dropped, rules instead | 16/20 |
 | Recipe extraction, 7 Wikibooks pages (Italian) | 6/7 raw | 7/7 | 7/7 |
 | Recipe extraction, 61 real pages in five languages | (not measured) | 50/61 | 61/61 |
@@ -702,12 +692,11 @@ The same page, the same model:
 |---|---|---|
 | “do not mention Ricotta” | “Ricotta, you’re making me flustered” | describe the reply without the name, or handle the rule in code |
 | an example of the note | returned the example word for word, whatever the meal (2 of 20) | describe the field, no example (16 of 20) |
-| an example ingredient, “200 g” | a recipe for a news homepage, every ingredient 200 g | placeholders instead of values, and a field that says “no recipe here” |
 | three cases in one prompt: tease a habit, note the season, else one line | teased on every add (23 of 23 down to 16 of 23) | the app picks the case; one short prompt each |
 | “also point out which items are in season” | dropped the other items from the list (3 of 10) | a table of seasons in code; the model only writes |
 | “talks about food the way a friend at the gym talks about a good set” | talked about the gym in every reply | describe the voice to the model, never as a comparison it can quote |
 
-*Six things the phone's model did with a prompt, and what fixed each. The pattern in the middle column is the same every time: whatever is concrete in the prompt (a name, an example, a comparison) comes back in the answer, and any choice left to the model goes wrong.*
+*Five things the phone's model did with a prompt, and what fixed each. The pattern in the middle column is the same every time: whatever is concrete in the prompt (a name, an example, a comparison) comes back in the answer, and any choice left to the model goes wrong.*
 
 ## From a row to a decision
 
@@ -730,8 +719,9 @@ flowchart LR
 
 One example, the recipe page. The phone's model read real recipe pages
 right 50 times in 61, above the floor of 0.6, so by the map it stays in
-the chain. But on pages with no recipe it invented one a third of the
-time, where PCC answered "no recipe found" every time. **An invented
+the chain. But even after the prompt fix shown above, on pages with no
+recipe it still invented one a third of the time, where PCC answered "no
+recipe found" every time. **An invented
 recipe is worse than none, and the map cannot know that: it only counts
 passes.** So reading pages is a job for the servers only, by a rule of
 the app's own. With the servers off, the app says so instead of asking
@@ -743,8 +733,8 @@ The same engine also settled two questions Part 3 had left open. Quality
 holds when the chain switches model in the middle of a conversation, 24
 of 24 items kept from the phone to the servers, because the app sends the
 history with every call. And the phone's model reads long pages fine once
-the output is structured, 7 of 7 up to 12,000 characters; its reputation
-for weakness with long inputs was a shape failure in disguise.
+the output is structured, 7 of 7 up to 12,000 characters; what looked like
+a weakness with long inputs was the same shape failure as the meal record.
 
 ## What to watch for
 
@@ -757,8 +747,8 @@ for weakness with long inputs was a shape failure in disguise.
 - **A rule can be wrong and reward the wrong model.** PCC was marked
   wrong for leaving absent amounts empty while the phone passed by
   inventing them.
-- **Every on-device number here is the Mac's model standing in for the
-  phone's.** The cloud tier and the judge still wait for keys.
+- **The cloud tier and the model judge are not measured yet.** Both wait
+  for API keys.
 - **Twenty inputs** show 0% becoming 60%. They cannot rank two prompts
   that differ by three answers.
 
@@ -770,12 +760,3 @@ session 298, for the framework's shape;
 session 299, for trajectories and synthetic samples;
 [**Improve your prompts by hill-climbing**](https://developer.apple.com/videos/play/wwdc2026/335/),
 session 335, for the judge and how to distrust it correctly.
-
-## Next
-
-- **The judge** and **the cloud rows**, both waiting on keys.
-- **The full real-iPhone row.**
-- **Raviolo's own piece**: what the five characters are and what the
-  person sees, told without the tables. Until then the app itself is the
-  best place to meet them, on
-  [the App Store](https://apps.apple.com/it/app/raviolo/id6816085710).
