@@ -1,7 +1,21 @@
 import type { ReactNode } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ShoppingBasket, Sparkles, BookOpen, Apple } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
+import {
+  ShoppingBasket,
+  Sparkles,
+  BookOpen,
+  Apple,
+  Smartphone,
+  Cloud,
+  BrainCircuit,
+  ScanBarcode,
+  Flame,
+  Wand2,
+  Mail,
+  Compass,
+} from "lucide-react";
 import spinacio from "@/assets/raviolo-spinacio.webp";
 import mistoManzo from "@/assets/raviolo-misto-manzo.webp";
 
@@ -24,6 +38,53 @@ const assistants = [
 
 // Raviolo ships on the App Store for iPhone and Mac from the same listing.
 const APP_STORE_URL = "https://apps.apple.com/it/app/raviolo/id6816085710";
+
+// What is coming next. Main features get the big cards, the rest a compact list.
+const upcomingMain: { icon: LucideIcon; title: string; body: string }[] = [
+  {
+    icon: Smartphone,
+    title: "Android version",
+    body: "Raviolo on Android phones, with the same lists, recipes and assistants as on iPhone.",
+  },
+  {
+    icon: Cloud,
+    title: "Cloud",
+    body: "An optional account that keeps lists and recipes in sync across every device.",
+  },
+  {
+    icon: BrainCircuit,
+    title: "More AI models",
+    body: "A choice of models beyond the on-device one, for longer recipes and harder questions.",
+  },
+  {
+    icon: ScanBarcode,
+    title: "Barcode scanner",
+    body: "Scan a supermarket product to add it to the list or bring it into a recipe.",
+  },
+  {
+    icon: Flame,
+    title: "Calorie counting",
+    body: "Calories per recipe and per portion, behind a setting that stays off until turned on.",
+  },
+];
+
+const upcomingSecondary: { icon: LucideIcon; title: string; body: string }[] = [
+  {
+    icon: Wand2,
+    title: "AI substitutions and improvements",
+    body: "Ask the assistants to swap an ingredient or improve a recipe already saved.",
+  },
+  {
+    icon: Mail,
+    title: "Newsletter",
+    body: "A mail subscription for the latest Raviolo news.",
+  },
+  {
+    icon: Compass,
+    title: "Spotlight tutorial",
+    body: "A guided tour that points at each part of the app on first launch.",
+  },
+];
 
 // Side characters — smaller cards, art still to come. Colors are theirs.
 const sideCharacters = [
@@ -85,6 +146,7 @@ export default function RavioloLanding() {
           <nav className="hidden sm:flex items-center gap-8 text-sm font-medium text-[color:var(--rv-ink)]/70">
             <a href="#features" className="hover:text-[color:var(--rv-ink)]">Features</a>
             <a href="#how" className="hover:text-[color:var(--rv-ink)]">How it works</a>
+            <a href="#upcoming" className="hover:text-[color:var(--rv-ink)]">Coming soon</a>
             <a href="#faq" className="hover:text-[color:var(--rv-ink)]">FAQ</a>
           </nav>
           <a
@@ -304,7 +366,7 @@ export default function RavioloLanding() {
               Cook happier.<br />Start with a raviolo.
             </h2>
             <p className="mt-4 text-white/85 max-w-md">
-              Available for iPhone and Mac. The Android build is simmering.
+              Available for iPhone and Mac.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <a
@@ -325,6 +387,56 @@ export default function RavioloLanding() {
             width={192}
             height={192}
           />
+        </div>
+      </section>
+
+      {/* UPCOMING */}
+      <section id="upcoming" className="mx-auto max-w-6xl px-6 pb-24">
+        <div className="max-w-2xl">
+          <p className="text-xs uppercase tracking-[0.18em] font-semibold text-[color:var(--rv-tomato)]">
+            On the stove
+          </p>
+          <h2 className="rv-display mt-3 font-extrabold text-4xl sm:text-5xl tracking-tight">
+            Upcoming features
+          </h2>
+          <p className="mt-6 text-lg text-[color:var(--rv-ink)]/70">
+            What Raviolo is cooking for the next releases.
+          </p>
+        </div>
+
+        <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {upcomingMain.map(({ icon: Icon, title, body }) => (
+            <div
+              key={title}
+              className="rounded-3xl border border-[color:var(--rv-border)] bg-white p-8"
+            >
+              <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-[color:var(--rv-gold)]/25 text-[color:var(--rv-ink)]">
+                <Icon className="h-6 w-6" strokeWidth={2.2} />
+              </div>
+              <h3 className="rv-display mt-6 text-xl font-bold">{title}</h3>
+              <p className="mt-2 text-sm text-[color:var(--rv-ink)]/70 leading-relaxed">{body}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-12">
+          <p className="rv-display text-sm font-bold uppercase tracking-[0.18em] text-[color:var(--rv-ink)]/45">
+            And also
+          </p>
+          <ul className="mt-5 grid md:grid-cols-3 gap-4">
+            {upcomingSecondary.map(({ icon: Icon, title, body }) => (
+              <li
+                key={title}
+                className="flex gap-4 rounded-2xl border border-[color:var(--rv-border)] bg-[color:var(--rv-muted)]/60 p-5"
+              >
+                <Icon className="h-5 w-5 shrink-0 mt-0.5 text-[color:var(--rv-tomato)]" strokeWidth={2.2} />
+                <div>
+                  <h3 className="rv-display font-bold">{title}</h3>
+                  <p className="mt-1 text-sm text-[color:var(--rv-ink)]/70 leading-relaxed">{body}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
