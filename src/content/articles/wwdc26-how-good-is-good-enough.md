@@ -617,9 +617,9 @@ rows over 95 tasks. Every number below is passes out of inputs, with the
 app's own prompts, and "on-device" is the Mac's Apple Intelligence model
 standing in for the phone's, the same model family.
 
-The table follows nine features through the week. "First" is the first
+The table follows eight features through the week. "First" is the first
 run, on 14 September for the first four rows and on the day the feature
-was written for the last five. "Final" is the same dataset run against
+was written for the last four. "Final" is the same dataset run against
 the last version of the prompts.
 
 | Feature | On-device, first | On-device, final | PCC, first | PCC, final |
@@ -630,7 +630,6 @@ the last version of the prompts.
 | Recipe extraction, 7 Wikibooks pages (Italian) | 6/7 raw, 7/7 structured | 7/7 | 6/7 | 7/7 |
 | Recipe extraction, 61 real pages in five languages | — | 50/61 | — | 61/61 |
 | A recipe for a dish asked for by name (10) | 6/10 | 6/10 | — | 10/10 |
-| A recipe under a gluten note, exception held (8) | 0/8 | 0/8, rule in the app | — | 8/8 |
 | A cooking question answered (English, 20) | 13/20 | 17/20 | — | 19/20 |
 | A fact about food answered correctly (12, then 27) | 6/12 | 20/24 | — | 26/27 |
 
@@ -658,15 +657,6 @@ right 26 times in 30. Asked which line of the whole list a new entry
 belongs to, it was right 4 times in 15, and PCC 11 times. So the app
 hands the whole list to PCC when it can, and otherwise asks the phone's
 model about one pair at a time.
-
-The features written later in the week split the same way. A cooking
-question went from 13 to 17 of 20 as the prompt changed. Two rows never
-moved on the phone whatever the wording, a dish asked for by name and a
-rule with an exception ("no gluten" with "gluten-free pasta is fine").
-Both need knowledge rather than shape, so the map sends both to PCC
-first. Across the whole map, **the small model follows one rule well and
-breaks when two rules pull against each other or when the answer needs
-knowledge.**
 
 The same engine also settled two questions left open by
 [Part 3](/articles/wwdc26-resolution-meets-orchestration) of the series,
