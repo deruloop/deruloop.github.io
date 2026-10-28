@@ -41,6 +41,28 @@ const CHAT: { question: string; answer: string; model: Model }[] = [
   },
 ];
 
+// The same questions to both models, word for word. Asked with the app's
+// instructions and settings, and the model that answered was checked.
+const FACE_OFF: { question: string; onDevice: string; privateCloud: string }[] = [
+  {
+    question: "How many r's are in the word strawberry?",
+    onDevice: 'There are two r\'s in the word "strawberry."\n\nThe word is spelled: s-t-r-e-w-b-e-r-r-y.',
+    privateCloud: "Three. The spelling is s-t-r-a-w-b-e-r-r-y, so r appears in positions 3, 8, and 9.",
+  },
+  {
+    question: "What's heavier, a kilo of feathers or a kilo of steel?",
+    onDevice:
+      "A kilo of steel is heavier than a kilo of feathers—they both weigh exactly one kilogram.\n\nNo exceptions here: the weight is the same regardless of the material.",
+    privateCloud: "They weigh the same—one kilo each. It’s just that the feathers take up more space.",
+  },
+  {
+    question: "Write a haiku about Monday mornings",
+    onDevice:
+      "Monday light arrives—\nCoffee brews beneath tired eyes—\nWeek begins quietly.\n\nLabel: Morning Routine\nNote: Adjust caffeine if needed; consistency helps ease the start.",
+    privateCloud: "Monday light creeps in,\nCoffee steam starts the routine,\nWeek begins its pace.",
+  },
+];
+
 const FEATURES = [
   {
     icon: Smartphone,
@@ -225,6 +247,110 @@ function ChatDemo() {
   );
 }
 
+/** One question to both models, side by side. Plays once it scrolls into view. */
+function ModelFaceOff() {
+  const reducedMotion = usePrefersReducedMotion();
+  const container = useRef<HTMLDivElement>(null);
+  const [selected, setSelected] = useState(0);
+  // 0: just the question, 1: both birds thinking, 2: both answers.
+  const [phase, setPhase] = useState(0);
+  const [started, setStarted] = useState(false);
+
+  useEffect(() => {
+    if (reducedMotion) {
+      setPhase(2);
+      return;
+    }
+    const element = container.current;
+    if (!element) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setStarted(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.4 },
+    );
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [reducedMotion]);
+
+  useEffect(() => {
+    if (!started || phase >= 2) return;
+    const timer = window.setTimeout(() => setPhase((current) => current + 1), phase === 0 ? 400 : 1500);
+    return () => window.clearTimeout(timer);
+  }, [started, phase]);
+
+  const pick = (index: number) => {
+    setSelected(index);
+    if (!reducedMotion) {
+      setStarted(true);
+      setPhase(0);
+    }
+  };
+
+  const exchange = FACE_OFF[selected];
+  const answers: { model: Model; text: string }[] = [
+    { model: "On device", text: exchange.onDevice },
+    { model: "Private Cloud Compute", text: exchange.privateCloud },
+  ];
+
+  return (
+    <div ref={container}>
+      <div className="flex flex-wrap gap-2" role="group" aria-label="Pick a question">
+        {FACE_OFF.map((item, index) => (
+          <button
+            key={item.question}
+            type="button"
+            onClick={() => pick(index)}
+            aria-pressed={index === selected}
+            className={
+              "rounded-full border px-4 py-2 text-left text-sm transition-colors " +
+              (index === selected
+                ? "border-[var(--ciappitti-accent)] bg-[var(--ciappitti-accent)] text-white dark:text-zinc-950"
+                : "border-zinc-200 text-zinc-600 hover:border-[var(--ciappitti-accent)] hover:text-zinc-950 dark:border-border dark:text-muted-foreground dark:hover:text-foreground")
+            }
+          >
+            {item.question}
+          </button>
+        ))}
+      </div>
+
+      <div className="mt-10 flex justify-end">
+        <p
+          key={selected}
+          className="ciappitti-bubble max-w-md rounded-[1.25rem] bg-[var(--ciappitti-paper)] px-4 py-2.5 text-sm text-zinc-950 dark:text-foreground"
+        >
+          {exchange.question}
+        </p>
+      </div>
+
+      <div className="mt-6 grid gap-4 md:grid-cols-2" aria-live="polite">
+        {answers.map(({ model, text }) => (
+          <div
+            key={model}
+            className="flex min-h-[8rem] flex-col rounded-[2rem] md:min-h-[13rem] border border-zinc-200 bg-white p-6 shadow-[var(--shadow-large)] dark:border-border dark:bg-card"
+          >
+            <ModelLabel model={model} />
+            <div className="mt-4 flex flex-1 flex-col justify-start">
+              {phase === 1 && <CiappittiBird size={34} thinking label="Ciappitti is thinking" />}
+              {phase === 2 && (
+                <p
+                  key={selected}
+                  className="ciappitti-bubble whitespace-pre-line text-sm leading-relaxed text-zinc-950 dark:text-foreground"
+                >
+                  {text}
+                </p>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 const eyebrow = "text-xs uppercase tracking-[0.2em] text-zinc-500 dark:text-muted-foreground";
 const muted = "text-zinc-500 dark:text-muted-foreground";
 const divider = (
@@ -265,6 +391,7 @@ export default function CiappittiLanding() {
         <nav className="hidden items-center gap-6 text-xs sm:flex uppercase tracking-[0.15em] text-zinc-500 dark:text-muted-foreground">
           <a href="#name" className="transition-colors hover:text-zinc-950 dark:hover:text-foreground">The name</a>
           <a href="#features" className="transition-colors hover:text-zinc-950 dark:hover:text-foreground">What it does</a>
+          <a href="#models" className="transition-colors hover:text-zinc-950 dark:hover:text-foreground">Two models</a>
         </nav>
       </header>
 
@@ -348,6 +475,24 @@ export default function CiappittiLanding() {
               }
             />
           ))}
+        </div>
+      </section>
+
+      {divider}
+
+      {/* Two models */}
+      <section id="models" className="mx-auto max-w-5xl px-6 py-28">
+        <p className={eyebrow}>Two models</p>
+        <div className="mt-6 grid gap-10 md:grid-cols-2">
+          <h2 className="text-4xl font-semibold tracking-tight">Same question, two answers.</h2>
+          <p className={`text-base leading-relaxed ${muted}`}>
+            Any chat can switch models with one tap. The on-device model is quick and works offline. Private
+            Cloud Compute is Apple&apos;s larger model, and it does better when a question needs some care.
+            These are real answers from both to the same questions, word for word.
+          </p>
+        </div>
+        <div className="mt-14">
+          <ModelFaceOff />
         </div>
       </section>
 
