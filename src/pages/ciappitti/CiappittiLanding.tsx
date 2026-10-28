@@ -125,7 +125,7 @@ function TappableBird({ size }: { size: number }) {
         aria-label="Tap the bird"
       >
         <span ref={bird} className="block origin-bottom">
-          <CiappittiBird size={size} drawsIn idle className="h-auto w-[220px] md:w-auto" />
+          <CiappittiBird size={size} drawsIn idle className="h-auto w-[261px] md:w-auto" />
         </span>
       </button>
       <span className="mt-2 text-xs uppercase tracking-[0.2em] text-zinc-500 dark:text-muted-foreground">

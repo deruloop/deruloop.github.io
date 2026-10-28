@@ -2,7 +2,12 @@ import type { CSSProperties } from "react";
 
 // Ciappitti's bird, traced from the 1024-point app icon (the same path the
 // app draws with BirdShape). One line weight with rounded ends.
-const VIEW_BOX = "214 320 582 466";
+const DRAWING_WIDTH = 582;
+// The frame leaves room around the drawing for the hop and the thinking bob,
+// which tilt it up to 8 degrees and lift it by 14% of its height. Browsers
+// don't reliably paint an animated SVG past its own frame, so the room has
+// to be inside it.
+const FRAME = { x: 160, y: 225, width: 690, height: 590 };
 const LINE_WIDTH = 22;
 const EYE = { cx: 333, cy: 403, r: (LINE_WIDTH * 1.1) / 2 };
 
@@ -13,6 +18,7 @@ const WING = "M395 487 C470 501 548 541 617 602";
 const LEGS = "M448 683 L442 762 M529 677 L536 762";
 
 type Props = {
+  /** The width of the drawing itself; the frame around it is a bit larger. */
   size: number;
   /** Draws itself on first appearance, like the app's welcome screen. */
   drawsIn?: boolean;
@@ -62,12 +68,10 @@ export default function CiappittiBird({
 
   return (
     <svg
-      viewBox={VIEW_BOX}
-      width={size}
-      height={(size * 466) / 582}
+      viewBox={`${FRAME.x} ${FRAME.y} ${FRAME.width} ${FRAME.height}`}
+      width={(size * FRAME.width) / DRAWING_WIDTH}
+      height={(size * FRAME.height) / DRAWING_WIDTH}
       className={classes}
-      // The hop and the tilt move the drawing past its frame.
-      style={{ overflow: "visible" }}
       role={label ? "img" : undefined}
       aria-label={label}
       aria-hidden={label ? undefined : true}
