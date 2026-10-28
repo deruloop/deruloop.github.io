@@ -10,6 +10,7 @@ import type { Components } from "react-markdown";
 import MermaidDiagram from "@/components/MermaidDiagram";
 import remarkFigureCaptions from "@/lib/remarkFigureCaptions";
 import { Article as ArticleData } from "@/lib/articles";
+import { contactLinks, isExternal } from "@/lib/contacts";
 
 const codeTheme: Record<string, CSSProperties> = {
   'pre[class*="language-"]': {
@@ -454,6 +455,30 @@ const Article = () => {
             <Download className="h-4 w-4" />
             Download .md
           </button>
+        </div>
+
+        <div className="mt-6 rounded-2xl border border-border/60 bg-card p-6 shadow-medium">
+          <p className="mb-4 text-sm text-foreground/80">
+            Follow me to get the latest news and articles.
+          </p>
+          <div className="grid gap-3 sm:grid-cols-2">
+            {contactLinks.map(({ label, detail, href, icon: Icon }) => (
+              <a
+                key={label}
+                href={href}
+                {...(isExternal(href) && { target: "_blank", rel: "noopener noreferrer" })}
+                className="group flex items-center gap-3 rounded-lg border-2 border-border p-3 transition-all duration-300 hover:border-primary hover:shadow-medium"
+              >
+                <Icon className="h-5 w-5 flex-shrink-0 text-primary" />
+                <div className="min-w-0 text-left">
+                  <p className="text-sm font-semibold text-foreground">{label}</p>
+                  <p className="truncate text-xs text-muted-foreground transition-colors group-hover:text-foreground">
+                    {detail}
+                  </p>
+                </div>
+              </a>
+            ))}
+          </div>
         </div>
 
         {trailingSpace && (

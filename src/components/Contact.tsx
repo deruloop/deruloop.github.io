@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Mail, MessageSquare, Github, Linkedin } from "lucide-react";
+import { Mail } from "lucide-react";
+import { contactLinks, isExternal } from "@/lib/contacts";
 
 const Contact = () => {
   return (
@@ -17,71 +18,24 @@ const Contact = () => {
           <Card className="border-2">
             <CardContent className="p-8 md:p-12 space-y-8">
               <div className="grid md:grid-cols-2 gap-6">
-                <a
-                  href="mailto:cristiano@calicchia.dev"
-                  className="group"
-                >
-                  <div className="p-4 rounded-lg border-2 hover:border-primary transition-all duration-300 hover:shadow-medium flex items-center gap-3">
-                    <Mail className="h-6 w-6 text-primary flex-shrink-0" />
-                    <div className="text-left">
-                      <p className="font-semibold text-sm">Email</p>
-                      <p className="text-xs text-muted-foreground group-hover:text-foreground transition-colors">
-                        cristiano@calicchia.dev
-                      </p>
+                {contactLinks.map(({ label, detail, href, icon: Icon }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    {...(isExternal(href) && { target: "_blank", rel: "noopener noreferrer" })}
+                    className="group"
+                  >
+                    <div className="p-4 rounded-lg border-2 hover:border-primary transition-all duration-300 hover:shadow-medium flex items-center gap-3">
+                      <Icon className="h-6 w-6 text-primary flex-shrink-0" />
+                      <div className="text-left">
+                        <p className="font-semibold text-sm">{label}</p>
+                        <p className="text-xs text-muted-foreground group-hover:text-foreground transition-colors">
+                          {detail}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                </a>
-
-                <a
-                  href="https://www.linkedin.com/in/cristiano-calicchia-240253167"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group"
-                >
-                  <div className="p-4 rounded-lg border-2 hover:border-primary transition-all duration-300 hover:shadow-medium flex items-center gap-3">
-                    <Linkedin className="h-6 w-6 text-primary flex-shrink-0" />
-                    <div className="text-left">
-                      <p className="font-semibold text-sm">LinkedIn</p>
-                      <p className="text-xs text-muted-foreground group-hover:text-foreground transition-colors">
-                        Connect with me
-                      </p>
-                    </div>
-                  </div>
-                </a>
-
-                <a
-                  href="https://github.com/deruloop"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group"
-                >
-                  <div className="p-4 rounded-lg border-2 hover:border-primary transition-all duration-300 hover:shadow-medium flex items-center gap-3">
-                    <Github className="h-6 w-6 text-primary flex-shrink-0" />
-                    <div className="text-left">
-                      <p className="font-semibold text-sm">GitHub</p>
-                      <p className="text-xs text-muted-foreground group-hover:text-foreground transition-colors">
-                        View my code
-                      </p>
-                    </div>
-                  </div>
-                </a>
-
-                <a
-                  href="https://x.com/deruloop"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group"
-                >
-                  <div className="p-4 rounded-lg border-2 hover:border-primary transition-all duration-300 hover:shadow-medium flex items-center gap-3">
-                    <MessageSquare className="h-6 w-6 text-primary flex-shrink-0" />
-                    <div className="text-left">
-                      <p className="font-semibold text-sm">X</p>
-                      <p className="text-xs text-muted-foreground group-hover:text-foreground transition-colors">
-                        Follow updates
-                      </p>
-                    </div>
-                  </div>
-                </a>
+                  </a>
+                ))}
               </div>
               <a
                     href="mailto:cristiano@calicchia.dev"
