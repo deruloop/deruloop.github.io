@@ -7,6 +7,7 @@ import voltaSdkImage from "@/assets/voltasdk-icon.svg";
 import ravioloIcon from "@/assets/raviolo-icon.png";
 import konuqIcon from "@/assets/konuq-icon.png";
 import raiuIcon from "@/assets/raiu-icon.png";
+import ciappittiIcon from "@/assets/ciappitti-icon.png";
 
 type Project = {
   title: string;
@@ -75,6 +76,14 @@ const projects: Project[] = [
     detailPage: "/raviolo/",
   },
   {
+    title: "Ciappitti",
+    description: "A free, slightly wonky ChatGPT for iPhone, running on Apple's on-device model and Private Cloud Compute. Named after how my nephew says ChatGPT.",
+    image: ciappittiIcon,
+    tags: ["SwiftUI", "iOS", "AI", "Swift", "CloudKit"],
+    detailPage: "/ciappitti/",
+    comingSoon: true,
+  },
+  {
     title: "Raiu",
     description: "An AI fitness tracker and personal trainer. Custom training plans, guided exercises, and progress worth sharing.",
     image: raiuIcon,
@@ -87,7 +96,8 @@ const shippedProjects = projects.filter((p) => !p.comingSoon);
 const inDevelopmentProjects = projects.filter((p) => p.comingSoon);
 
 const ProjectCard = ({ project }: { project: Project }) => {
-  const clickable = !project.comingSoon && !!project.detailPage;
+  // An app still in development opens its page once it has one.
+  const clickable = !!project.detailPage;
   return (
             <Card
               className={
@@ -95,7 +105,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
                 (clickable ? "hover:shadow-large cursor-pointer" : "cursor-default")
               }
               onClick={clickable ? () => window.open(project.detailPage, '_blank') : undefined}
-              aria-disabled={project.comingSoon || undefined}
+              aria-disabled={!clickable || undefined}
             >
               <div className="flex flex-col md:flex-row">
                 <div className="relative overflow-hidden bg-gradient-to-br from-primary/5 to-primary/10 p-6 md:w-1/3 flex items-center justify-center">

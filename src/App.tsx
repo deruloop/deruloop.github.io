@@ -15,6 +15,7 @@ import ExoreaderTerms from "./pages/exoreader/Terms";
 import RavioloLanding from "./pages/raviolo/RavioloLanding";
 import RavioloPrivacy from "./pages/raviolo/Privacy";
 import RavioloTerms from "./pages/raviolo/Terms";
+import CiappittiLanding from "./pages/ciappitti/CiappittiLanding";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -38,6 +39,7 @@ const App = () => (
           <Route path="/raviolo" element={<RavioloLanding />} />
           <Route path="/raviolo/privacy" element={<RavioloPrivacy />} />
           <Route path="/raviolo/terms" element={<RavioloTerms />} />
+          <Route path="/ciappitti" element={<CiappittiLanding />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
