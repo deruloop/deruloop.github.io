@@ -20,21 +20,23 @@ const CHIRPS = [
 
 type Model = "On device" | "Private Cloud Compute";
 
+// Real answers from the app's on-device model, word for word.
 const CHAT: { question: string; answer: string; model: Model }[] = [
   {
     question: "Are you ChatGPT?",
-    answer: "Close enough. I'm Ciappitti, the small and free one, and I live right here on the iPhone.",
+    answer: "No, I'm Ciappitti, a small model.",
     model: "On device",
   },
   {
-    question: "Plan a weekend in Rome",
+    question: "Explain black holes simply",
     answer:
-      "Saturday: Colosseum early, lunch in Monti, sunset from the Pincio. Sunday: Pantheon, an afternoon in Trastevere, a long dinner. Pack comfy shoes.",
-    model: "Private Cloud Compute",
+      "A black hole is a region where gravity is so strong that nothing, not even light, can escape. It’s like a cosmic vacuum cleaner with a boundary called the event horizon—anything crossing it is trapped.",
+    model: "On device",
   },
   {
     question: "What's the weather today?",
-    answer: "I can't check, I have no web access. I'd only be guessing, and I try not to do that.",
+    answer:
+      "I’m a small model, so I don’t have access to real-time weather. For updates, check a reliable local source or app.",
     model: "On device",
   },
 ];
@@ -303,8 +305,8 @@ export default function CiappittiLanding() {
           <p className={eyebrow}>The name</p>
           <h2 className="mt-6 text-4xl font-semibold tracking-tight">Named by my nephew.</h2>
           <p className={`mt-6 text-base leading-relaxed ${muted}`}>
-            My nephew can&apos;t quite say ChatGPT. It comes out as Ciappitti. When I built my own small
-            version of it, the name was already taken care of.
+            My nephew can&apos;t quite say ChatGPT. It comes out as Ciappitti. So when I made my own little
+            ChatGPT, it got his name for it.
           </p>
           <p className={`mt-4 text-base leading-relaxed ${muted}`}>
             The bird is a doodle that stuck. It draws itself while Ciappitti thinks and hops when an answer
