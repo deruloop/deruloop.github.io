@@ -1,10 +1,12 @@
-import { Mail, MessageSquare, Github, Linkedin, LucideIcon } from "lucide-react";
+import { Mail, MessageSquare, Github, Linkedin } from "lucide-react";
+import type { ComponentType } from "react";
+import BlueskyIcon from "@/components/BlueskyIcon";
 
 export interface ContactLink {
   label: string;
   detail: string;
   href: string;
-  icon: LucideIcon;
+  icon: ComponentType<{ className?: string }>;
 }
 
 // One list for the homepage's contact card and the follow box at the end of
@@ -34,6 +36,16 @@ export const contactLinks: ContactLink[] = [
     href: "https://x.com/deruloop",
     icon: MessageSquare,
   },
+  {
+    label: "Bluesky",
+    detail: "@deruloop.dev",
+    href: "https://bsky.app/profile/deruloop.dev",
+    icon: BlueskyIcon,
+  },
 ];
+
+// With an odd number of links the first one (email) spans the full row, so the
+// rest pair up evenly in the two-column grids.
+export const spansRow = (index: number) => index === 0 && contactLinks.length % 2 === 1;
 
 export const isExternal = (href: string) => !href.startsWith("mailto:");

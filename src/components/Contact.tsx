@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Mail } from "lucide-react";
-import { contactLinks, isExternal } from "@/lib/contacts";
+import { contactLinks, isExternal, spansRow } from "@/lib/contacts";
 
 const Contact = () => {
   return (
@@ -18,12 +18,12 @@ const Contact = () => {
           <Card className="border-2">
             <CardContent className="p-8 md:p-12 space-y-8">
               <div className="grid md:grid-cols-2 gap-6">
-                {contactLinks.map(({ label, detail, href, icon: Icon }) => (
+                {contactLinks.map(({ label, detail, href, icon: Icon }, i) => (
                   <a
                     key={label}
                     href={href}
                     {...(isExternal(href) && { target: "_blank", rel: "noopener noreferrer" })}
-                    className="group"
+                    className={`group ${spansRow(i) ? "md:col-span-2" : ""}`}
                   >
                     <div className="p-4 rounded-lg border-2 hover:border-primary transition-all duration-300 hover:shadow-medium flex items-center gap-3">
                       <Icon className="h-6 w-6 text-primary flex-shrink-0" />

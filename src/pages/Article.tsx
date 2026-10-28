@@ -10,7 +10,7 @@ import type { Components } from "react-markdown";
 import MermaidDiagram from "@/components/MermaidDiagram";
 import remarkFigureCaptions from "@/lib/remarkFigureCaptions";
 import { Article as ArticleData } from "@/lib/articles";
-import { contactLinks, isExternal } from "@/lib/contacts";
+import { contactLinks, isExternal, spansRow } from "@/lib/contacts";
 
 const codeTheme: Record<string, CSSProperties> = {
   'pre[class*="language-"]': {
@@ -462,12 +462,12 @@ const Article = () => {
             Follow me to get the latest news and articles.
           </p>
           <div className="grid gap-3 sm:grid-cols-2">
-            {contactLinks.map(({ label, detail, href, icon: Icon }) => (
+            {contactLinks.map(({ label, detail, href, icon: Icon }, i) => (
               <a
                 key={label}
                 href={href}
                 {...(isExternal(href) && { target: "_blank", rel: "noopener noreferrer" })}
-                className="group flex items-center gap-3 rounded-lg border-2 border-border p-3 transition-all duration-300 hover:border-primary hover:shadow-medium"
+                className={`group flex items-center gap-3 ${spansRow(i) ? "sm:col-span-2" : ""} rounded-lg border-2 border-border p-3 transition-all duration-300 hover:border-primary hover:shadow-medium`}
               >
                 <Icon className="h-5 w-5 flex-shrink-0 text-primary" />
                 <div className="min-w-0 text-left">
