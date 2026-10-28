@@ -24,19 +24,20 @@ type Model = "On device" | "Private Cloud Compute";
 const CHAT: { question: string; answer: string; model: Model }[] = [
   {
     question: "Are you ChatGPT?",
-    answer: "No, I'm Ciappitti, a small model.",
+    answer:
+      "I’m Ciappitti, a friendly assistant running on Apple’s models.",
     model: "On device",
   },
   {
     question: "Explain black holes simply",
     answer:
-      "A black hole is a region where gravity is so strong that nothing, not even light, can escape. It’s like a cosmic vacuum cleaner with a boundary called the event horizon—anything crossing it is trapped.",
+      "A black hole is a place in space where gravity is so strong that nothing, not even light, can escape. Think of it like a cosmic vacuum with a boundary called an event horizon—once something crosses it, it’s gone, and there’s no turning back.",
     model: "On device",
   },
   {
     question: "What's the weather today?",
     answer:
-      "I’m a small model, so I don’t have access to real-time weather. For updates, check a reliable local source or app.",
+      "I can't check the weather.",
     model: "On device",
   },
 ];
@@ -46,20 +47,24 @@ const CHAT: { question: string; answer: string; model: Model }[] = [
 const FACE_OFF: { question: string; onDevice: string; privateCloud: string }[] = [
   {
     question: "How many r's are in the word strawberry?",
-    onDevice: 'There are two r\'s in the word "strawberry."\n\nThe word is spelled: s-t-r-e-w-b-e-r-r-y.',
-    privateCloud: "Three. The spelling is s-t-r-a-w-b-e-r-r-y, so r appears in positions 3, 8, and 9.",
+    onDevice:
+      "There are two r's in the word strawberry.",
+    privateCloud:
+      "There are three r’s in strawberry.",
   },
   {
     question: "What's heavier, a kilo of feathers or a kilo of steel?",
     onDevice:
-      "A kilo of steel is heavier than a kilo of feathers—they both weigh exactly one kilogram.\n\nNo exceptions here: the weight is the same regardless of the material.",
-    privateCloud: "They weigh the same—one kilo each. It’s just that the feathers take up more space.",
+      "A kilo of steel is heavier than a kilo of feathers. Both weigh exactly one kilogram, but steel is denser, so it takes up more space.",
+    privateCloud:
+      "They weigh the same: one kilo each. The feathers just take up more space.",
   },
   {
-    question: "Write a haiku about Monday mornings",
+    question: "Can I wash jeans at 60 degrees?",
     onDevice:
-      "Monday light arrives—\nCoffee brews beneath tired eyes—\nWeek begins quietly.\n\nLabel: Morning Routine\nNote: Adjust caffeine if needed; consistency helps ease the start.",
-    privateCloud: "Monday light creeps in,\nCoffee steam starts the routine,\nWeek begins its pace.",
+      "Yes, you can wash jeans at 60 degrees. Most fabrics handle this temperature well, and it's a good balance for cleaning without risking fading. Always check the care label on your jeans to be sure.",
+    privateCloud:
+      "Jeans can usually be washed at 60 °C, but it’s not typical. Most labels suggest 30–40 °C to protect colour and fabric. At 60 °C you may get more shrinkage or fading, especially with dark denim. Check the care tag first; if it’s unclear, choose a lower temperature and turn them inside out.",
   },
 ];
 
