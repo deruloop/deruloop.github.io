@@ -106,11 +106,11 @@ function TappableBird({ size }: { size: number }) {
 
   return (
     <div className="relative inline-flex flex-col items-center">
-      <div className="h-14" aria-live="polite">
+      <div className="mb-4 h-14" aria-live="polite">
         {chirp && (
           <span
             key={chirp.key}
-            className="ciappitti-bubble relative inline-block rounded-2xl bg-[var(--ciappitti-sky)] px-4 py-2 text-sm font-medium text-[var(--ciappitti-blue)]"
+            className="ciappitti-bubble relative inline-block rounded-2xl bg-[var(--ciappitti-paper)] px-4 py-2 text-sm font-medium text-[var(--ciappitti-accent)]"
           >
             {chirp.text}
           </span>
@@ -119,7 +119,7 @@ function TappableBird({ size }: { size: number }) {
       <button
         type="button"
         onClick={tap}
-        className="rounded-3xl p-2 outline-none transition-transform focus-visible:ring-2 focus-visible:ring-[var(--ciappitti-blue)] active:scale-95"
+        className="rounded-3xl p-2 outline-none transition-transform focus-visible:ring-2 focus-visible:ring-[var(--ciappitti-accent)] active:scale-95"
         aria-label="Tap the bird"
       >
         <span ref={bird} className="block origin-bottom">
@@ -191,7 +191,7 @@ function ChatDemo() {
         {CHAT.map((exchange, index) => (
           <div key={exchange.question} className="flex flex-col gap-5">
             {step > index * 2 && (
-              <p className="ciappitti-bubble ml-10 self-end rounded-[1.25rem] bg-[var(--ciappitti-sky)] px-4 py-2.5 text-sm text-zinc-950 dark:text-foreground">
+              <p className="ciappitti-bubble ml-10 self-end rounded-[1.25rem] bg-[var(--ciappitti-paper)] px-4 py-2.5 text-sm text-zinc-950 dark:text-foreground">
                 {exchange.question}
               </p>
             )}
@@ -211,7 +211,7 @@ function ChatDemo() {
           <button
             type="button"
             onClick={() => setStep(0)}
-            className="rounded-full bg-[var(--ciappitti-blue)] px-3 py-1 text-xs font-semibold text-white dark:text-zinc-950"
+            className="rounded-full bg-[var(--ciappitti-accent)] px-3 py-1 text-xs font-semibold text-white dark:text-zinc-950"
           >
             Play again
           </button>
@@ -234,9 +234,9 @@ const divider = (
 function ComingSoon({ className = "" }: { className?: string }) {
   return (
     <span
-      className={`inline-flex items-center gap-2 rounded-full border border-[var(--ciappitti-blue)] px-4 py-2 text-sm font-semibold text-[var(--ciappitti-blue)] ${className}`}
+      className={`inline-flex items-center gap-2 rounded-full border border-[var(--ciappitti-accent)] px-4 py-2 text-sm font-semibold text-[var(--ciappitti-accent)] ${className}`}
     >
-      <span className="h-2 w-2 rounded-full bg-[var(--ciappitti-blue)]" aria-hidden />
+      <span className="h-2 w-2 rounded-full bg-[var(--ciappitti-accent)]" aria-hidden />
       Coming soon to the App Store
     </span>
   );
@@ -277,7 +277,7 @@ export default function CiappittiLanding() {
           <h1 className="mt-6 text-5xl font-semibold leading-[0.95] tracking-tight lg:text-7xl">
             Ask freely.
             <br />
-            <span className="text-[var(--ciappitti-blue)]">It tries its best.</span>
+            <span className="text-[var(--ciappitti-accent)]">It tries its best.</span>
           </h1>
           <p className={`mt-8 max-w-md text-base leading-relaxed ${muted}`}>
             Ciappitti is a pocket-sized, slightly wonky take on ChatGPT. It answers with Apple&apos;s on-device
@@ -322,7 +322,7 @@ export default function CiappittiLanding() {
         <div className="mt-14 grid gap-12 sm:grid-cols-2 lg:grid-cols-4">
           {FEATURES.map(({ icon: Icon, title, body }) => (
             <div key={title}>
-              <Icon className="h-6 w-6 text-[var(--ciappitti-blue)]" aria-hidden />
+              <Icon className="h-6 w-6 text-[var(--ciappitti-accent)]" aria-hidden />
               <h3 className="mt-4 text-lg font-medium tracking-tight">{title}</h3>
               <p className={`mt-2 text-sm leading-relaxed ${muted}`}>{body}</p>
             </div>
@@ -372,7 +372,7 @@ export default function CiappittiLanding() {
 
       {/* CTA */}
       <section className="mx-auto max-w-5xl px-6 pb-32">
-        <div className="flex flex-col items-center rounded-[2rem] bg-[var(--ciappitti-sky)] px-8 py-16 text-center">
+        <div className="flex flex-col items-center rounded-[2rem] bg-[var(--ciappitti-paper)] px-8 py-16 text-center">
           <CiappittiBird size={96} />
           <h2 className="mt-8 text-4xl font-semibold tracking-tight md:text-5xl">Cip cip, almost there.</h2>
           <p className={`mt-4 max-w-md text-base ${muted}`}>Free, on iPhone, in five languages.</p>

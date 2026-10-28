@@ -2,15 +2,18 @@
    (body, wing, legs, then the eye), then hops twice with a tilt of the head
    every few seconds. With reduced motion it is simply drawn. */
 
+/* The app's Ocean icon theme: the bird's ink, the accent for text and
+   buttons, and the icon's paper for soft backgrounds. */
 .ciappitti-page {
-  --ciappitti-blue: #0071c7;
-  --ciappitti-ink: #039bff;
-  --ciappitti-sky: #e8f4fd;
+  --ciappitti-ink: #1c3350;
+  --ciappitti-accent: #1c3350;
+  --ciappitti-paper: #eef4f9;
 }
 
 .dark .ciappitti-page {
-  --ciappitti-blue: #4db8ff;
-  --ciappitti-sky: hsl(205 45% 16%);
+  --ciappitti-ink: #8db4e2;
+  --ciappitti-accent: #8db4e2;
+  --ciappitti-paper: hsl(212 35% 16%);
 }
 
 .ciappitti-bird .bird-line {

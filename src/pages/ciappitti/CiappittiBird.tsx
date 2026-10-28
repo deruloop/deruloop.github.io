@@ -66,6 +66,8 @@ export default function CiappittiBird({
       width={size}
       height={(size * 466) / 582}
       className={classes}
+      // The hop and the tilt move the drawing past its frame.
+      style={{ overflow: "visible" }}
       role={label ? "img" : undefined}
       aria-label={label}
       aria-hidden={label ? undefined : true}
@@ -73,7 +75,7 @@ export default function CiappittiBird({
       <g
         className="bird-body"
         fill="none"
-        stroke="var(--ciappitti-blue)"
+        stroke="var(--ciappitti-ink)"
         strokeWidth={LINE_WIDTH}
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -85,7 +87,7 @@ export default function CiappittiBird({
           cx={EYE.cx}
           cy={EYE.cy}
           r={EYE.r}
-          fill="var(--ciappitti-blue)"
+          fill="var(--ciappitti-ink)"
           stroke="none"
           className="bird-eye"
           style={{ "--eye-delay": `${timing.eye}s` } as CSSProperties}
