@@ -1,5 +1,5 @@
 import { Article, getAllArticles } from "@/lib/articles";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import TabSwitcher from "@/components/TabSwitcher";
 import { useMemo, useState } from "react";
 import { BookOpen, Calendar, ChevronDown, ChevronRight, FolderOpen, Sparkles, Tag } from "lucide-react";
@@ -137,8 +137,14 @@ const Articles = () => {
 
       <div className="container mx-auto px-4 pt-24 pb-16 max-w-3xl">
         <h1 className="text-4xl font-bold mb-2">Articles</h1>
-        <p className="text-muted-foreground mb-10">
+        <p className="text-muted-foreground mb-3">
           Thoughts on iOS development, Swift, and mobile engineering, plus curated collections you can browse as mini-series.
+        </p>
+        <p className="text-sm text-muted-foreground mb-10">
+          Looking for app updates?{" "}
+          <Link to="/updates" className="font-medium text-accent hover:underline">
+            See what changed each month
+          </Link>
         </p>
 
         {featuredArticles.length > 0 && (

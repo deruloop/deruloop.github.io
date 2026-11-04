@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 const tabs = [
   { label: "Portfolio", path: "/" },
   { label: "Articles", path: "/articles" },
+  { label: "Updates", path: "/updates" },
 ];
 
 const TabSwitcher = ({ isStatic = false }: { isStatic?: boolean }) => {
