@@ -537,12 +537,17 @@ export default function CiappittiLanding() {
           <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500 dark:text-muted-foreground">
             © 2026 Ciappitti. All rights reserved.
           </span>
-          <Link
-            to="/"
-            className="text-xs font-medium text-zinc-500 transition-colors hover:text-zinc-950 dark:text-muted-foreground dark:hover:text-foreground"
-          >
-            Portfolio
-          </Link>
+          <nav className="flex items-center gap-6 text-xs font-medium text-zinc-500 dark:text-muted-foreground">
+            <Link to="/ciappitti/privacy" className="transition-colors hover:text-zinc-950 dark:hover:text-foreground">
+              Privacy
+            </Link>
+            <Link to="/ciappitti/support" className="transition-colors hover:text-zinc-950 dark:hover:text-foreground">
+              Support
+            </Link>
+            <Link to="/" className="transition-colors hover:text-zinc-950 dark:hover:text-foreground">
+              Portfolio
+            </Link>
+          </nav>
         </div>
       </footer>
     </main>
